@@ -11,6 +11,10 @@ const atkinson = Atkinson_Hyperlegible_Next({
   subsets: ["latin"],
   variable: "--font-atkinson",
   display: "swap",
+  // Next has no metrics for this font yet. We supply our own size-matched
+  // fallback ("Atkinson Fallback" in globals.css) and the rest of the stack.
+  adjustFontFallback: false,
+  fallback: ["Atkinson Fallback", "ui-sans-serif", "system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {

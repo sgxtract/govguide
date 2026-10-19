@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* Size-matched fallback shown while Atkinson Hyperlegible Next loads, so text
+   doesn't jump when the real font arrives. Values measured from the font file
+   (unitsPerEm 1000, ascent 984, descent -316, avg width 444) against Arial;
+   Roboto and Liberation Sans are within 0.2%. Re-measure if the font changes. */
+@font-face {
+  font-family: "Atkinson Fallback";
+  src:
+    local("Arial"), local("ArialMT"), local("Roboto"), local("Roboto-Regular"),
+    local("Liberation Sans"), local("LiberationSans");
+  size-adjust: 99.6%;
+  ascent-override: 98.8%;
+  descent-override: 31.73%;
+  line-gap-override: 0%;
+}
+
 /*
  * GovGuide design tokens. See docs/design-system.md.
  * Direction: a printed Citizen's Charter / transit timetable.
@@ -123,7 +138,7 @@
   --color-accent: var(--accent);
   --color-notice: var(--notice);
 
-  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-atkinson);
 }
 
 /* ── 4. Base styles ───────────────────────────────────────────────────── */
