@@ -15,6 +15,7 @@ content/
 - **The file name is the slug.** The city comes from the folder.
 - **Unknown keys are errors**, so a typo can't silently drop data.
 - **`[VERIFY]`** is allowed in any field while drafting (including URLs, numbers, dates). A `published` service fails the build if it, its agency, or its offices contain `[VERIFY]`.
+- **Agencies and offices** have no draft status. In production they appear only when they contain no `[VERIFY]`; in dev they always show, with the marks highlighted.
 
 ## Category (`categories.yaml`)
 

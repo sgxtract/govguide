@@ -4,6 +4,7 @@ import path from "node:path";
 
 import { cache } from "react";
 
+import { hasPlaceholders } from "./integrity";
 import { loadFileContent } from "./loaders/file-loader";
 import type { Agency, Category, City, Office, Service } from "./schemas";
 
@@ -25,6 +26,11 @@ const getStore = cache(() => loadFileContent(CONTENT_DIR));
 
 const isVisible = (service: Service) =>
   SHOW_DRAFTS || service.status === "published";
+
+// Agencies and offices have no draft status. They're shown in production only
+// once every value is verified (no [VERIFY] left).
+const isVerified = (item: Agency | Office) =>
+  SHOW_DRAFTS || !hasPlaceholders(item);
 
 // ── Cities ─────────────────────────────────────────────────────────────────
 
@@ -52,6 +58,25 @@ export async function getAgency(slug: string): Promise<Agency | undefined> {
   return (await getStore()).agencies.find((a) => a.slug === slug);
 }
 
+/**
+ * Agencies with something in this city: at least one office there, or at
+ * least one visible guide. Agencies with neither get no page for the city.
+ */
+export async function listCityAgencies(city: string): Promise<Agency[]> {
+  const store = await getStore();
+  const used = new Set([
+    ...store.offices
+      .filter((o) => o.city === city && isVerified(o))
+      .map((o) => o.agency),
+    ...store.services
+      .filter((s) => s.city === city && isVisible(s))
+      .map((s) => s.agency),
+  ]);
+  return store.agencies
+    .filter((a) => used.has(a.slug) && isVerified(a))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
 // ── Offices ────────────────────────────────────────────────────────────────
 
 export async function listOffices(
@@ -59,7 +84,10 @@ export async function listOffices(
   filter: { agency?: string } = {},
 ): Promise<Office[]> {
   return (await getStore()).offices.filter(
-    (o) => o.city === city && (!filter.agency || o.agency === filter.agency),
+    (o) =>
+      o.city === city &&
+      isVerified(o) &&
+      (!filter.agency || o.agency === filter.agency),
   );
 }
 
@@ -67,9 +95,10 @@ export async function getOffice(
   city: string,
   slug: string,
 ): Promise<Office | undefined> {
-  return (await getStore()).offices.find(
+  const office = (await getStore()).offices.find(
     (o) => o.city === city && o.slug === slug,
   );
+  return office && isVerified(office) ? office : undefined;
 }
 
 // ── Services ───────────────────────────────────────────────────────────────

@@ -42,3 +42,4 @@ website, or the posted notice at the office. If you don't have it, write `[VERIF
 3. Run `pnpm content:check`.
 4. Open a PR with the source links in the description.
 5. Once verified and free of `[VERIFY]`, set `status: published` and `lastVerified` to today.
+6. Verify the agency and office files too: a guide can't be published while its agency or offices still contain `[VERIFY]`, and they won't get their own pages until they're clean.
