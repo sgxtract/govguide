@@ -49,3 +49,9 @@ All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text o
 - Only token utilities. Tailwind's default colors, radii, shadows and text sizes are removed on purpose.
 - No arbitrary values (`[13px]`) without a comment explaining why.
 - Every interactive element: visible `:focus-visible`, 44px minimum tap target.
+
+## Lists
+- Lists of things to pick (categories, guides, cities) are ruled rows: a 2px `ink` rule on top, 1px `rule` dividers between rows. No cards.
+- The whole row is clickable via a stretched link (`after:absolute after:inset-0` on the link, `relative` on the row). The link text stays short.
+- Every styled `<ul>`/`<ol>` outside `<nav>` gets `role="list"` (Safari drops list semantics without bullets).
+- Empty lists say why they're empty and offer "Suggest a service".

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Atkinson_Hyperlegible_Next } from "next/font/google";
 
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/config/site";
 
 import "@/styles/globals.css";
@@ -46,10 +45,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <SiteHeader />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
+        {children}
         <SiteFooter />
       </body>
     </html>

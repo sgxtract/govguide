@@ -98,3 +98,7 @@ export async function getService(
   );
   return service && isVisible(service) ? service : undefined;
 }
+
+export async function listAgencies(): Promise<Agency[]> {
+  return (await getStore()).agencies;
+}

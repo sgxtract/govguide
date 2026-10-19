@@ -1,30 +1,44 @@
-// Temporary token preview. Replaced by the city picker in Lesson 03.
-export default function Home() {
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { SiteHeader } from "@/components/layout/site-header";
+import { listCities } from "@/lib/content/repository";
+
+/**
+ * City picker. While Sorsogon is the only city, skip straight to it.
+ * When a second city folder is added, this page lists them instead.
+ */
+export default async function RootPage() {
+  const cities = await listCities();
+  const [only] = cities;
+  if (cities.length === 1 && only) redirect(`/${only.slug}`);
+
   return (
-    <div className="mx-auto max-w-page px-4 py-12">
-      <h1 className="max-w-prose text-display font-extrabold tracking-tight">
-        Get your government errand done in one trip.
-      </h1>
-      <p className="mt-6 max-w-prose text-lg text-muted">
-        Where to go, what to bring, the steps, the fees, and how long it takes,
-        for offices in Sorsogon.
-      </p>
-
-      <h2 className="mt-12 text-2xl font-bold">Type and color check</h2>
-      <p className="mt-4 max-w-prose">
-        Body text is 18px with generous line height so it stays readable on a
-        phone outdoors. Links look like{" "}
-        <a href="https://github.com/sgxtract/govguide">this</a>.
-      </p>
-
-      <div className="mt-6 max-w-prose rounded-md border-l-6 border-ink bg-notice px-4 py-3">
-        <p className="font-bold">Bring photocopies.</p>
-        <p>Notice callout. Used for things people commonly forget.</p>
-      </div>
-
-      <div className="mt-6 max-w-prose border-y border-rule bg-surface px-4 py-3">
-        <p className="text-sm text-muted">Surface block with ruled edges.</p>
-      </div>
-    </div>
+    <>
+      <SiteHeader />
+      <main id="main" tabIndex={-1} className="flex-1">
+        <div className="mx-auto max-w-page px-4 py-10">
+          <h1 className="text-2xl font-extrabold tracking-tight">
+            Choose your city
+          </h1>
+          <ul role="list" className="mt-6 max-w-prose border-t-2 border-ink">
+            {cities.map((city) => (
+              <li
+                key={city.slug}
+                className="relative border-b border-rule py-3 hover:bg-surface"
+              >
+                <Link
+                  href={`/${city.slug}`}
+                  className="text-lg font-bold text-ink no-underline after:absolute after:inset-0 hover:underline"
+                >
+                  {city.name}
+                </Link>
+                <p className="mt-1 text-sm text-muted">{city.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </main>
+    </>
   );
 }
