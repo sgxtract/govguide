@@ -15,11 +15,12 @@ and the cluttered old-portal look.
 - Atkinson Hyperlegible Next (variable 200–800), self-hosted via `next/font`.
 - Scale: `text-sm` 1rem · `text-base` 1.125rem (body) · `text-lg` · `text-xl` · `text-2xl` (fluid) · `text-display` (fluid).
 - Nothing smaller than 1rem. Text blocks use `max-w-prose` (65ch).
+- Fallback: next/font has no metrics for this font yet, so `layout.tsx` sets `adjustFontFallback: false` and an explicit `fallback` stack starting with "Atkinson Fallback", a size-matched local Arial/Roboto defined in globals.css. Re-measure if we change fonts.
 
 ## Color tokens
 
 | Token     | Use                                                      |
-| --------- | -------------------------------------------------------- |
+|-----------|----------------------------------------------------------|
 | `paper`   | Page background                                          |
 | `surface` | Footer, table stripes, quiet blocks                      |
 | `ink`     | Text, heavy rules                                        |

@@ -17,20 +17,23 @@ content/
 - **`[VERIFY]`** is allowed in any field while drafting (including URLs, numbers, dates). A `published` service fails the build if it, its agency, or its offices contain `[VERIFY]`.
 
 ## Category (`categories.yaml`)
+
 | Field             | Required | Notes        |
-|-------------------|----------|--------------|
+| ----------------- | -------- | ------------ |
 | slug              | yes      | Used in URLs |
 | name, description | yes      |              |
 
 ## City (`cities/<city>/city.yaml`)
+
 | Field                       | Required | Notes                    |
-|-----------------------------|----------|--------------------------|
+| --------------------------- | -------- | ------------------------ |
 | name, province, description | yes      |                          |
 | hotlines                    | no       | `{ label, number }` list |
 
 ## Agency (`agencies/<slug>.yaml`)
+
 | Field             | Required | Notes                                     |
-|-------------------|----------|-------------------------------------------|
+| ----------------- | -------- | ----------------------------------------- |
 | name, description | yes      |                                           |
 | acronym           | no       |                                           |
 | level             | yes      | national · provincial · city · barangay   |
@@ -39,8 +42,9 @@ content/
 | hotline           | no       |                                           |
 
 ## Office (`cities/<city>/offices/<slug>.yaml`)
+
 | Field         | Required | Notes                                                  |
-|---------------|----------|--------------------------------------------------------|
+| ------------- | -------- | ------------------------------------------------------ |
 | agency        | yes      | Must match an agency slug                              |
 | name, address | yes      |                                                        |
 | mapUrl        | no       |                                                        |
@@ -49,8 +53,9 @@ content/
 | email         | no       |                                                        |
 
 ## Service (`cities/<city>/services/<slug>.yaml`)
+
 | Field            | Required | Notes                                                                                                    |
-|------------------|----------|----------------------------------------------------------------------------------------------------------|
+| ---------------- | -------- | -------------------------------------------------------------------------------------------------------- |
 | status           | yes      | `draft` (hidden in production) or `published`                                                            |
 | title            | yes      | The task in plain words: "Get a new driver's license"                                                    |
 | summary          | yes      | One sentence                                                                                             |

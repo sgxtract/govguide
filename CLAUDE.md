@@ -289,7 +289,7 @@ Maintain `docs/` as we go:
 ## 10. Lesson roadmap (proposed — adjust as we go)
 
 | #   | Lesson                           | Outcome                                                                                                                                  |
-|-----|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| --- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | 00  | Project setup                    | Next.js + TS strict + Tailwind + ESLint/Prettier + pnpm, GitHub repo, branch protection on `main`, README, `docs/` skeleton, PR template |
 | 01  | Design direction & tokens        | `/anti-slop-design` direction, fonts via `next/font`, `@theme` tokens, base layout (header/footer)                                       |
 | 02  | Content model                    | Zod schemas, file loaders, content repository, one sample service with `[VERIFY]` placeholders                                           |
