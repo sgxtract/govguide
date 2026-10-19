@@ -282,14 +282,14 @@ Maintain `docs/` as we go:
 - Repo + hosting on personal accounts (sgxtract); public repo
 - Launch in English; structure strings/routes so Filipino can be added without URL churn
 - Initial services: driver's license, vehicle registration, birth certificate, PhilSys ID, passport, business permit, barangay clearance, police clearance, NBI clearance, cedula
-- Open: who verifies content and how often (settle in Lesson 02)
+- Content verified by the maintainer via PR review; re-verify published guides every 6 months
 
 ---
 
 ## 10. Lesson roadmap (proposed — adjust as we go)
 
 | #   | Lesson                           | Outcome                                                                                                                                  |
-| --- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+|-----|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
 | 00  | Project setup                    | Next.js + TS strict + Tailwind + ESLint/Prettier + pnpm, GitHub repo, branch protection on `main`, README, `docs/` skeleton, PR template |
 | 01  | Design direction & tokens        | `/anti-slop-design` direction, fonts via `next/font`, `@theme` tokens, base layout (header/footer)                                       |
 | 02  | Content model                    | Zod schemas, file loaders, content repository, one sample service with `[VERIFY]` placeholders                                           |
