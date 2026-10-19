@@ -10,6 +10,7 @@ import {
   listCategories,
   listServices,
 } from "@/lib/content/repository";
+import Link from "next/dist/client/link";
 
 export async function generateMetadata({
   params,
@@ -45,6 +46,12 @@ export default async function CityHomePage({ params }: PageProps<"/[city]">) {
       <p className="mt-4 max-w-prose text-lg text-muted">
         Where to go, what to bring, the steps, the fees, and how long it takes.
         Every guide is checked against official sources.
+      </p>
+
+      <p className="mt-4">
+        <Link href={`/${city.slug}/agencies`}>
+          Find a government office and its hours
+        </Link>
       </p>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-3">

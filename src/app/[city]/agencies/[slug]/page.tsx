@@ -19,6 +19,7 @@ import {
   listServices,
 } from "@/lib/content/repository";
 import { VERIFY } from "@/lib/content/schemas";
+import Link from "next/dist/client/link";
 
 // The parent [city] layout supplies `city`; only agencies active there get a page.
 export async function generateStaticParams({
@@ -79,7 +80,11 @@ export default async function AgencyPage({
 
       <div className="max-w-3xl">
         <h1 className="mt-4 text-2xl font-extrabold tracking-tight">
-          {agencyDisplayName(agency)}
+          <p className="mt-2">
+            <Link href={`/${city.slug}/agencies/${agency.slug}`}>
+              {agencyDisplayName(agency)}
+            </Link>
+          </p>
         </h1>
         <p className="mt-1 text-muted">{agencyLevelLabel(agency.level)}</p>
         <p className="mt-3 text-lg">{agency.description}</p>
