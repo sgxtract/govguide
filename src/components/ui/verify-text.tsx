@@ -1,4 +1,4 @@
-import { VERIFY } from "@/lib/content/schemas";
+import { VERIFY } from "@/lib/content/verify";
 
 /**
  * Renders text, highlighting any [VERIFY] placeholder so editors spot it.

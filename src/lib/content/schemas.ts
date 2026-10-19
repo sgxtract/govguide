@@ -1,13 +1,14 @@
 import { z } from "zod";
 
+import { VERIFY } from "./verify";
+
+export { VERIFY };
+
 /**
  * The content contract. Every YAML file in /content is parsed with these
  * schemas at build time, so a typo fails the build instead of shipping.
  * Types are inferred from the schemas: this file is the single source of truth.
  */
-
-/** Marks a value nobody has confirmed from an official source yet. */
-export const VERIFY = "[VERIFY]";
 
 /** A typed value (URL, number, date…) that may still be a [VERIFY] placeholder. */
 const orVerify = <T extends z.ZodType>(schema: T) =>
@@ -66,6 +67,8 @@ export const agencySchema = z.strictObject({
     .array(z.strictObject({ label: text, url: orVerify(z.url()) }))
     .default([]),
   hotline: text.optional(),
+  // Other names people search for: old names, local terms ("NSO" for PSA).
+  keywords: z.array(text).default([]),
 });
 
 // ── Office (a local branch, belongs to one city) ──────────────────────────
@@ -118,6 +121,8 @@ export const serviceSchema = z.strictObject({
   status: z.enum(["draft", "published"]),
   title: text, // plain-language task: "Get a new driver's license"
   summary: text, // one sentence
+  // Everyday and Filipino words people type: "birth cert", "lisensya".
+  keywords: z.array(text).default([]),
   category: slug,
   agency: slug,
   offices: z.array(slug).default([]),
