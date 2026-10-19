@@ -28,8 +28,10 @@ steps:
     where: "[VERIFY]"
   - title: "[VERIFY] Take the practical driving exam"
     where: "[VERIFY]"
-  - title: "[VERIFY] Pay the fees and get your license"
+  - title: "[VERIFY] Pay the fees"
     where: Cashier [VERIFY]
+  - title: "[VERIFY] Get your license card or temporary paper license"
+    details: "[VERIFY] what you receive and when the card is released"
 
 fees:
   - label: License fee [VERIFY]
@@ -44,6 +46,10 @@ online:
 
 tips:
   - Bring a black pen. [VERIFY]
+
+faqs:
+  - question: Can someone else apply for me? [VERIFY]
+    answer: "[VERIFY]"
 
 sources:
   - title: LTO Citizen's Charter [VERIFY]
