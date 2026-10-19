@@ -20,7 +20,7 @@ and the cluttered old-portal look.
 ## Color tokens
 
 | Token     | Use                                                      |
-|-----------|----------------------------------------------------------|
+| --------- | -------------------------------------------------------- |
 | `paper`   | Page background                                          |
 | `surface` | Footer, table stripes, quiet blocks                      |
 | `ink`     | Text, heavy rules                                        |
