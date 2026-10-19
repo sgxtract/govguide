@@ -11,6 +11,9 @@ import {
   listServices,
 } from "@/lib/content/repository";
 import Link from "next/dist/client/link";
+import { Suspense } from "react";
+import { SearchBox } from "@/features/search/search-box";
+import { SearchForm } from "@/features/search/search-form";
 
 export async function generateMetadata({
   params,
@@ -48,11 +51,16 @@ export default async function CityHomePage({ params }: PageProps<"/[city]">) {
         Every guide is checked against official sources.
       </p>
 
-      <p className="mt-4">
-        <Link href={`/${city.slug}/agencies`}>
-          Find a government office and its hours
-        </Link>
-      </p>
+      <div className="mt-8 max-w-3xl">
+        <Suspense fallback={<SearchForm city={city.slug} inputId="q" />}>
+          <SearchBox city={city.slug} mode="home" />
+        </Suspense>
+        <p className="mt-4">
+          <Link href={`/${city.slug}/agencies`}>
+            Find a government office and its hours
+          </Link>
+        </p>
+      </div>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-3">
         <section aria-labelledby="categories-heading">
