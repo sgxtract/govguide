@@ -1,0 +1,12 @@
+# A local branch. Folder = city, file name = slug.
+agency: lto
+name: LTO Sorsogon District Office
+address: "[VERIFY]"
+mapUrl: "[VERIFY]"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+phones: []
+notes:
+  - "Application cut-off time: [VERIFY]"

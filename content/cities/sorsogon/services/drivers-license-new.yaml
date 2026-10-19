@@ -1,0 +1,53 @@
+# SAMPLE GUIDE. Every [VERIFY] must be replaced with a value from an official
+# source before this can be published. See docs/content-guide.md.
+status: draft
+title: Get a new driver's license
+summary: Apply for your first non-professional driver's license at the LTO. [VERIFY]
+category: vehicles-and-driving
+agency: lto
+offices:
+  - lto-sorsogon-district-office
+
+whoCanApply:
+  - "[VERIFY] age and permit requirements"
+
+requirements:
+  - label: Student permit [VERIFY]
+    form: original
+  - label: Medical certificate from an LTO-accredited clinic [VERIFY]
+    form: original
+  - label: Valid government ID [VERIFY]
+    form: original-and-photocopy
+    copies: 1
+    alternatives:
+      - "[VERIFY] list of accepted IDs"
+
+steps:
+  - title: "[VERIFY] Register or log in to the LTMS portal"
+  - title: "[VERIFY] Take the theoretical driving exam"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Take the practical driving exam"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Pay the fees and get your license"
+    where: Cashier [VERIFY]
+
+fees:
+  - label: License fee [VERIFY]
+    amount: "[VERIFY]"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: LTMS portal
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY]"
+
+tips:
+  - Bring a black pen. [VERIFY]
+
+sources:
+  - title: LTO Citizen's Charter [VERIFY]
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

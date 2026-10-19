@@ -1,0 +1,8 @@
+# The folder name is the city slug used in URLs: /sorsogon
+name: Sorsogon
+province: Sorsogon
+description: Guides for government offices serving Sorsogon City and the Province of Sorsogon.
+# Add verified emergency and LGU hotlines here, e.g.
+# - label: City Disaster Risk Reduction and Management Office
+#   number: "..."
+hotlines: []

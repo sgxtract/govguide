@@ -1,0 +1,10 @@
+# National agency, shared by every city. File name = slug.
+name: Land Transportation Office
+acronym: LTO
+level: national
+description: Issues driver's licenses and permits, and registers motor vehicles.
+website: "[VERIFY]"
+portals:
+  - label: LTMS (Land Transportation Management System)
+    url: "[VERIFY]"
+hotline: "[VERIFY]"
