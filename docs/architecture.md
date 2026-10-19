@@ -14,8 +14,9 @@ Phase 2 replaces the file loader with a Postgres loader; the repository API stay
 See `content-model.md` for fields and `decisions/` for the reasoning.
 
 ## Routes
+
 | URL                         | File                                    | Notes                                                           |
-|-----------------------------|-----------------------------------------|-----------------------------------------------------------------|
+| --------------------------- | --------------------------------------- | --------------------------------------------------------------- |
 | `/`                         | `app/page.tsx`                          | Redirects to the only city; lists cities once there are several |
 | `/[city]`                   | `app/[city]/page.tsx`                   | City home: categories + all guides                              |
 | `/[city]/categories/[slug]` | `app/[city]/categories/[slug]/page.tsx` | Guides in one category                                          |

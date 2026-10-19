@@ -20,7 +20,7 @@ and the cluttered old-portal look.
 ## Color tokens
 
 | Token     | Use                                                      |
-|-----------|----------------------------------------------------------|
+| --------- | -------------------------------------------------------- |
 | `paper`   | Page background                                          |
 | `surface` | Footer, table stripes, quiet blocks                      |
 | `ink`     | Text, heavy rules                                        |
@@ -51,6 +51,7 @@ All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text o
 - Every interactive element: visible `:focus-visible`, 44px minimum tap target.
 
 ## Lists
+
 - Lists of things to pick (categories, guides, cities) are ruled rows: a 2px `ink` rule on top, 1px `rule` dividers between rows. No cards.
 - The whole row is clickable via a stretched link (`after:absolute after:inset-0` on the link, `relative` on the row). The link text stays short.
 - Every styled `<ul>`/`<ol>` outside `<nav>` gets `role="list"` (Safari drops list semantics without bullets).
