@@ -34,6 +34,7 @@ website, or the posted notice at the office. If you don't have it, write `[VERIF
 - Steps go all the way to the finish: having the document in hand, including the claim stub, release date, and where to claim.
 - If the agency requires an online appointment or form, say so in a step and link its official portal under `online`. GovGuide never books appointments or hosts forms.
 - Use `amount: 0` for free items (shown as "Free"); leave `fees` empty only if the source lists none.
+- Add `keywords` for the words people actually type: "lisensya", "birth cert", "NSO". No need to add misspellings; search tolerates small typos.
 
 ## Workflow
 

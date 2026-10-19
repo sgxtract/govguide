@@ -33,14 +33,15 @@ content/
 
 ## Agency (`agencies/<slug>.yaml`)
 
-| Field             | Required | Notes                                     |
-| ----------------- | -------- | ----------------------------------------- |
-| name, description | yes      |                                           |
-| acronym           | no       |                                           |
-| level             | yes      | national · provincial · city · barangay   |
-| website           | no       | URL or `[VERIFY]`                         |
-| portals           | no       | `{ label, url }`: official online systems |
-| hotline           | no       |                                           |
+| Field             | Required | Notes                                                                                 |
+| ----------------- | -------- | ------------------------------------------------------------------------------------- |
+| name, description | yes      |                                                                                       |
+| acronym           | no       |                                                                                       |
+| level             | yes      | national · provincial · city · barangay                                               |
+| website           | no       | URL or `[VERIFY]`                                                                     |
+| portals           | no       | `{ label, url }`: official online systems                                             |
+| hotline           | no       |                                                                                       |
+| keywords          | no       | Old or local names, e.g. "NSO" for PSA. Also searched for every guide of this agency. |
 
 ## Office (`cities/<city>/offices/<slug>.yaml`)
 
@@ -73,3 +74,4 @@ content/
 | related          | no       | Service slugs in the same city                                                                           |
 | sources          | yes (≥1) | `{ title, url, accessed }`                                                                               |
 | lastVerified     | yes      | `YYYY-MM-DD`. Re-verify every 6 months                                                                   |
+| keywords         | no       | Words people type: everyday names, Filipino/Bikol terms, aberivations                                    |
