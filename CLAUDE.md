@@ -84,7 +84,7 @@ Example — _Getting a driver's license at LTO_:
 - **GitHub Actions** — CI: lint, typecheck, test, build on every PR
 - **Vercel** — hosting with preview deployments per PR
 - **Privacy-friendly analytics** (Vercel Web Analytics, Plausible, or Umami) — know which services people look for, no personal data
-**Browser support:** Baseline Widely available. Newer features need a fallback (many users have older phones, e.g. iPhones stuck on Safari 16).
+  **Browser support:** Baseline Widely available. Newer features need a fallback (many users have older phones, e.g. iPhones stuck on Safari 16).
 
 ---
 

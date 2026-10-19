@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit",
-    "check": "pnpm lint && pnpm typecheck && pnpm format:check"
+    "content:check": "tsx scripts/check-content.ts",
+    "check": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm content:check"
   },
   "dependencies": {
     "next": "16.4.2",
