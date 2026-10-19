@@ -8,6 +8,9 @@ How to research, write, verify, and update a service guide.
 must come from an official source: the office's Citizen's Charter, the agency's
 website, or the posted notice at the office. If you don't have it, write `[VERIFY]`.
 
+- Steps go all the way to the finish: having the document in hand, including the claim stub, release date, and where to claim.
+- If the agency requires an online appointment or form, say so in a step and link its official portal under `online`. GovGuide never books or hosts forms.
+
 ## Who verifies
 
 - Anyone can propose a change by Pull Request (or report outdated info as an Issue).
