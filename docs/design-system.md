@@ -56,3 +56,12 @@ All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text o
 - The whole row is clickable via a stretched link (`after:absolute after:inset-0` on the link, `relative` on the row). The link text stays short.
 - Every styled `<ul>`/`<ol>` outside `<nav>` gets `role="list"` (Safari drops list semantics without bullets).
 - Empty lists say why they're empty and offer "Suggest a service".
+
+## The guide page (signature)
+
+- Order follows the errand: at a glance (fees, processing time, last checked) → what to bring → steps → fees → where to go → online → tips → questions → sources.
+- Steps: big `ink` numerals in their own column, timetable rows, "Where / Takes" underneath. Numerals are `aria-hidden`; the `<ol>` carries the order.
+- What to bring: ruled checklist with empty boxes (real tick-boxes in Lesson 07).
+- `notice` callouts: draft banner, "may be outdated" warning, Good to know. Nothing else.
+- One column at every width; the reading order never changes.
+- Formatting (₱, dates, times, days) only through `src/lib/utils/format.ts`.

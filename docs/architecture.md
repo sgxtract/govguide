@@ -15,11 +15,12 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 
 ## Routes
 
-| URL                         | File                                    | Notes                                                           |
-| --------------------------- | --------------------------------------- | --------------------------------------------------------------- |
-| `/`                         | `app/page.tsx`                          | Redirects to the only city; lists cities once there are several |
-| `/[city]`                   | `app/[city]/page.tsx`                   | City home: categories + all guides                              |
-| `/[city]/categories/[slug]` | `app/[city]/categories/[slug]/page.tsx` | Guides in one category                                          |
+| URL                         | File                                    | Notes                                                              |
+| --------------------------- | --------------------------------------- | ------------------------------------------------------------------ |
+| `/`                         | `app/page.tsx`                          | Redirects to the only city; lists cities once there are several    |
+| `/[city]`                   | `app/[city]/page.tsx`                   | City home: categories + all guides                                 |
+| `/[city]/categories/[slug]` | `app/[city]/categories/[slug]/page.tsx` | Guides in one category                                             |
+| `/[city]/services/[slug]`   | `app/[city]/services/[slug]/page.tsx`   | The guide. Only visible guides are built; drafts 404 in production |
 
 - `app/[city]/layout.tsx` renders the header (with city name) and `<main>`, and generates one static copy per city (`dynamicParams = false`: unknown cities 404).
 - The root layout holds only the skip link and footer. Pages outside a city render `<SiteHeader />` without a city.
