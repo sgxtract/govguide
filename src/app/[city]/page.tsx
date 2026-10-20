@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { newIssueUrl } from "@/config/site";
 import { CategoryList } from "@/features/categories/category-list";
 import { getAgencyNames } from "@/features/services/agency-names";
 import { ServiceList } from "@/features/services/service-list";
@@ -17,6 +16,7 @@ import { SearchForm } from "@/features/search/search-form";
 import { pageMetadata } from "@/features/seo/page-metadata";
 import { websiteJsonLd } from "@/features/seo/structured-data";
 import { JsonLd } from "@/components/seo/json-ld";
+import { SuggestService } from "@/features/feedback/report-actions";
 
 export async function generateMetadata({
   params,
@@ -88,7 +88,7 @@ export default async function CityHomePage({ params }: PageProps<"/[city]">) {
                 ones will appear here soon.
               </p>
               <p className="mt-2">
-                <a href={newIssueUrl}>Suggest a service to cover</a>
+                <SuggestService city={city.name} />
               </p>
             </div>
           )}

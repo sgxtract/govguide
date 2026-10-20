@@ -44,5 +44,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   );
 
-  return perCity.flat();
+  return [...perCity.flat(), { url: absoluteUrl("/contribute") }];
 }

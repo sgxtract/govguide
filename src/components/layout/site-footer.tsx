@@ -1,3 +1,4 @@
+import { Link } from "@/components/ui/link";
 import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
@@ -12,6 +13,9 @@ export function SiteFooter() {
           Requirements and fees can change. Every guide links to its official
           source and shows when it was last checked. Confirm with the office
           before you go.
+        </p>
+        <p className="text-sm">
+          <Link href="/contribute">Help keep this guide accurate</Link>
         </p>
       </div>
     </footer>

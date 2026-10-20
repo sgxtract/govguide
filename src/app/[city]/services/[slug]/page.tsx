@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { VerifyText } from "@/components/ui/verify-text";
-import { reportIssueUrl, siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";
 import { OfficeDetails } from "@/features/offices/office-details";
 import { FeeTable } from "@/features/services/fee-table";
 import { RequirementList } from "@/features/services/requirement-list";
@@ -27,6 +27,7 @@ import { pageMetadata } from "@/features/seo/page-metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl } from "@/config/site-url";
 import { serviceJsonLd } from "@/features/seo/structured-data";
+import { ReportOutdated } from "@/features/feedback/report-actions";
 
 // The parent [city] layout supplies `city`; we add every visible guide in it.
 export async function generateStaticParams({
@@ -393,12 +394,9 @@ export default async function ServicePage({
             Sources
           </h2>
           <SourceList sources={service.sources} />
-          <p className="mt-4">
-            Something changed?{" "}
-            <a href={reportIssueUrl(service.title, path)}>
-              Report outdated info
-            </a>
-          </p>
+          <div className="mt-6">
+            <ReportOutdated subject={service.title} path={path} />
+          </div>
         </section>
       </div>
     </article>

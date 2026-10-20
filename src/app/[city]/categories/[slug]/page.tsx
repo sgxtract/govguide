@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
-import { newIssueUrl } from "@/config/site";
 import { getAgencyNames } from "@/features/services/agency-names";
 import { ServiceList } from "@/features/services/service-list";
 import {
@@ -12,6 +11,7 @@ import {
   listServices,
 } from "@/lib/content/repository";
 import { pageMetadata } from "@/features/seo/page-metadata";
+import { SuggestService } from "@/features/feedback/report-actions";
 
 // The parent [city] layout supplies `city`; we add every category for it.
 export async function generateStaticParams() {
@@ -77,7 +77,7 @@ export default async function CategoryPage({
           <div className="border-t-2 border-ink pt-4">
             <p>No guides in this category yet.</p>
             <p className="mt-2">
-              <a href={newIssueUrl}>Suggest a service to cover</a>
+              <SuggestService city={city.name} />
             </p>
           </div>
         )}
