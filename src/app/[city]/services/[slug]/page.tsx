@@ -24,6 +24,9 @@ import { formatDate, formatPeso } from "@/lib/utils/format";
 import { ChecklistMemory } from "@/features/services/checklist-memory";
 import { PrintButton } from "@/features/services/print-button";
 import { pageMetadata } from "@/features/seo/page-metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { absoluteUrl } from "@/config/site-url";
+import { serviceJsonLd } from "@/features/seo/structured-data";
 
 // The parent [city] layout supplies `city`; we add every visible guide in it.
 export async function generateStaticParams({
@@ -116,9 +119,22 @@ export default async function ServicePage({
       {/* Paper has no header or footer, so the print copy says what it is. */}
       <p className="mb-4 hidden border-b-2 border-ink pb-2 text-sm print:block">
         {siteConfig.name}: an independent guide, not an official government
-        website. Online version: {path}
+        website. Online version: {absoluteUrl(path)}
       </p>
+      {!isDraft && (
+        <JsonLd
+          data={serviceJsonLd({
+            service,
+            agency,
+            category,
+            city,
+            offices,
+            path,
+          })}
+        />
+      )}
       <Breadcrumbs
+        path={path}
         items={[
           { label: city.name, href: `/${city.slug}` },
           {

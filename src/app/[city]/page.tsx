@@ -15,6 +15,8 @@ import { Suspense } from "react";
 import { SearchBox } from "@/features/search/search-box";
 import { SearchForm } from "@/features/search/search-form";
 import { pageMetadata } from "@/features/seo/page-metadata";
+import { websiteJsonLd } from "@/features/seo/structured-data";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export async function generateMetadata({
   params,
@@ -54,6 +56,7 @@ export default async function CityHomePage({ params }: PageProps<"/[city]">) {
       </p>
 
       <div className="mt-8 max-w-3xl">
+        <JsonLd data={websiteJsonLd()} />
         <Suspense fallback={<SearchForm city={city.slug} inputId="q" />}>
           <SearchBox city={city.slug} mode="home" />
         </Suspense>

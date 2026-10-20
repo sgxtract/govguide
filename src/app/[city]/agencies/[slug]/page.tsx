@@ -73,6 +73,7 @@ export default async function AgencyPage({
   return (
     <div className="mx-auto max-w-page px-4 py-10">
       <Breadcrumbs
+        path={`/${city.slug}/agencies/${agency.slug}`}
         items={[
           { label: city.name, href: `/${city.slug}` },
           { label: "Offices", href: `/${city.slug}/agencies` },
