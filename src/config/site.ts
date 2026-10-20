@@ -9,4 +9,4 @@ export const siteConfig = {
  * Inbox for reports from people without a GitHub account. Set this once the
  * dedicated GovGuide address exists; until then only GitHub is offered.
  */
-export const feedbackEmail: string | null = null;
+export const feedbackEmail: string | null = "njasystems@gmail.com";

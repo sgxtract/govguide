@@ -15,3 +15,6 @@
 - slug: social-services
   name: Social Services
   description: Assistance programs for seniors, persons with disability, solo parents, and families.
+- slug: benefits-and-contributions
+  name: Benefits & Contributions
+  description: Pag-IBIG, SSS and other memberships, contributions, and loans.
