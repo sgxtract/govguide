@@ -8,7 +8,7 @@ const time = (value: string) =>
 /** One office: where it is, when it's open, how to reach it. */
 export function OfficeDetails({ office }: { office: Office }) {
   return (
-    <div className="border-t-2 border-ink pt-3">
+    <div className="print-keep border-t-2 border-ink pt-3">
       <h3 className="text-lg font-bold">{office.name}</h3>
       <p className="mt-1">
         <VerifyText text={office.address} />
