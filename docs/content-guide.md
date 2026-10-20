@@ -44,3 +44,10 @@ website, or the posted notice at the office. If you don't have it, write `[VERIF
 4. Open a PR with the source links in the description.
 5. Once verified and free of `[VERIFY]`, set `status: published` and `lastVerified` to today.
 6. Verify the agency and office files too: a guide can't be published while its agency or offices still contain `[VERIFY]`, and they won't get their own pages until they're clean.
+
+## Handling reports
+1. New reports arrive as `outdated-info` / `new-service` issues (or emails, once the inbox is set).
+2. Check the claim against an official source: the posted notice, Citizen's Charter, or agency site. "Staff told me" needs a written source before changing a guide.
+3. If a report contains personal information, edit it out of the issue immediately (or delete the email) before anything else.
+4. Fix the guide in a PR that links the issue (`Fixes #12`), update `lastVerified` and the source's `accessed` date.
+5. Reserved slugs: a city folder can't be named `contribute`, `about`, `privacy` or `disclaimer` (those are site pages).
