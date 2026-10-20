@@ -1,0 +1,13 @@
+# FICTIONAL test content. Never shown on the real site.
+agency: test-permits-agency
+name: Testville Main Office
+address: 1 Example Street, Testville
+mapUrl: https://example.test/map
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "08:00"
+    closes: "17:00"
+phones:
+  - "(000) 000-0000"
+notes:
+  - Cut-off for applications is 3:00 PM.

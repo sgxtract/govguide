@@ -1,0 +1,7 @@
+# FICTIONAL test content. Never shown on the real site.
+- slug: permits
+  name: Permits
+  description: Test permits for end-to-end tests.
+- slug: other
+  name: Other things
+  description: An empty category, to test the empty state.
