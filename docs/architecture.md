@@ -31,7 +31,14 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 - Route props use Next's generated `PageProps<"/route">` / `LayoutProps<"/route">` types; `pnpm typecheck` runs `next typegen` first.
 
 ## Data stored on the visitor's device
+
 - `color-scheme`: the light/dark override (Lesson 01).
 - `govguide:checklist:<guide path>`: ticked requirement labels (Lesson 07).
 
 Nothing is sent to a server. The privacy page (Lesson 12) will say this.
+
+## SEO
+- Site address: `src/config/site-url.ts` (`NEXT_PUBLIC_SITE_URL` → Vercel production URL → localhost). Server-only.
+- Every indexable page uses `pageMetadata()` (title, description, canonical, share text).
+- Share cards: `opengraph-image.tsx` at `/`, `/[city]` and `/[city]/services/[slug]`, all rendered by `features/seo/og-card.tsx` at build time.
+- `sitemap.ts` and `robots.ts` read from the repository, like the pages.

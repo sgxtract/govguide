@@ -8,16 +8,18 @@ import {
   listCityAgencies,
   listOffices,
 } from "@/lib/content/repository";
+import { pageMetadata } from "@/features/seo/page-metadata";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[city]/agencies">): Promise<Metadata> {
   const city = await getCity((await params).city);
   if (!city) return {};
-  return {
+  return pageMetadata({
     title: `Government offices in ${city.name}`,
     description: `Addresses, office hours and guides for government offices in ${city.name}.`,
-  };
+    path: `/${city.slug}/agencies`,
+  });
 }
 
 export default async function AgenciesPage({
@@ -38,6 +40,7 @@ export default async function AgenciesPage({
   return (
     <div className="mx-auto max-w-page px-4 py-10">
       <Breadcrumbs
+        path={`/${city.slug}/agencies`}
         items={[
           { label: city.name, href: `/${city.slug}` },
           { label: "Offices" },

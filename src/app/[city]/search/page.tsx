@@ -34,6 +34,7 @@ export default async function SearchPage({
   return (
     <div className="mx-auto max-w-page px-4 py-10">
       <Breadcrumbs
+        path={`/${city.slug}/search`}
         items={[
           { label: city.name, href: `/${city.slug}` },
           { label: "Search" },

@@ -67,12 +67,19 @@ All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text o
 - Formatting (₱, dates, times, days) only through `src/lib/utils/format.ts`.
 
 ## Checklist
+
 - "What to bring" uses real checkboxes with `.tick-box` (appearance:none, 2px ink square, CSS-mask checkmark). Not `accent-color`: it isn't in older Safari.
 - The whole row is the `<label>`, ≥44px tall. Ticked rows fade and strike through (`peer-checked:`).
 - Ticks are saved per guide in `localStorage` (`govguide:checklist:<path>`), by requirement label. Nothing leaves the phone.
 
 ## Print
+
 - Always prints the light palette; hides header, footer, breadcrumbs, buttons, jump links, FAQs, related guides and the report link.
 - Adds a print-only line: independent guide + online address.
 - `.print-urls` sections print link addresses; `li`, `tr` and `.print-keep` never split across pages.
 - Use `print:hidden` for anything that only makes sense on screen.
+
+## Share card
+- 1200×630, always light palette (hex copies in `og-card.tsx`; keep in sync with tokens).
+- Heavy ink top rule, "GovGuide / city · category", big title, agency, independence line.
+- Favicon: a ticked box (`app/icon.svg`), colors flip in dark browser UI.

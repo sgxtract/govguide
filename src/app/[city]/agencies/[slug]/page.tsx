@@ -20,6 +20,7 @@ import {
 } from "@/lib/content/repository";
 import { VERIFY } from "@/lib/content/schemas";
 import Link from "next/dist/client/link";
+import { pageMetadata } from "@/features/seo/page-metadata";
 
 // The parent [city] layout supplies `city`; only agencies active there get a page.
 export async function generateStaticParams({
@@ -49,10 +50,11 @@ export async function generateMetadata({
 }: PageProps<"/[city]/agencies/[slug]">): Promise<Metadata> {
   const data = await load(params);
   if (!data) return {};
-  return {
+  return pageMetadata({
     title: `${agencyDisplayName(data.agency)} in ${data.city.name}`,
     description: data.agency.description,
-  };
+    path: `/${data.city.slug}/agencies/${data.agency.slug}`,
+  });
 }
 
 export default async function AgencyPage({
@@ -71,6 +73,7 @@ export default async function AgencyPage({
   return (
     <div className="mx-auto max-w-page px-4 py-10">
       <Breadcrumbs
+        path={`/${city.slug}/agencies/${agency.slug}`}
         items={[
           { label: city.name, href: `/${city.slug}` },
           { label: "Offices", href: `/${city.slug}/agencies` },

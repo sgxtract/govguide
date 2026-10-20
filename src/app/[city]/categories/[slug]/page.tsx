@@ -11,6 +11,7 @@ import {
   listCategories,
   listServices,
 } from "@/lib/content/repository";
+import { pageMetadata } from "@/features/seo/page-metadata";
 
 // The parent [city] layout supplies `city`; we add every category for it.
 export async function generateStaticParams() {
@@ -34,10 +35,11 @@ export async function generateMetadata({
 }: PageProps<"/[city]/categories/[slug]">): Promise<Metadata> {
   const data = await load(params);
   if (!data) return {};
-  return {
+  return pageMetadata({
     title: `${data.category.name} in ${data.city.name}`,
     description: data.category.description,
-  };
+    path: `/${data.city.slug}/categories/${data.category.slug}`,
+  });
 }
 
 export default async function CategoryPage({
@@ -55,6 +57,7 @@ export default async function CategoryPage({
   return (
     <div className="mx-auto max-w-page px-4 py-10">
       <Breadcrumbs
+        path={`/${city.slug}/categories/${category.slug}`}
         items={[
           { label: city.name, href: `/${city.slug}` },
           { label: category.name },
