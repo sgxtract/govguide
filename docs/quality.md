@@ -21,4 +21,4 @@
    Every control still has a visible edge.
 7. **Slow network**: DevTools → Network → "Slow 4G". Text appears before the font; nothing jumps.
 
-Lesson 10 automates the axe part of this in Playwright.
+axe (WCAG 2.2 AA) runs automatically on every page type in both color schemes in `tests/e2e/accessibility.spec.ts`. The manual checks above still matter: automated tools catch only about a third of real problems.

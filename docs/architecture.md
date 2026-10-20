@@ -16,7 +16,7 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 ## Routes
 
 | URL                         | File                                    | Notes                                                                          |
-| --------------------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
+|-----------------------------|-----------------------------------------|--------------------------------------------------------------------------------|
 | `/`                         | `app/page.tsx`                          | Redirects to the only city; lists cities once there are several                |
 | `/[city]`                   | `app/[city]/page.tsx`                   | City home: categories + all guides                                             |
 | `/[city]/categories/[slug]` | `app/[city]/categories/[slug]/page.tsx` | Guides in one category                                                         |
@@ -43,3 +43,13 @@ Nothing is sent to a server. The privacy page (Lesson 12) will say this.
 - Every indexable page uses `pageMetadata()` (title, description, canonical, share text).
 - Share cards: `opengraph-image.tsx` at `/`, `/[city]` and `/[city]/services/[slug]`, all rendered by `features/seo/og-card.tsx` at build time.
 - `sitemap.ts` and `robots.ts` read from the repository, like the pages.
+
+## Tests
+| Command         | What                                                                                                    | Where         |
+|-----------------|---------------------------------------------------------------------------------------------------------|---------------|
+| `pnpm test`     | Unit tests (Vitest): loader, integrity rules, freshness, formatting, search                             | `tests/unit/` |
+| `pnpm test:e2e` | End-to-end (Playwright, Pixel 7): journeys, search, publishing rules, axe on every page in both schemes | `tests/e2e/`  |
+
+- E2E tests build the site with `CONTENT_DIR=tests/fixtures/content`: a fictional city (Testville) with one published guide, one draft, one empty category. Never real content.
+- After `pnpm test:e2e`, `.next` contains the Testville build. Run `pnpm build` before `pnpm start`.
+- CI (`.github/workflows/ci.yml`) runs `pnpm check` + `pnpm build` and the e2e suite on every PR. Both are required to merge.
