@@ -3,6 +3,7 @@ import { Atkinson_Hyperlegible_Next } from "next/font/google";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/config/site";
+import { siteUrl } from "@/config/site-url";
 
 import "@/styles/globals.css";
 
@@ -17,8 +18,12 @@ const atkinson = Atkinson_Hyperlegible_Next({
 });
 
 export const metadata: Metadata = {
+  // Turns relative URLs (canonical, share images) into absolute ones.
+  metadataBase: siteUrl,
   title: { default: siteConfig.name, template: `%s · ${siteConfig.name}` },
   description: siteConfig.description,
+  openGraph: { type: "website", siteName: siteConfig.name, locale: "en_PH" },
+  twitter: { card: "summary_large_image" },
 };
 
 // Runs before first paint so a saved light/dark choice never flashes.

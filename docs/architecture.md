@@ -16,7 +16,7 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 ## Routes
 
 | URL                         | File                                    | Notes                                                                          |
-|-----------------------------|-----------------------------------------|--------------------------------------------------------------------------------|
+| --------------------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
 | `/`                         | `app/page.tsx`                          | Redirects to the only city; lists cities once there are several                |
 | `/[city]`                   | `app/[city]/page.tsx`                   | City home: categories + all guides                                             |
 | `/[city]/categories/[slug]` | `app/[city]/categories/[slug]/page.tsx` | Guides in one category                                                         |
@@ -31,6 +31,7 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 - Route props use Next's generated `PageProps<"/route">` / `LayoutProps<"/route">` types; `pnpm typecheck` runs `next typegen` first.
 
 ## Data stored on the visitor's device
+
 - `color-scheme`: the light/dark override (Lesson 01).
 - `govguide:checklist:<guide path>`: ticked requirement labels (Lesson 07).
 

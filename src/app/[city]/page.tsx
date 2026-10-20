@@ -14,16 +14,18 @@ import Link from "next/dist/client/link";
 import { Suspense } from "react";
 import { SearchBox } from "@/features/search/search-box";
 import { SearchForm } from "@/features/search/search-form";
+import { pageMetadata } from "@/features/seo/page-metadata";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[city]">): Promise<Metadata> {
   const city = await getCity((await params).city);
   if (!city) return {};
-  return {
+  return pageMetadata({
     title: `Government services in ${city.name}`,
     description: city.description,
-  };
+    path: `/${city.slug}`,
+  });
 }
 
 export default async function CityHomePage({ params }: PageProps<"/[city]">) {

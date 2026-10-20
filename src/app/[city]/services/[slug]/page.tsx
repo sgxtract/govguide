@@ -23,6 +23,7 @@ import { VERIFY } from "@/lib/content/schemas";
 import { formatDate, formatPeso } from "@/lib/utils/format";
 import { ChecklistMemory } from "@/features/services/checklist-memory";
 import { PrintButton } from "@/features/services/print-button";
+import { pageMetadata } from "@/features/seo/page-metadata";
 
 // The parent [city] layout supplies `city`; we add every visible guide in it.
 export async function generateStaticParams({
@@ -70,9 +71,15 @@ export async function generateMetadata({
 }: PageProps<"/[city]/services/[slug]">): Promise<Metadata> {
   const data = await load(params);
   if (!data) return {};
+  const { city, service } = data;
   return {
-    title: `${data.service.title} in ${data.city.name}`,
-    description: data.service.summary,
+    ...pageMetadata({
+      title: `${service.title} in ${city.name}`,
+      description: service.summary,
+      path: `/${city.slug}/services/${service.slug}`,
+    }),
+    // Drafts are only built in dev or previews; never let them be indexed.
+    ...(service.status === "draft" && { robots: { index: false } }),
   };
 }
 
