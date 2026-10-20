@@ -19,5 +19,8 @@ pnpm check      # lint + typecheck + format check
 See [`docs/`](docs/README.md).
 
 ## Contributing
+Found outdated info? On any guide or office page, use **Something changed or wrong here?** at the bottom.
+It opens a report with the page already filled in. You can also open an issue here using the
+"Report outdated info" or "Suggest a service" forms.
 
-Found outdated info? Open an issue with a link to the official source.
+Please don't include ID numbers, photos of your own documents, or your address. Issues are public.

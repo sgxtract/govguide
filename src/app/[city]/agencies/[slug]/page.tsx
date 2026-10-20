@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { VerifyText } from "@/components/ui/verify-text";
-import { newIssueUrl } from "@/config/site";
 import {
   agencyDisplayName,
   agencyLevelLabel,
@@ -21,6 +20,10 @@ import {
 import { VERIFY } from "@/lib/content/schemas";
 import Link from "next/dist/client/link";
 import { pageMetadata } from "@/features/seo/page-metadata";
+import {
+  ReportOutdated,
+  SuggestService,
+} from "@/features/feedback/report-actions";
 
 // The parent [city] layout supplies `city`; only agencies active there get a page.
 export async function generateStaticParams({
@@ -166,10 +169,19 @@ export default async function AgencyPage({
             <div className="border-t-2 border-ink pt-4">
               <p>No guides for this agency yet.</p>
               <p className="mt-2">
-                <a href={newIssueUrl}>Suggest a service to cover</a>
+                <SuggestService city={city.name} />
               </p>
             </div>
           )}
+        </section>
+        <section
+          aria-label="Report a change"
+          className="mt-10 border-t-2 border-ink pt-4"
+        >
+          <ReportOutdated
+            subject={`${agencyDisplayName(agency)} in ${city.name}`}
+            path={`/${city.slug}/agencies/${agency.slug}`}
+          />
         </section>
       </div>
     </div>

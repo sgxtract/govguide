@@ -45,6 +45,7 @@ Nothing is sent to a server. The privacy page (Lesson 12) will say this.
 - `sitemap.ts` and `robots.ts` read from the repository, like the pages.
 
 ## Tests
+
 | Command         | What                                                                                                    | Where         |
 |-----------------|---------------------------------------------------------------------------------------------------------|---------------|
 | `pnpm test`     | Unit tests (Vitest): loader, integrity rules, freshness, formatting, search                             | `tests/unit/` |
@@ -53,3 +54,9 @@ Nothing is sent to a server. The privacy page (Lesson 12) will say this.
 - E2E tests build the site with `CONTENT_DIR=tests/fixtures/content`: a fictional city (Testville) with one published guide, one draft, one empty category. Never real content.
 - After `pnpm test:e2e`, `.next` contains the Testville build. Run `pnpm build` before `pnpm start`.
 - CI (`.github/workflows/ci.yml`) runs `pnpm check` + `pnpm build` and the e2e suite on every PR. Both are required to merge.
+
+## Feedback
+- `features/feedback/report-links.ts`: pure URL builders (GitHub issue forms pre-filled by field id; mailto with %20 and CRLF). Unit tested.
+- `features/feedback/report-actions.tsx`: `ReportOutdated` (guides, agency pages) and `SuggestService` (empty states, /contribute).
+- `feedbackEmail` in `config/site.ts`: when set, "Email GovGuide" appears as the primary action everywhere.
+- Issue forms in `.github/ISSUE_TEMPLATE/`; labels `outdated-info` and `new-service` must exist in the repo.
