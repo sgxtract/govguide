@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbJsonLd } from "@/features/seo/structured-data";

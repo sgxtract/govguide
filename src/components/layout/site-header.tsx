@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 import { siteConfig } from "@/config/site";
 
@@ -15,14 +15,16 @@ export function SiteHeader({ city }: Props) {
       <div className="mx-auto flex max-w-page items-center justify-between gap-4 px-4 py-3">
         <Link
           href={city ? `/${city.slug}` : "/"}
-          className="text-lg text-ink no-underline"
+          // flex-wrap: with large text, "Sorsogon" moves to its own line
+          // instead of pushing the page wider than the screen.
+          className="flex flex-wrap items-baseline gap-x-2 text-lg text-ink no-underline"
         >
           <span className="font-extrabold tracking-tight">
             {siteConfig.name}
           </span>
           {city && (
             <>
-              <span aria-hidden="true" className="mx-2 text-muted">
+              <span aria-hidden="true" className="text-muted">
                 /
               </span>
               <span>{city.name}</span>
