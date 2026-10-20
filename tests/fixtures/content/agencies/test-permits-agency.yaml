@@ -1,0 +1,12 @@
+# FICTIONAL test content. Never shown on the real site.
+name: Test Permits Agency
+acronym: TESTPA
+level: national
+description: A fictional agency used only in automated tests.
+website: https://example.test/agency
+portals:
+  - label: Test Portal
+    url: https://example.test/portal
+hotline: "(000) 111-1111"
+keywords:
+  - old permits office

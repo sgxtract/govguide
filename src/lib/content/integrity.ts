@@ -3,7 +3,9 @@ import { VERIFY } from "./schemas";
 
 /** True if any value inside still contains the [VERIFY] placeholder. */
 export function hasPlaceholders(value: unknown): boolean {
-  return JSON.stringify(value).includes(VERIFY);
+  // JSON.stringify(undefined) is undefined, not a string, e.g. when a guide
+  // points at an agency that doesn't exist.
+  return JSON.stringify(value)?.includes(VERIFY) ?? false;
 }
 
 /**

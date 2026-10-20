@@ -31,5 +31,13 @@ export default defineConfig([
   },
   prettier,
   prettier,
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    "test-results/**",
+    "playwright-report/**",
+    "blob-report/**",
+  ]),
 ]);

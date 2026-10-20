@@ -20,7 +20,7 @@ and the cluttered old-portal look.
 ## Color tokens
 
 | Token     | Use                                                      |
-|-----------|----------------------------------------------------------|
+| --------- | -------------------------------------------------------- |
 | `paper`   | Page background                                          |
 | `surface` | Footer, table stripes, quiet blocks                      |
 | `ink`     | Text, heavy rules                                        |
@@ -86,6 +86,7 @@ All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text o
 - Favicon: a ticked box (`app/icon.svg`), colors flip in dark browser UI.
 
 ## Large text (phones set to 200%)
+
 - `<meta name="text-scale">` opts Chrome/Android into the phone's text size. Never set font-size on `html`/`:root` for screen.
 - Rows that put a label and a value side by side use `flex-wrap`; text never gets `shrink-0` or `whitespace-nowrap` (except money).
 - `text-2xl` and `text-display` are capped with `min(…, vw)` so headings don't split mid-word; headings also have `overflow-wrap: break-word`.

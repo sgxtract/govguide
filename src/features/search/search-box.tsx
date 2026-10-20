@@ -134,7 +134,11 @@ export function SearchBox({ city, mode }: Props) {
       )}
 
       {results.length > 0 && (
-        <ul role="list" className="mt-3 border-t-2 border-ink">
+        <ul
+          role="list"
+          aria-label="Search results"
+          className="mt-3 border-t-2 border-ink"
+        >
           {results.map((r) => (
             <li
               key={r.url}

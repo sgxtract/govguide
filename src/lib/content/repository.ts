@@ -14,7 +14,12 @@ import type { Agency, Category, City, Office, Service } from "./schemas";
  * data source means changing getStore() and nothing else.
  */
 
-const CONTENT_DIR = path.join(process.cwd(), "content");
+// Normally ./content. End-to-end tests point this at fixture content
+// (tests/fixtures/content) so they don't depend on real guides.
+const CONTENT_DIR = path.resolve(
+  process.cwd(),
+  process.env.CONTENT_DIR ?? "content",
+);
 
 // Drafts show in `pnpm dev` (and when SHOW_DRAFTS=true), never in production.
 const SHOW_DRAFTS =

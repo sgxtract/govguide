@@ -1,6 +1,7 @@
 # Quality bar
 
 ## Budgets (Lighthouse, Mobile, Navigation)
+
 - Performance ≥ 90 · Accessibility 100 · Best Practices 100 · SEO 100 (published pages)
 - CLS 0
 - First visit to any page ≤ 200 KB transferred (now ~155 KB + 34 KB font)
@@ -8,6 +9,7 @@
   must stay small: no client-side libraries on page load (search loads on demand).
 
 ## Before merging UI changes
+
 1. **Lighthouse**: Chrome DevTools → Lighthouse → Mobile → Navigation, on `pnpm build && pnpm start`
    (never on `pnpm dev`, which isn't optimized).
 2. **Keyboard**: Tab through the page. "Skip to content" first, every stop visible, nothing trapped.
@@ -19,4 +21,4 @@
    Every control still has a visible edge.
 7. **Slow network**: DevTools → Network → "Slow 4G". Text appears before the font; nothing jumps.
 
-Lesson 10 automates the axe part of this in Playwright.
+axe (WCAG 2.2 AA) runs automatically on every page type in both color schemes in `tests/e2e/accessibility.spec.ts`. The manual checks above still matter: automated tools catch only about a third of real problems.
