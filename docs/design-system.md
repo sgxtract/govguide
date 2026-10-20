@@ -20,7 +20,7 @@ and the cluttered old-portal look.
 ## Color tokens
 
 | Token     | Use                                                      |
-|-----------|----------------------------------------------------------|
+| --------- | -------------------------------------------------------- |
 | `paper`   | Page background                                          |
 | `surface` | Footer, table stripes, quiet blocks                      |
 | `ink`     | Text, heavy rules                                        |
@@ -80,6 +80,7 @@ All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text o
 - Use `print:hidden` for anything that only makes sense on screen.
 
 ## Share card
+
 - 1200×630, always light palette (hex copies in `og-card.tsx`; keep in sync with tokens).
 - Heavy ink top rule, "GovGuide / city · category", big title, agency, independence line.
 - Favicon: a ticked box (`app/icon.svg`), colors flip in dark browser UI.

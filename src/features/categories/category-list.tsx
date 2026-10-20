@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 import type { Category } from "@/lib/content/schemas";
 import { countLabel } from "@/lib/utils/format";

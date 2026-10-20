@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 import { VerifyText } from "@/components/ui/verify-text";
 import type { Agency, Office } from "@/lib/content/schemas";

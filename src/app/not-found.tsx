@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 import { SiteHeader } from "@/components/layout/site-header";
 
