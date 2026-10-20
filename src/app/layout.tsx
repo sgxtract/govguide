@@ -36,6 +36,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={atkinson.variable}>
       <head>
+        {/* Follow the phone's text-size setting (Chrome on Android 146+). */}
+        <meta name="text-scale" content="scale" />
         <meta
           name="color-scheme"
           content="light dark"

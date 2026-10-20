@@ -47,7 +47,9 @@ export function SearchForm({
           />
           <button
             type="submit"
-            className="shrink-0 rounded-md bg-ink px-4 py-2 font-bold text-paper"
+            // The transparent border shows up in Windows High Contrast mode,
+            // where background colors are removed.
+            className="shrink-0 rounded-md border-2 border-transparent bg-ink px-4 py-2 font-bold text-paper"
           >
             Search
           </button>
