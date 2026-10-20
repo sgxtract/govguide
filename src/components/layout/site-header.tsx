@@ -11,7 +11,7 @@ type Props = {
 
 export function SiteHeader({ city }: Props) {
   return (
-    <header className="border-t-6 border-b border-t-ink border-b-rule">
+    <header className="border-t-6 border-b border-t-ink border-b-rule print:hidden">
       <div className="mx-auto flex max-w-page items-center justify-between gap-4 px-4 py-3">
         <Link
           href={city ? `/${city.slug}` : "/"}

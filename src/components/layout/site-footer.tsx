@@ -2,7 +2,7 @@ import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-rule bg-surface">
+    <footer className="mt-16 border-t border-rule bg-surface print:hidden">
       <div className="mx-auto max-w-page space-y-2 px-4 py-8">
         <p className="max-w-prose font-bold">
           {siteConfig.name} is an independent guide, not an official government

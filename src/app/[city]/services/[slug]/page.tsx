@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { VerifyText } from "@/components/ui/verify-text";
-import { reportIssueUrl } from "@/config/site";
+import { reportIssueUrl, siteConfig } from "@/config/site";
 import { OfficeDetails } from "@/features/offices/office-details";
 import { FeeTable } from "@/features/services/fee-table";
 import { RequirementList } from "@/features/services/requirement-list";
@@ -21,6 +21,8 @@ import {
 } from "@/lib/content/repository";
 import { VERIFY } from "@/lib/content/schemas";
 import { formatDate, formatPeso } from "@/lib/utils/format";
+import { ChecklistMemory } from "@/features/services/checklist-memory";
+import { PrintButton } from "@/features/services/print-button";
 
 // The parent [city] layout supplies `city`; we add every visible guide in it.
 export async function generateStaticParams({
@@ -104,6 +106,11 @@ export default async function ServicePage({
 
   return (
     <article className="mx-auto max-w-page px-4 py-10">
+      {/* Paper has no header or footer, so the print copy says what it is. */}
+      <p className="mb-4 hidden border-b-2 border-ink pb-2 text-sm print:block">
+        {siteConfig.name}: an independent guide, not an official government
+        website. Online version: {path}
+      </p>
       <Breadcrumbs
         items={[
           { label: city.name, href: `/${city.slug}` },
@@ -180,7 +187,11 @@ export default async function ServicePage({
           </div>
         </dl>
 
-        <nav aria-label="On this page" className="mt-6 text-sm">
+        <div className="mt-6">
+          <PrintButton />
+        </div>
+
+        <nav aria-label="On this page" className="mt-6 text-sm print:hidden">
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {sections.map((s) => (
               <li key={s.id}>
@@ -213,7 +224,9 @@ export default async function ServicePage({
           <h2 id="requirements-heading" className="mb-3 text-xl font-bold">
             What to bring
           </h2>
-          <RequirementList requirements={service.requirements} />
+          <ChecklistMemory guide={path}>
+            <RequirementList requirements={service.requirements} />
+          </ChecklistMemory>
         </section>
 
         <section
@@ -261,7 +274,7 @@ export default async function ServicePage({
           <section
             id="online"
             aria-labelledby="online-heading"
-            className="mt-10 scroll-mt-4"
+            className="print-urls mt-10 scroll-mt-4"
           >
             <h2 id="online-heading" className="mb-3 text-xl font-bold">
               What you can do online
@@ -310,7 +323,7 @@ export default async function ServicePage({
           <section
             id="faqs"
             aria-labelledby="faqs-heading"
-            className="mt-10 scroll-mt-4"
+            className="mt-10 scroll-mt-4 print:hidden"
           >
             <h2 id="faqs-heading" className="mb-3 text-xl font-bold">
               Common questions
@@ -351,7 +364,7 @@ export default async function ServicePage({
         <section
           id="sources"
           aria-labelledby="sources-heading"
-          className="mt-10 scroll-mt-4 border-t-2 border-ink pt-4"
+          className="print-urls mt-10 scroll-mt-4 border-t-2 border-ink pt-4"
         >
           <h2 id="sources-heading" className="mb-3 text-xl font-bold">
             Sources
