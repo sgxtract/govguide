@@ -1,0 +1,60 @@
+name: Report outdated info
+description: A requirement, fee, office address or office hours is different from the guide.
+title: "Outdated info: "
+labels: ["outdated-info"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Every report is checked against an official source before a guide changes.
+
+        **This report is public.** Don't include ID numbers, photos of your own documents, or your address.
+  - type: input
+    id: page
+    attributes:
+      label: Which page?
+      description: The link to the guide or office page. Filled in for you when you use the button on the page.
+      placeholder: https://…/sorsogon/services/…
+    validations:
+      required: true
+  - type: textarea
+    id: what-changed
+    attributes:
+      label: What is different?
+      description: What does the guide say, and what did you find instead?
+      placeholder: "The guide says the fee is ₱X, but the cashier charged ₱Y."
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: How do you know?
+      options:
+        - A notice posted at the office
+        - The agency's official website or page
+        - The office's Citizen's Charter
+        - Office staff told me
+        - I went there and it was different
+    validations:
+      required: true
+  - type: textarea
+    id: source-details
+    attributes:
+      label: Link or photo of the official source (if you have one)
+      description: A link, or a photo of the **posted notice** (not of your personal documents). You can drag a photo into this box.
+    validations:
+      required: false
+  - type: input
+    id: when
+    attributes:
+      label: When did you notice this?
+      placeholder: e.g. October 20, 2026
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: I didn't include ID numbers, photos of my own documents, or my address.
+          required: true

@@ -1,0 +1,52 @@
+name: Suggest a service
+description: A government service GovGuide should explain.
+title: "Suggest: "
+labels: ["new-service"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Which errand was hard to figure out? We'll research it from official sources.
+
+        **This suggestion is public.** Don't include personal information.
+  - type: input
+    id: service
+    attributes:
+      label: Which service?
+      placeholder: e.g. Get a barangay clearance
+    validations:
+      required: true
+  - type: input
+    id: city
+    attributes:
+      label: Which city or town?
+      placeholder: e.g. Sorsogon City
+    validations:
+      required: true
+  - type: input
+    id: agency
+    attributes:
+      label: Which office or agency handles it? (if you know)
+    validations:
+      required: false
+  - type: textarea
+    id: why
+    attributes:
+      label: What was hard or confusing?
+      description: This helps us know what the guide must explain clearly.
+    validations:
+      required: false
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources you know of
+      description: Links to the agency's website or Citizen's Charter, if any.
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: I didn't include personal information.
+          required: true

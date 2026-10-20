@@ -1,0 +1,6 @@
+# Only the forms above; no blank issues. Maintainers can still use `gh issue create`.
+blank_issues_enabled: false
+contact_links:
+  - name: No GitHub account?
+    url: https://github.com/sgxtract/govguide#contributing
+    about: See the README for other ways to report outdated info.
