@@ -16,7 +16,7 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 ## Routes
 
 | URL                         | File                                    | Notes                                                                          |
-| --------------------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
+|-----------------------------|-----------------------------------------|--------------------------------------------------------------------------------|
 | `/`                         | `app/page.tsx`                          | Redirects to the only city; lists cities once there are several                |
 | `/[city]`                   | `app/[city]/page.tsx`                   | City home: categories + all guides                                             |
 | `/[city]/categories/[slug]` | `app/[city]/categories/[slug]/page.tsx` | Guides in one category                                                         |
@@ -36,3 +36,9 @@ See `content-model.md` for fields and `decisions/` for the reasoning.
 - `govguide:checklist:<guide path>`: ticked requirement labels (Lesson 07).
 
 Nothing is sent to a server. The privacy page (Lesson 12) will say this.
+
+## SEO
+- Site address: `src/config/site-url.ts` (`NEXT_PUBLIC_SITE_URL` → Vercel production URL → localhost). Server-only.
+- Every indexable page uses `pageMetadata()` (title, description, canonical, share text).
+- Share cards: `opengraph-image.tsx` at `/`, `/[city]` and `/[city]/services/[slug]`, all rendered by `features/seo/og-card.tsx` at build time.
+- `sitemap.ts` and `robots.ts` read from the repository, like the pages.
