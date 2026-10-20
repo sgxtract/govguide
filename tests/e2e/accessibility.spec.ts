@@ -9,6 +9,7 @@ const PAGES = [
   "/testville/agencies",
   "/testville/agencies/test-permits-agency",
   "/testville/search?q=permit",
+  "/contribute",
   "/nowhere",
 ];
 
