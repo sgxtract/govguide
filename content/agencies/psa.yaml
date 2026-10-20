@@ -1,0 +1,13 @@
+# National agency, shared by every city. File name = slug.
+name: Philippine Statistics Authority
+acronym: PSA
+level: national
+description: Keeps the national civil registry and issues certified copies of birth, marriage and death certificates.
+website: "[VERIFY]"
+portals:
+  - label: "[VERIFY] online request portal"
+    url: "[VERIFY]"
+hotline: "[VERIFY]"
+keywords:
+  - NSO
+  - civil registry

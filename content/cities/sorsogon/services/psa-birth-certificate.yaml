@@ -1,0 +1,34 @@
+status: draft
+title: Get a PSA birth certificate
+summary: "[VERIFY] one sentence: who this is for and what you get"
+keywords:
+  - birth cert
+  - NSO birth certificate
+  - PSA copy
+category: ids-and-documents # must exist in categories.yaml
+agency: psa
+offices:
+  - psa-sorsogon # must match an office file name
+
+whoCanApply:
+  - "[VERIFY]"
+
+requirements: # add one block per item to bring
+  - label: "[VERIFY]"
+    form: original
+
+steps: # in order; numbers are added for you
+  - title: "[VERIFY]"
+
+fees:
+  - label: "[VERIFY]"
+    amount: "[VERIFY]"
+
+processingTime: "[VERIFY]"
+
+sources:
+  - title: "[VERIFY]"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"
