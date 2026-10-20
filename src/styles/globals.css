@@ -193,3 +193,93 @@
     }
   }
 }
+
+/* ── 5. Components that need real CSS ─────────────────────────────────── */
+@layer components {
+  /* Tick-box for the "What to bring" checklist. appearance:none gives the
+     same square ink box on every phone (accent-color only reached Safari in
+     late 2025), and it still behaves as a real checkbox. */
+  .tick-box {
+    appearance: none;
+    display: inline-grid;
+    place-content: center;
+    flex-shrink: 0;
+    inline-size: 1.25em;
+    aspect-ratio: 1;
+    margin: 0;
+    border: 2px solid currentColor;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-paper);
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      inline-size: 0.8em;
+      aspect-ratio: 1;
+      background-color: currentColor;
+      mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>")
+        no-repeat center / contain;
+      scale: 0;
+      print-color-adjust: exact; /* keep the tick when printing */
+
+      @media (prefers-reduced-motion: no-preference) {
+        transition: scale 150ms ease;
+      }
+      @media (forced-colors: active) {
+        background-color: CanvasText;
+      }
+    }
+
+    &:checked::before {
+      scale: 1;
+    }
+  }
+}
+
+/* ── 6. Print: a clean black-on-white sheet to bring to the office ────── */
+@media print {
+  /* Always print the light palette, even if the screen is in dark mode.
+     !important beats the :root:has(meta…) override from section 2. */
+  :root {
+    color-scheme: light !important;
+    --paper: var(--paper-light);
+    --surface: var(--surface-light);
+    --ink: var(--ink-light);
+    --muted: var(--muted-light);
+    --rule: var(--rule-light);
+    --accent: var(--ink-light);
+    --notice: var(--paper-light);
+  }
+
+  html {
+    font-size: 80%; /* 18px body → ~10.5pt on paper */
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+
+  a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  /* Links whose address matters on paper (sources, online services). */
+  .print-urls a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+
+  /* Don't split a requirement, step, fee or office across two pages. */
+  li,
+  tr,
+  .print-keep {
+    break-inside: avoid;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}
