@@ -2,6 +2,8 @@
 - slug: permits
   name: Permits
   description: Test permits for end-to-end tests.
+  icon: documents
 - slug: other
   name: Other things
   description: An empty category, to test the empty state.
+  icon: social

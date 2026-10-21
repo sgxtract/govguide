@@ -13,7 +13,19 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   // Our visitors are on phones, so the tests are too.
-  projects: [{ name: "mobile", use: { ...devices["Pixel 7"] } }],
+  projects: [
+    {
+      name: "mobile",
+      use: {
+        ...devices["Pixel 7"],
+        // Locally you can use an installed Chrome instead of downloading
+        // Playwright's: PW_CHROME=/usr/bin/google-chrome pnpm test:e2e
+        ...(process.env.PW_CHROME && {
+          launchOptions: { executablePath: process.env.PW_CHROME },
+        }),
+      },
+    },
+  ],
   webServer: {
     // A real production build, using the fictional test content.
     command: `pnpm build && pnpm start --port ${PORT}`,

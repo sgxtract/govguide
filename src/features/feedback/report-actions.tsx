@@ -1,5 +1,9 @@
 import "server-only";
 
+import { Mail, Pencil } from "lucide-react";
+
+import { buttonClass } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icons";
 import { feedbackEmail, siteConfig } from "@/config/site";
 import { absoluteUrl } from "@/config/site-url";
 
@@ -10,21 +14,18 @@ import {
   githubSuggestServiceUrl,
 } from "./report-links";
 
-const primary =
-  "inline-flex min-h-11 items-center rounded-md border-2 border-transparent bg-ink px-4 py-2 font-bold text-paper no-underline hover:underline";
-const secondary =
-  "inline-flex min-h-11 items-center rounded-md border-2 border-ink px-4 py-2 font-bold text-ink no-underline hover:bg-surface";
-
 function Actions({ email, github }: { email?: string; github: string }) {
   return (
     <div className="mt-3 flex flex-wrap gap-3">
       {email && (
-        <a href={email} className={primary}>
+        <a href={email} className={buttonClass("primary")}>
+          <Icon icon={Mail} />
           Email GovGuide
         </a>
       )}
       {/* Without an email inbox, GitHub is the main way to report. */}
-      <a href={github} className={email ? secondary : primary}>
+      <a href={github} className={buttonClass(email ? "secondary" : "primary")}>
+        <Icon icon={Pencil} />
         Report on GitHub
       </a>
     </div>

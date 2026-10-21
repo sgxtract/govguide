@@ -1,0 +1,56 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+# Requirements and fees can differ per barangay; write what is common and
+# say so in a tip.
+status: draft
+title: Get a barangay clearance
+summary: Get a clearance from the barangay where you live, for jobs, permits and other applications.
+keywords:
+  - brgy clearance
+  - barangay certificate
+  - residency
+category: ids-and-documents
+agency: barangay
+
+whoCanApply:
+  - "[VERIFY] residents of the barangay; minimum length of residence, if any"
+
+requirements:
+  - label: "[VERIFY] Valid ID showing your address"
+    form: original-and-photocopy
+    copies: 1
+  - label: "[VERIFY] Cedula (community tax certificate) for this year"
+    form: original
+
+steps:
+  - title: Go to the barangay hall where you live
+    where: Your barangay hall
+  - title: "[VERIFY] Fill in the request and state the purpose"
+  - title: "[VERIFY] Pay the fee"
+    where: "[VERIFY] Barangay treasurer"
+  - title: "[VERIFY] Get the clearance signed by the barangay captain"
+    details: "[VERIFY] released the same day or later"
+
+fees:
+  - label: "[VERIFY] Barangay clearance"
+    amount: "[VERIFY]"
+
+processingTime: "[VERIFY]"
+
+tips:
+  - "[VERIFY] Fees and requirements can differ per barangay. Call your barangay hall first."
+  - "[VERIFY] Know the purpose (employment, business, etc.); it is written on the clearance."
+
+faqs:
+  - question: Can I get one from a barangay where I don't live?
+    answer: "[VERIFY]"
+
+related:
+  - cedula
+  - police-clearance
+
+sources:
+  - title: "[VERIFY] official source for barangay clearance requirements"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

@@ -58,3 +58,13 @@ describe("countLabel", () => {
     expect(countLabel(2, "photocopy", "photocopies")).toBe("2 photocopies");
   });
 });
+
+describe("formatDuration", () => {
+  it("says hours and minutes in words", async () => {
+    const { formatDuration } = await import("@/lib/utils/format");
+    expect(formatDuration(40)).toBe("40 minutes");
+    expect(formatDuration(60)).toBe("1 hour");
+    expect(formatDuration(75)).toBe("1 hour 15 minutes");
+    expect(formatDuration(1)).toBe("1 minute");
+  });
+});

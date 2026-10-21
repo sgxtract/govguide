@@ -6,10 +6,15 @@ const PAGES = [
   "/testville/categories/permits",
   "/testville/categories/other",
   "/testville/services/get-a-test-permit",
+  "/testville/services",
   "/testville/agencies",
   "/testville/agencies/test-permits-agency",
   "/testville/search?q=permit",
   "/contribute",
+  "/about",
+  "/disclaimer",
+  "/privacy",
+  "/styleguide",
   "/nowhere",
 ];
 

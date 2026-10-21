@@ -1,0 +1,12 @@
+name: Department of Foreign Affairs
+acronym: DFA
+level: national
+description: Issues Philippine passports through its consular offices.
+website: "[VERIFY]"
+portals:
+  - label: "[VERIFY] passport appointment system"
+    url: "[VERIFY]"
+hotline: "[VERIFY]"
+keywords:
+  - passport
+  - pasaporte

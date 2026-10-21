@@ -11,8 +11,14 @@ export function hasPlaceholders(value: unknown): boolean {
 /**
  * Rules the schemas can't express on their own: references between files,
  * duplicate slugs, and "nothing unverified gets published".
+ *
+ * `broken` lists files that exist but failed to load ("service:city/slug",
+ * "office:city/slug", "agency:slug"); references to them are not reported.
  */
-export function checkIntegrity(store: ContentStore): string[] {
+export function checkIntegrity(
+  store: ContentStore,
+  broken: ReadonlySet<string> = new Set(),
+): string[] {
   const problems: string[] = [];
   const categories = new Set(store.categories.map((c) => c.slug));
   const agencies = new Map(store.agencies.map((a) => [a.slug, a]));
@@ -21,8 +27,31 @@ export function checkIntegrity(store: ContentStore): string[] {
     problems.push(`categories.yaml\n  ✖ Duplicate category "${slug}"`);
   }
 
+  for (const slug of duplicates(store.holidays.map((h) => h.date))) {
+    problems.push(`holidays.yaml\n  ✖ Duplicate date "${slug}"`);
+  }
+
+  for (const city of store.cities) {
+    const cityServices = new Set(
+      store.services.filter((s) => s.city === city.slug).map((s) => s.slug),
+    );
+    for (const popular of city.popular) {
+      if (
+        !cityServices.has(popular) &&
+        !broken.has(`service:${city.slug}/${popular}`)
+      ) {
+        problems.push(
+          `cities/${city.slug}/city.yaml\n  ✖ Unknown popular service "${popular}"`,
+        );
+      }
+    }
+  }
+
   for (const office of store.offices) {
-    if (!agencies.has(office.agency)) {
+    if (
+      !agencies.has(office.agency) &&
+      !broken.has(`agency:${office.agency}`)
+    ) {
       problems.push(
         `cities/${office.city}/offices/${office.slug}.yaml\n  ✖ Unknown agency "${office.agency}"`,
       );
@@ -43,18 +72,27 @@ export function checkIntegrity(store: ContentStore): string[] {
     if (!categories.has(service.category)) {
       problems.push(`${where}\n  ✖ Unknown category "${service.category}"`);
     }
-    if (!agencies.has(service.agency)) {
+    if (
+      !agencies.has(service.agency) &&
+      !broken.has(`agency:${service.agency}`)
+    ) {
       problems.push(`${where}\n  ✖ Unknown agency "${service.agency}"`);
     }
     for (const office of service.offices) {
-      if (!cityOffices.has(office)) {
+      if (
+        !cityOffices.has(office) &&
+        !broken.has(`office:${service.city}/${office}`)
+      ) {
         problems.push(
           `${where}\n  ✖ Unknown office "${office}" in ${service.city}`,
         );
       }
     }
     for (const related of service.related) {
-      if (!cityServices.has(related)) {
+      if (
+        !cityServices.has(related) &&
+        !broken.has(`service:${service.city}/${related}`)
+      ) {
         problems.push(`${where}\n  ✖ Unknown related service "${related}"`);
       }
     }

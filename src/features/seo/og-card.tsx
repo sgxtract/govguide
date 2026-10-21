@@ -10,17 +10,18 @@ import { siteConfig } from "@/config/site";
 /** Share-preview size used by Facebook, Messenger, X and others. */
 export const ogSize = { width: 1200, height: 630 };
 
-// The image renderer can't read CSS variables or oklch(), so the light
-// palette is repeated here as hex. Keep in sync with globals.css.
+// The image renderer can't read CSS variables, so the light palette is
+// repeated here. Keep in sync with globals.css.
 const COLORS = {
-  paper: "#f9f6f1",
-  ink: "#201914",
-  muted: "#5c534d",
-  rule: "#cfcac2",
+  brand: "#1d6e75",
+  signal: "#f5c842",
+  bg: "#ecf0ef",
+  ink: "#15201f",
+  muted: "#4a5857",
 };
 
-// Atkinson Hyperlegible Next from the @fontsource package (.woff: the image
-// renderer can't read .woff2). Read once, at build time.
+// Atkinson Hyperlegible Next from @fontsource (.woff: the image renderer
+// can't read .woff2). Read once, at build time.
 const fontDir = path.join(
   process.cwd(),
   "node_modules/@fontsource/atkinson-hyperlegible-next/files",
@@ -40,7 +41,7 @@ const fonts = Promise.all(
 );
 
 type Props = {
-  /** Small line above the title, e.g. "Sorsogon · Vehicles & Driving". */
+  /** Small line in the teal band, e.g. "Sorsogon, Vehicles & Driving". */
   eyebrow: string;
   title: string;
   /** Line under the title, e.g. the agency name. */
@@ -48,8 +49,8 @@ type Props = {
 };
 
 /**
- * The share card: the site's printed-notice look. Heavy ink rule on top,
- * big title, and the independence line at the bottom, always in light colors.
+ * The share card, in the app's look: teal band, big title on the page
+ * colour, a yellow route stop, and the independence line. Always light.
  */
 export async function renderOgCard({ eyebrow, title, subtitle }: Props) {
   return new ImageResponse(
@@ -59,51 +60,69 @@ export async function renderOgCard({ eyebrow, title, subtitle }: Props) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: COLORS.paper,
+        backgroundColor: COLORS.bg,
         color: COLORS.ink,
         fontFamily: "Atkinson",
-        borderTop: `24px solid ${COLORS.ink}`,
-        padding: "56px 72px",
       }}
     >
-      <div style={{ display: "flex", fontSize: 32, color: COLORS.muted }}>
-        <span style={{ fontWeight: 800, color: COLORS.ink }}>
-          {siteConfig.name}
-        </span>
-        <span style={{ margin: "0 16px" }}>/</span>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 20,
+          backgroundColor: COLORS.brand,
+          color: "#ffffff",
+          padding: "36px 72px",
+          fontSize: 34,
+        }}
+      >
+        <span style={{ fontWeight: 800 }}>{siteConfig.name}</span>
         <span>{eyebrow}</span>
       </div>
 
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
           flexGrow: 1,
-          justifyContent: "center",
+          alignItems: "center",
+          gap: 40,
+          padding: "0 72px",
         }}
       >
         <div
           style={{
-            fontSize: title.length > 40 ? 72 : 88,
-            fontWeight: 800,
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
+            display: "flex",
+            width: 64,
+            height: 64,
+            flexShrink: 0,
+            borderRadius: 999,
+            backgroundColor: COLORS.signal,
+            border: `8px solid ${COLORS.brand}`,
           }}
-        >
-          {title}
-        </div>
-        {subtitle && (
-          <div style={{ marginTop: 24, fontSize: 36, color: COLORS.muted }}>
-            {subtitle}
+        />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              fontSize: title.length > 40 ? 68 : 84,
+              fontWeight: 800,
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {title}
           </div>
-        )}
+          {subtitle && (
+            <div style={{ marginTop: 20, fontSize: 34, color: COLORS.muted }}>
+              {subtitle}
+            </div>
+          )}
+        </div>
       </div>
 
       <div
         style={{
           display: "flex",
-          borderTop: `3px solid ${COLORS.ink}`,
-          paddingTop: 20,
+          padding: "0 72px 40px",
           fontSize: 28,
           color: COLORS.muted,
         }}

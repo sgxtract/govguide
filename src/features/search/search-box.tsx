@@ -13,6 +13,9 @@ import {
   type FormEvent,
 } from "react";
 
+import { ChevronRight } from "lucide-react";
+
+import { Icon } from "@/components/ui/icons";
 import { VerifyText } from "@/components/ui/verify-text";
 
 import { searchOptions, type SearchDoc } from "./engine";
@@ -22,11 +25,13 @@ type Props = {
   city: string;
   /** "home": Enter goes to the search page. "page": the URL keeps ?q= in sync. */
   mode: "home" | "page";
+  /** Id of the heading that labels the field (home page). */
+  labelledBy?: string;
 };
 
 type Result = Pick<SearchDoc, "kind" | "title" | "summary" | "agency" | "url">;
 
-export function SearchBox({ city, mode }: Props) {
+export function SearchBox({ city, mode, labelledBy }: Props) {
   const inputId = useId();
   const router = useRouter();
   const initialQuery = useSearchParams().get("q") ?? "";
@@ -113,6 +118,8 @@ export function SearchBox({ city, mode }: Props) {
       <SearchForm
         city={city}
         inputId={inputId}
+        variant={mode === "home" ? "hero" : "page"}
+        labelledBy={labelledBy}
         inputRef={inputRef}
         onSubmit={onSubmit}
         inputProps={{
@@ -122,14 +129,25 @@ export function SearchBox({ city, mode }: Props) {
         }}
       />
 
-      <p aria-live="polite" className="mt-4 text-sm text-muted empty:hidden">
+      <p
+        aria-live="polite"
+        className={`mt-3 font-bold empty:hidden ${
+          mode === "home" ? "text-on-brand" : "text-ink"
+        }`}
+      >
         {status}
       </p>
 
       {trimmed && engine && results.length === 0 && (
-        <p className="mt-2">
-          Try another word, or{" "}
-          <Link href={`/${city}`}>browse guides by category</Link>.
+        <p className={`mt-1 ${mode === "home" ? "text-on-brand" : ""}`}>
+          Try a shorter word, or{" "}
+          <Link
+            href={`/${city}/services`}
+            className={mode === "home" ? "text-on-brand" : undefined}
+          >
+            see all guides
+          </Link>
+          .
         </p>
       )}
 
@@ -137,28 +155,32 @@ export function SearchBox({ city, mode }: Props) {
         <ul
           role="list"
           aria-label="Search results"
-          className="mt-3 border-t-2 border-ink"
+          className="mt-3 rounded-card bg-surface text-ink"
         >
           {results.map((r) => (
             <li
               key={r.url}
-              className="relative border-b border-rule py-3 hover:bg-surface"
+              className="tap-area flex items-center gap-3 border-b border-line px-4 py-3 first:rounded-t-card last:rounded-b-card last:border-0 hover:bg-brand-tint/40"
             >
-              <p className="text-sm text-muted">
-                {r.kind === "guide" ? "Guide" : "Office"}
-              </p>
-              <Link
-                href={r.url}
-                className="text-lg font-bold text-ink no-underline after:absolute after:inset-0 hover:underline"
-              >
-                {r.title}
-              </Link>
-              <p className="mt-1 text-muted">
-                <VerifyText text={r.summary} />
-              </p>
-              {r.kind === "guide" && (
-                <p className="mt-1 text-sm text-muted">{r.agency}</p>
-              )}
+              <div className="min-w-0 flex-1">
+                <Link
+                  href={r.url}
+                  className="stretched font-bold text-ink no-underline"
+                >
+                  {r.title}
+                </Link>
+                <p className="text-sm text-muted">
+                  {r.kind === "guide"
+                    ? `Guide, ${r.agency}`
+                    : "Office and hours"}
+                </p>
+                {r.kind === "guide" && (
+                  <p className="mt-1 text-sm">
+                    <VerifyText text={r.summary} />
+                  </p>
+                )}
+              </div>
+              <Icon icon={ChevronRight} className="shrink-0 text-muted" />
             </li>
           ))}
         </ul>

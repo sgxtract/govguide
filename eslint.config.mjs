@@ -30,7 +30,6 @@ export default defineConfig([
     rules: { "no-restricted-imports": "off" },
   },
   prettier,
-  prettier,
   globalIgnores([
     ".next/**",
     "out/**",
@@ -39,5 +38,8 @@ export default defineConfig([
     "test-results/**",
     "playwright-report/**",
     "blob-report/**",
+    // Local tooling, git-ignored: Claude Code skills and design mockups.
+    ".claude/**",
+    ".superpowers/**",
   ]),
 ]);

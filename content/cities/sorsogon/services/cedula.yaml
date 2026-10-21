@@ -1,0 +1,58 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+status: draft
+title: Get a cedula (community tax certificate)
+summary: Get this year's community tax certificate, often needed for barangay clearances and permits.
+keywords:
+  - cedula
+  - CTC
+  - community tax certificate
+  - sedula
+category: ids-and-documents
+agency: sorsogon-city
+offices:
+  - sorsogon-city-treasurer
+
+whoCanApply:
+  - "[VERIFY] who must get one: age and income rules"
+
+requirements:
+  - label: "[VERIFY] Valid ID"
+    form: original
+  - label: "[VERIFY] Proof of income, if you earn above the basic amount"
+    form: photocopy
+    copies: 1
+
+steps:
+  - title: "[VERIFY] Go to the cedula window"
+    where: "[VERIFY] City Treasurer's Office, or your barangay hall"
+  - title: "[VERIFY] Give your details and income"
+  - title: "[VERIFY] Pay the community tax"
+    where: "[VERIFY] Cashier"
+  - title: "[VERIFY] Get your cedula"
+
+fees:
+  - label: "[VERIFY] Basic community tax"
+    amount: "[VERIFY]"
+  - label: "[VERIFY] Additional tax based on income"
+    amount: "[VERIFY]"
+    notes: "[VERIFY] how it's computed"
+
+processingTime: "[VERIFY]"
+
+tips:
+  - "[VERIFY] Penalty for getting it late in the year"
+
+faqs:
+  - question: Can I get it at my barangay instead?
+    answer: "[VERIFY]"
+
+related:
+  - barangay-clearance
+  - business-permit-new
+
+sources:
+  - title: "[VERIFY] Sorsogon City Citizen's Charter"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

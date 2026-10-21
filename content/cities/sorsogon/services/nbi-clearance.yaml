@@ -1,0 +1,62 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+status: draft
+title: Get an NBI clearance
+summary: Get an NBI clearance for employment, travel or other applications.
+keywords:
+  - NBI
+  - clearance
+  - trabaho
+category: ids-and-documents
+agency: nbi
+offices:
+  - nbi-clearance-center
+
+whoCanApply:
+  - "[VERIFY]"
+
+requirements:
+  - label: "[VERIFY] Online appointment reference number"
+    form: original
+  - label: "[VERIFY] Two valid government IDs"
+    form: original
+    alternatives:
+      - "[VERIFY] list of accepted IDs"
+
+steps:
+  - title: "[VERIFY] Register and set an appointment online"
+    where: Online, before you go
+  - title: "[VERIFY] Pay the clearance fee"
+    where: "[VERIFY] online or through a payment partner"
+  - title: "[VERIFY] Go to the NBI clearance center on your appointment date"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Have your photo, fingerprints and signature taken"
+  - title: "[VERIFY] Get your NBI clearance"
+    details: "[VERIFY] same day, or a later release date if you have a 'hit'"
+
+fees:
+  - label: "[VERIFY] NBI clearance"
+    amount: "[VERIFY]"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: "[VERIFY] NBI clearance online application"
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY] register, book and pay"
+
+tips:
+  - "[VERIFY] Renewing? Check if your old clearance lets you renew online."
+
+faqs:
+  - question: What does it mean to have a "hit"?
+    answer: "[VERIFY]"
+
+related:
+  - police-clearance
+
+sources:
+  - title: "[VERIFY] NBI clearance guidelines"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

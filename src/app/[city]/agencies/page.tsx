@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
-import { AgencyList } from "@/features/agencies/agency-list";
+import { PageHeader } from "@/components/layout/page-header";
+import { SectionHeading } from "@/components/ui/section-heading";
+import {
+  agencyDisplayName,
+  agencyLevelLabel,
+} from "@/features/agencies/agency-level";
+import { OfficeRows } from "@/features/offices/office-rows";
+import { pageMetadata } from "@/features/seo/page-metadata";
+import { Link } from "@/components/ui/link";
 import {
   getCity,
   listCityAgencies,
+  listHolidays,
   listOffices,
 } from "@/lib/content/repository";
-import { pageMetadata } from "@/features/seo/page-metadata";
 
 export async function generateMetadata({
   params,
@@ -17,48 +24,82 @@ export async function generateMetadata({
   if (!city) return {};
   return pageMetadata({
     title: `Government offices in ${city.name}`,
-    description: `Addresses, office hours and guides for government offices in ${city.name}.`,
+    description: `Addresses, office hours and contact details of government offices in ${city.name}.`,
     path: `/${city.slug}/agencies`,
   });
 }
 
-export default async function AgenciesPage({
+/** Every agency with something in this city, and its local offices. */
+export default async function OfficesPage({
   params,
 }: PageProps<"/[city]/agencies">) {
   const city = await getCity((await params).city);
   if (!city) notFound();
 
-  const [agencies, offices] = await Promise.all([
+  const [agencies, offices, holidays] = await Promise.all([
     listCityAgencies(city.slug),
     listOffices(city.slug),
+    listHolidays(),
   ]);
-  const rows = agencies.map((agency) => ({
-    agency,
-    offices: offices.filter((o) => o.agency === agency.slug),
-  }));
 
   return (
-    <div className="mx-auto max-w-page px-4 py-10">
-      <Breadcrumbs
-        path={`/${city.slug}/agencies`}
-        items={[
-          { label: city.name, href: `/${city.slug}` },
-          { label: "Offices" },
-        ]}
+    <>
+      <PageHeader
+        title="Offices and hours"
+        subtitle={`Government offices serving ${city.name}`}
+        back={{ href: `/${city.slug}`, label: city.name }}
+        breadcrumbs={{
+          path: `/${city.slug}/agencies`,
+          items: [
+            { label: city.name, href: `/${city.slug}` },
+            { label: "Offices" },
+          ],
+        }}
       />
-      <h1 className="mt-4 max-w-prose text-2xl font-extrabold tracking-tight">
-        Government offices in {city.name}
-      </h1>
-      <p className="mt-3 max-w-prose text-lg text-muted">
-        Where each office is, when it&apos;s open, and which errands it handles.
-      </p>
-      <div className="mt-8 max-w-3xl">
-        {rows.length > 0 ? (
-          <AgencyList city={city.slug} agencies={rows} />
-        ) : (
-          <p className="border-t-2 border-ink pt-4">No offices listed yet.</p>
-        )}
+
+      <div className="mx-auto max-w-page px-4 pt-6">
+        <div className="grid max-w-3xl grid-cols-1 gap-10">
+          {agencies.length === 0 && (
+            <p className="rounded-card bg-surface p-5">
+              Office details are being checked against official sources. They
+              will appear here once confirmed.
+            </p>
+          )}
+          {agencies.map((agency) => {
+            const own = offices.filter((o) => o.agency === agency.slug);
+            return (
+              <section
+                key={agency.slug}
+                aria-labelledby={`${agency.slug}-heading`}
+              >
+                <SectionHeading
+                  id={`${agency.slug}-heading`}
+                  more={{
+                    href: `/${city.slug}/agencies/${agency.slug}`,
+                    label: "Details and guides",
+                  }}
+                >
+                  {agencyDisplayName(agency)}
+                </SectionHeading>
+                <p className="-mt-2 mb-3 text-sm text-muted">
+                  {agencyLevelLabel(agency.level)}
+                </p>
+                {own.length > 0 ? (
+                  <OfficeRows offices={own} holidays={holidays} />
+                ) : (
+                  <p className="rounded-card bg-surface px-4 py-3">
+                    No local office listed.{" "}
+                    <Link href={`/${city.slug}/agencies/${agency.slug}`}>
+                      See how to reach them
+                    </Link>
+                    .
+                  </p>
+                )}
+              </section>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

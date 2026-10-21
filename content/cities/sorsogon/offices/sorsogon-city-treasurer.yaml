@@ -1,0 +1,10 @@
+agency: sorsogon-city
+name: "[VERIFY] City Treasurer's Office, Sorsogon City Hall"
+address: "[VERIFY]"
+mapUrl: "[VERIFY]"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+notes:
+  - "[VERIFY] which window issues cedulas"

@@ -1,20 +1,27 @@
-# Categories group services on the city home page and in navigation.
+# Categories group guides on the city home and in navigation.
 # The slug is used in URLs: /sorsogon/categories/<slug>
+# icon: one of documents, vehicles, business, health, social, benefits
 - slug: ids-and-documents
   name: IDs & Documents
   description: Birth certificates, national ID, passports, clearances, and other papers.
+  icon: documents
 - slug: vehicles-and-driving
   name: Vehicles & Driving
   description: Driver's licenses, permits, and vehicle registration.
+  icon: vehicles
 - slug: business
   name: Business
   description: Permits and registrations for starting or running a business.
+  icon: business
 - slug: health
   name: Health
   description: PhilHealth, health certificates, and other health-related services.
+  icon: health
 - slug: social-services
   name: Social Services
   description: Assistance programs for seniors, persons with disability, solo parents, and families.
+  icon: social
 - slug: benefits-and-contributions
   name: Benefits & Contributions
   description: Pag-IBIG, SSS and other memberships, contributions, and loans.
+  icon: benefits

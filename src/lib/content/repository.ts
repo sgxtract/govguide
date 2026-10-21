@@ -6,7 +6,14 @@ import { cache } from "react";
 
 import { hasPlaceholders } from "./integrity";
 import { loadFileContent } from "./loaders/file-loader";
-import type { Agency, Category, City, Office, Service } from "./schemas";
+import type {
+  Agency,
+  Category,
+  City,
+  Holiday,
+  Office,
+  Service,
+} from "./schemas";
 
 /**
  * The only door to content. Pages and components call these functions and
@@ -15,9 +22,11 @@ import type { Agency, Category, City, Office, Service } from "./schemas";
  */
 
 // Normally ./content. End-to-end tests point this at fixture content
-// (tests/fixtures/content) so they don't depend on real guides.
+// (tests/fixtures/content) so they don't depend on real guides. Content is
+// only read at build time (every page is static), so the bundler is told not
+// to trace this path into the server output.
 const CONTENT_DIR = path.resolve(
-  process.cwd(),
+  /*turbopackIgnore: true*/ process.cwd(),
   process.env.CONTENT_DIR ?? "content",
 );
 
@@ -45,6 +54,13 @@ export async function listCities(): Promise<City[]> {
 
 export async function getCity(slug: string): Promise<City | undefined> {
   return (await getStore()).cities.find((c) => c.slug === slug);
+}
+
+// ── Holidays ───────────────────────────────────────────────────────────────
+
+/** Public holidays from content/holidays.yaml, for office open/closed status. */
+export async function listHolidays(): Promise<Holiday[]> {
+  return (await getStore()).holidays;
 }
 
 // ── Categories ─────────────────────────────────────────────────────────────
@@ -135,4 +151,17 @@ export async function getService(
 
 export async function listAgencies(): Promise<Agency[]> {
   return (await getStore()).agencies;
+}
+
+/** The city's "Most looked up" guides, in the order listed in city.yaml. */
+export async function listPopularServices(city: string): Promise<Service[]> {
+  const store = await getStore();
+  const config = store.cities.find((c) => c.slug === city);
+  if (!config) return [];
+  return config.popular.flatMap((slug) => {
+    const service = store.services.find(
+      (s) => s.city === city && s.slug === slug,
+    );
+    return service && isVisible(service) ? [service] : [];
+  });
 }

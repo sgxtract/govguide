@@ -66,7 +66,7 @@ export function ColorSchemeToggle() {
       type="button"
       onClick={toggle}
       // Hidden in browsers without light-dark(): there the colors can only follow the system.
-      className="hidden size-11 items-center justify-center rounded-md border border-muted text-ink hover:bg-surface supports-[color:light-dark(white,black)]:inline-flex"
+      className="hidden size-11 items-center justify-center rounded-control text-on-brand hover:bg-brand-strong supports-[color:light-dark(white,black)]:inline-flex"
     >
       {/* Shows the current scheme; the label says what pressing it does. */}
       <span className="dark:hidden">

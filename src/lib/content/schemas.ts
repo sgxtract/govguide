@@ -38,13 +38,33 @@ const hotlineSchema = z.strictObject({
 
 // ── Category ───────────────────────────────────────────────────────────────
 
+/** Icons a category can use. The UI maps each to one Lucide icon. */
+export const categoryIcons = [
+  "documents",
+  "vehicles",
+  "business",
+  "health",
+  "social",
+  "benefits",
+] as const;
+
 export const categorySchema = z.strictObject({
   slug,
   name: text,
   description: text,
+  icon: z.enum(categoryIcons),
 });
 
 export const categoriesFileSchema = z.array(categorySchema).min(1);
+
+// ── Public holidays (offices are closed) ──────────────────────────────────
+
+export const holidaySchema = z.strictObject({
+  date: isoDate,
+  name: text,
+});
+
+export const holidaysFileSchema = z.array(holidaySchema).default([]);
 
 // ── City ───────────────────────────────────────────────────────────────────
 
@@ -53,6 +73,8 @@ export const citySchema = z.strictObject({
   province: text,
   description: text,
   hotlines: z.array(hotlineSchema).default([]),
+  // Guides shown under "Most looked up" on the city home, in this order.
+  popular: z.array(slug).default([]),
 });
 
 // ── Agency (shared by all cities) ─────────────────────────────────────────
@@ -73,22 +95,29 @@ export const agencySchema = z.strictObject({
 
 // ── Office (a local branch, belongs to one city) ──────────────────────────
 
-const weekday = z.enum(["mon", "tue", "wed", "thu", "fri", "sat", "sun"]);
+export const weekdays = [
+  "mon",
+  "tue",
+  "wed",
+  "thu",
+  "fri",
+  "sat",
+  "sun",
+] as const;
+export const weekdaySchema = z.enum(weekdays);
+
+export const hoursSchema = z.strictObject({
+  days: z.array(weekdaySchema).min(1),
+  opens: orVerify(time),
+  closes: orVerify(time),
+});
 
 export const officeSchema = z.strictObject({
   agency: slug,
   name: text,
   address: text,
   mapUrl: orVerify(z.url()).optional(),
-  hours: z
-    .array(
-      z.strictObject({
-        days: z.array(weekday).min(1),
-        opens: orVerify(time),
-        closes: orVerify(time),
-      }),
-    )
-    .default([]),
+  hours: z.array(hoursSchema).default([]),
   phones: z.array(text).default([]),
   email: orVerify(z.email()).optional(),
   notes: z.array(text).default([]), // "Cut-off for applications is 3 PM"
@@ -107,7 +136,7 @@ export const requirementSchema = z.strictObject({
 export const stepSchema = z.strictObject({
   title: text,
   details: text.optional(),
-  where: text.optional(), // "Window 3", "Cashier"
+  where: text.optional(), // "Window 3", "Cashier", "Online"
   duration: text.optional(), // "About 30 minutes"
 });
 
@@ -128,7 +157,9 @@ export const serviceSchema = z.strictObject({
   offices: z.array(slug).default([]),
   whoCanApply: z.array(text).default([]),
   requirements: z.array(requirementSchema).min(1),
-  steps: z.array(stepSchema).min(1), // in order; numbering comes from position
+  // In order; numbering comes from position. The last step is drawn as the
+  // finish, so make it what you leave with ("Get your license card").
+  steps: z.array(stepSchema).min(1),
   fees: z.array(feeSchema).default([]),
   processingTime: text,
   online: z
@@ -150,12 +181,16 @@ export const serviceSchema = z.strictObject({
 // ── Inferred types (with slug/city added by the loader) ───────────────────
 
 export type Category = z.infer<typeof categorySchema>;
+export type CategoryIcon = Category["icon"];
+export type Holiday = z.infer<typeof holidaySchema>;
 export type City = z.infer<typeof citySchema> & { slug: string };
 export type Agency = z.infer<typeof agencySchema> & { slug: string };
 export type Office = z.infer<typeof officeSchema> & {
   slug: string;
   city: string;
 };
+export type OfficeHours = z.infer<typeof hoursSchema>;
+export type Weekday = z.infer<typeof weekdaySchema>;
 export type Service = z.infer<typeof serviceSchema> & {
   slug: string;
   city: string;

@@ -1,0 +1,73 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+status: draft
+title: Apply for a new passport
+summary: Apply for your first Philippine passport at a DFA consular office.
+keywords:
+  - passport
+  - pasaporte
+  - DFA appointment
+category: ids-and-documents
+agency: dfa
+offices:
+  - dfa-consular-office
+
+whoCanApply:
+  - "[VERIFY] Filipino citizens; separate rules for minors"
+
+requirements:
+  - label: "[VERIFY] Confirmed online appointment"
+    form: original
+  - label: "[VERIFY] Accomplished application form"
+    form: original
+  - label: "[VERIFY] PSA birth certificate"
+    form: original-and-photocopy
+    copies: 1
+  - label: "[VERIFY] Valid government ID"
+    form: original-and-photocopy
+    copies: 1
+    alternatives:
+      - "[VERIFY] list of accepted IDs"
+
+steps:
+  - title: "[VERIFY] Book an appointment online"
+    where: Online, before you go
+  - title: "[VERIFY] Pay the passport fee"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Go to the consular office on your appointment date"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Have your documents checked, photo and fingerprints taken"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Get your passport by pick-up or delivery"
+    details: "[VERIFY] when and how it's released"
+
+fees:
+  - label: "[VERIFY] Regular processing"
+    amount: "[VERIFY]"
+  - label: "[VERIFY] Expedited processing"
+    amount: "[VERIFY]"
+    notes: "[VERIFY] only one of the two fees applies"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: "[VERIFY] DFA passport appointment system"
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY] book and pay for an appointment"
+
+tips:
+  - "[VERIFY] Only book through the official DFA website."
+  - "[VERIFY] dress code for the photo"
+
+faqs:
+  - question: Can I walk in without an appointment?
+    answer: "[VERIFY]"
+
+related:
+  - psa-birth-certificate
+
+sources:
+  - title: "[VERIFY] DFA passport requirements"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

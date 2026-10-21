@@ -1,0 +1,12 @@
+# The DFA consular office that serves Sorsogon residents. It may be outside
+# the province; say so in the name and notes once verified.
+agency: dfa
+name: "[VERIFY] DFA consular office serving Sorsogon"
+address: "[VERIFY]"
+mapUrl: "[VERIFY]"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+notes:
+  - "[VERIFY] appointment needed before going, and whether walk-ins are accepted"
