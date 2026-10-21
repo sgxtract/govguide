@@ -23,6 +23,27 @@ const time = z
   .string()
   .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'use 24-hour "HH:MM"');
 
+/**
+ * An amount in pesos, or [VERIFY]. Accepts the ways people write money:
+ * 585, "585", "₱585.00", "PHP 1,234.50", "P67.63". Stored as a number.
+ */
+const pesosHint = `write the amount in pesos, like 585 or 67.63 (0 = free), or "${VERIFY}" if not checked yet`;
+const pesos = z.preprocess(
+  (value) => {
+    if (typeof value !== "string" || value.trim() === VERIFY) {
+      return typeof value === "string" ? value.trim() : value;
+    }
+    const digits = value
+      .trim()
+      .replace(/^(₱|php|p)\s*/i, "")
+      .replace(/,/g, "");
+    return /^\d+(\.\d{1,2})?$/.test(digits) ? Number(digits) : value;
+  },
+  z.union([z.number().nonnegative({ error: pesosHint }), z.literal(VERIFY)], {
+    error: pesosHint,
+  }),
+);
+
 // ── Shared pieces ──────────────────────────────────────────────────────────
 
 export const sourceSchema = z.strictObject({
@@ -142,7 +163,7 @@ export const stepSchema = z.strictObject({
 
 export const feeSchema = z.strictObject({
   label: text,
-  amount: orVerify(z.number().nonnegative()), // PHP; 0 = free
+  amount: pesos, // 0 = free
   notes: text.optional(),
 });
 

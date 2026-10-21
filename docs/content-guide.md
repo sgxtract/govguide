@@ -20,7 +20,9 @@ highlighted in yellow, and are hidden on the live site.
    turned out right; rewrite text that didn't.
    - A `[VERIFY]` in a requirement's **label** means check the whole item: the label, whether
      it's `original` / `photocopy` / `original-and-photocopy`, and `copies`.
-   - Amounts are plain numbers in pesos: `amount: 155`. Free = `amount: 0`.
+   - Amounts are in pesos. Any of these work: `585`, `"585"`, `₱585.00`, `"PHP 1,234.50"`.
+     Free = `amount: 0`. Also remove `[VERIFY]` from the fee's `label` once it's checked.
+     Don't mix a number and `[VERIFY]` (`"585 [VERIFY]"`): it's either checked or not.
    - Times are 24-hour in quotes: `opens: "08:00"`, `closes: "17:00"`.
    - Dates are `"YYYY-MM-DD"`.
    - The **last step** is drawn as the finish flag. Make it what you leave with
