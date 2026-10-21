@@ -64,22 +64,22 @@ from the official proclamation each year, plus local Sorsogon holidays.
 
 ## Service (`cities/<city>/services/<slug>.yaml`)
 
-| Field            | Required | Notes                                                                                                    |
-| ---------------- | -------- | -------------------------------------------------------------------------------------------------------- |
-| status           | yes      | `draft` (hidden in production) or `published`                                                            |
-| title            | yes      | The task in plain words: "Get a new driver's license"                                                    |
-| summary          | yes      | One sentence                                                                                             |
-| category, agency | yes      | Must match existing slugs                                                                                |
-| offices          | no       | Office slugs in the same city                                                                            |
-| whoCanApply      | no       | List                                                                                                     |
-| requirements     | yes (≥1) | `{ label, form, copies?, notes?, alternatives? }`. `form`: original · photocopy · original-and-photocopy |
-| steps            | yes (≥1) | `{ title, details?, where?, duration? }`. List order is step order; the last step is drawn as the finish |
-| fees             | no       | `{ label, amount (PHP number, 0 = free), notes? }`                                                       |
-| processingTime   | yes      |                                                                                                          |
-| online           | no       | `{ label, url, whatYouCanDo }`                                                                           |
-| tips             | no       | List                                                                                                     |
-| faqs             | no       | `{ question, answer }`                                                                                   |
-| related          | no       | Service slugs in the same city                                                                           |
-| sources          | yes (≥1) | `{ title, url, accessed }`                                                                               |
-| lastVerified     | yes      | `YYYY-MM-DD`. Re-verify every 6 months                                                                   |
-| keywords         | no       | Words people type: everyday names, Filipino/Bikol terms, abbreviations                                   |
+| Field            | Required | Notes                                                                                                          |
+| ---------------- | -------- | -------------------------------------------------------------------------------------------------------------- |
+| status           | yes      | `draft` (hidden in production) or `published`                                                                  |
+| title            | yes      | The task in plain words: "Get a new driver's license"                                                          |
+| summary          | yes      | One sentence                                                                                                   |
+| category, agency | yes      | Must match existing slugs                                                                                      |
+| offices          | no       | Office slugs in the same city                                                                                  |
+| whoCanApply      | no       | List                                                                                                           |
+| requirements     | yes (≥1) | `{ label, form, copies?, notes?, alternatives? }`. `form`: original · photocopy · original-and-photocopy       |
+| steps            | yes (≥1) | `{ title, details?, where?, duration? }`. List order is step order; the last step is drawn as the finish       |
+| fees             | no       | `{ label, amount, notes? }`. `amount` in pesos: `585`, `"₱1,234.50"` and similar are read as numbers; 0 = free |
+| processingTime   | yes      |                                                                                                                |
+| online           | no       | `{ label, url, whatYouCanDo }`                                                                                 |
+| tips             | no       | List                                                                                                           |
+| faqs             | no       | `{ question, answer }`                                                                                         |
+| related          | no       | Service slugs in the same city                                                                                 |
+| sources          | yes (≥1) | `{ title, url, accessed }`                                                                                     |
+| lastVerified     | yes      | `YYYY-MM-DD`. Re-verify every 6 months                                                                         |
+| keywords         | no       | Words people type: everyday names, Filipino/Bikol terms, abbreviations                                         |
