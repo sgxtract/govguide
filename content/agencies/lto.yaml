@@ -3,8 +3,8 @@ name: Land Transportation Office
 acronym: LTO
 level: national
 description: Issues driver's licenses and permits, and registers motor vehicles.
-website: "[VERIFY]"
+website: "https://lto.gov.ph"
 portals:
   - label: LTMS (Land Transportation Management System)
-    url: "[VERIFY]"
-hotline: "[VERIFY]"
+    url: "https://portal.lto.gov.ph"
+hotline: "1-342-586"

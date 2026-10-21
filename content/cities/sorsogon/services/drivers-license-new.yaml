@@ -16,7 +16,11 @@ offices:
   - lto-sorsogon-district-office
 
 whoCanApply:
-  - "[VERIFY] minimum age and how long you must have held a student permit"
+  - At least 17 years old
+  - Can read and write in Filipino and/or English
+  - Has held a Student-Driver's Permit for at least one month
+  - Has completed the Practical Driving Course (PDC)
+  - Has no unsettled traffic violations
 
 requirements:
   - label: "[VERIFY] Student permit"
@@ -45,10 +49,10 @@ steps:
     details: "[VERIFY] what you receive and when the card is released"
 
 fees:
-  - label: "[VERIFY] License fee"
-    amount: "[VERIFY]"
-  - label: "[VERIFY] Computer fee"
-    amount: "[VERIFY]"
+  - label: "License fee"
+    amount: "585"
+  - label: "Computer fee"
+    amount: "67.63"
 
 processingTime: "[VERIFY]"
 
