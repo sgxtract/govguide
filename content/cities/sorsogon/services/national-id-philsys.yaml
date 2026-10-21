@@ -1,0 +1,62 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+status: draft
+title: Register for the national ID (PhilSys)
+summary: Register for the Philippine Identification System and get your national ID.
+keywords:
+  - national ID
+  - PhilID
+  - PhilSys
+  - ePhilID
+category: ids-and-documents
+agency: psa
+offices:
+  - psa-sorsogon
+
+whoCanApply:
+  - "[VERIFY] who can register: Filipino citizens and resident aliens"
+
+requirements:
+  - label: "[VERIFY] PSA birth certificate"
+    form: original
+    alternatives:
+      - "[VERIFY] other accepted primary documents"
+  - label: "[VERIFY] One valid government ID with photo"
+    form: original
+
+steps:
+  - title: "[VERIFY] Set an appointment or go to a registration center"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Have your documents checked"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Have your photo, fingerprints and iris scan taken"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Get your transaction slip, then wait for your ID"
+    details: "[VERIFY] how the ID is delivered and how to get the printed ePhilID"
+
+fees:
+  - label: "[VERIFY] Registration"
+    amount: "[VERIFY]"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: "[VERIFY] PhilSys online registration"
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY]"
+
+tips:
+  - "[VERIFY] Keep your transaction slip; you need it to follow up."
+
+faqs:
+  - question: Can children register?
+    answer: "[VERIFY]"
+
+related:
+  - psa-birth-certificate
+
+sources:
+  - title: "[VERIFY] PhilSys official website"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

@@ -1,7 +1,12 @@
 agency: psa # must match the agency file name
 name: "[VERIFY] PSA office name in Sorsogon"
 address: "[VERIFY]"
+mapUrl: "[VERIFY]"
 hours:
   - days: [mon, tue, wed, thu, fri]
     opens: "[VERIFY]"
     closes: "[VERIFY]"
+phones:
+  - "[VERIFY]"
+notes:
+  - "[VERIFY] whether this office also handles PhilSys (national ID) registration"

@@ -33,7 +33,7 @@ export default async function Image({
   ]);
 
   return renderOgCard({
-    eyebrow: [city.name, category?.name].filter(Boolean).join(" · "),
+    eyebrow: [city.name, category?.name].filter(Boolean).join(", "),
     title: service.title,
     subtitle: agency ? agencyDisplayName(agency) : undefined,
   });

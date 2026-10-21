@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { PageHeader } from "@/components/layout/page-header";
+import { SuggestService } from "@/features/feedback/report-actions";
+import { pageMetadata } from "@/features/seo/page-metadata";
 import { getAgencyNames } from "@/features/services/agency-names";
-import { ServiceList } from "@/features/services/service-list";
+import { GuideRows } from "@/features/services/guide-rows";
 import {
   getCategory,
   getCity,
   listCategories,
   listServices,
 } from "@/lib/content/repository";
-import { pageMetadata } from "@/features/seo/page-metadata";
-import { SuggestService } from "@/features/feedback/report-actions";
 
 // The parent [city] layout supplies `city`; we add every category for it.
 export async function generateStaticParams() {
@@ -53,35 +53,43 @@ export default async function CategoryPage({
     listServices(city.slug, { category: category.slug }),
     getAgencyNames(),
   ]);
+  const path = `/${city.slug}/categories/${category.slug}`;
 
   return (
-    <div className="mx-auto max-w-page px-4 py-10">
-      <Breadcrumbs
-        path={`/${city.slug}/categories/${category.slug}`}
-        items={[
-          { label: city.name, href: `/${city.slug}` },
-          { label: category.name },
-        ]}
+    <>
+      <PageHeader
+        title={category.name}
+        subtitle={category.description}
+        back={{ href: `/${city.slug}`, label: city.name }}
+        breadcrumbs={{
+          path,
+          items: [
+            { label: city.name, href: `/${city.slug}` },
+            { label: category.name },
+          ],
+        }}
       />
-      <h1 className="mt-4 max-w-prose text-2xl font-extrabold tracking-tight">
-        {category.name}
-      </h1>
-      <p className="mt-3 max-w-prose text-lg text-muted">
-        {category.description}
-      </p>
 
-      <div className="mt-8 max-w-3xl">
-        {services.length > 0 ? (
-          <ServiceList services={services} agencyNames={agencyNames} />
-        ) : (
-          <div className="border-t-2 border-ink pt-4">
-            <p>No guides in this category yet.</p>
-            <p className="mt-2">
+      <div className="mx-auto max-w-page px-4 pt-6">
+        <div className="max-w-3xl">
+          {services.length > 0 ? (
+            <GuideRows
+              services={services}
+              agencyNames={agencyNames}
+              withSummary
+            />
+          ) : (
+            <div className="rounded-card bg-surface p-5">
+              <h2 className="text-lg font-extrabold">No guides here yet</h2>
+              <p className="mt-1 max-w-prose">
+                Guides for {category.name.toLowerCase()} are coming. Which one
+                should we explain first?
+              </p>
               <SuggestService city={city.name} />
-            </p>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

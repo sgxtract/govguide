@@ -1,7 +1,7 @@
-import { Link } from "@/components/ui/link";
 import { redirect } from "next/navigation";
 
-import { SiteHeader } from "@/components/layout/site-header";
+import { StandalonePage } from "@/components/layout/standalone-page";
+import { CityList } from "@/features/cities/city-list";
 import { listCities } from "@/lib/content/repository";
 
 /**
@@ -14,31 +14,8 @@ export default async function RootPage() {
   if (cities.length === 1 && only) redirect(`/${only.slug}`);
 
   return (
-    <>
-      <SiteHeader />
-      <main id="main" tabIndex={-1} className="flex-1">
-        <div className="mx-auto max-w-page px-4 py-10">
-          <h1 className="text-2xl font-extrabold tracking-tight">
-            Choose your city
-          </h1>
-          <ul role="list" className="mt-6 max-w-prose border-t-2 border-ink">
-            {cities.map((city) => (
-              <li
-                key={city.slug}
-                className="relative border-b border-rule py-3 hover:bg-surface"
-              >
-                <Link
-                  href={`/${city.slug}`}
-                  className="text-lg font-bold text-ink no-underline after:absolute after:inset-0 hover:underline"
-                >
-                  {city.name}
-                </Link>
-                <p className="mt-1 text-sm text-muted">{city.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </main>
-    </>
+    <StandalonePage title="Choose your city">
+      <CityList cities={cities} />
+    </StandalonePage>
   );
 }

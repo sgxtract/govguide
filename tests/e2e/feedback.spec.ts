@@ -40,9 +40,7 @@ test("an empty category offers to suggest a service for that city", async ({
 
 test("every page links to the contribute page", async ({ page }) => {
   await page.goto("/testville");
-  await page
-    .getByRole("link", { name: "Help keep this guide accurate" })
-    .click();
+  await page.getByRole("link", { name: "Help keep this accurate" }).click();
   await expect(
     page.getByRole("heading", {
       level: 1,

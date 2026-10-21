@@ -1,93 +1,104 @@
 # Design system
 
+The live reference is **`/styleguide`**: every token and component, rendered from the real
+code. This page explains the rules behind it. Decision record: `decisions/0009`.
+
 ## Direction
 
-A printed Citizen's Charter / transit timetable: calm, exact, local.
-Warm paper neutrals, near-black ink, one teal accent, ruled lines instead of shadows,
-a heavy top rule like a posted notice. Signature move: numbered steps + requirements
-checklist on the service page (Lesson 04).
+**The counter window, with a route to follow.** A government errand in Sorsogon, set like
+the signage at the counter. Bay teal frames each screen, "now serving" yellow marks the stops
+on your route, and the reading text is large and plain. Calm and practical: not a startup, not
+an old government portal.
 
-Avoid: SaaS gradients, glassy cards, icon grids, "unlock/seamless" copy, flag-color theming,
-and the cluttered old-portal look.
+Signature: **Your route** on the guide page. Spend boldness there; keep everything else quiet.
 
-## Typography
+Avoid: gradients, glassy cards, decorative illustrations, carousels, flag-colour theming,
+official seals, tracked-out all-caps labels, motion nobody asked for.
 
-- Atkinson Hyperlegible Next (variable 200–800), self-hosted via `next/font`.
-- Scale: `text-sm` 1rem · `text-base` 1.125rem (body) · `text-lg` · `text-xl` · `text-2xl` (fluid) · `text-display` (fluid).
-- Nothing smaller than 1rem. Text blocks use `max-w-prose` (65ch).
-- Fallback: next/font has no metrics for this font yet, so `layout.tsx` sets `adjustFontFallback: false` and an explicit `fallback` stack starting with "Atkinson Fallback", a size-matched local Arial/Roboto defined in globals.css. Re-measure if we change fonts.
+## Colour tokens (`src/styles/globals.css`)
 
-## Color tokens
+| Token                    | Use                                                                       |
+| ------------------------ | ------------------------------------------------------------------------- |
+| `brand`                  | App bar, title band, primary buttons. White text on it: 5.9:1             |
+| `brand-strong`           | Hover/pressed for brand                                                   |
+| `brand-tint`             | Icon wells, row hover (at 40%)                                            |
+| `signal`                 | Route stops, the search button, focus halo. Never for text or large fills |
+| `signal-tint`            | Notices (draft, out of date, good to know). Nothing else                  |
+| `bg`                     | Page background                                                           |
+| `surface`                | Lists, cards, tables                                                      |
+| `ink`                    | Text, heavy rules                                                         |
+| `muted`                  | Secondary text (≥ 6.4:1)                                                  |
+| `line`                   | Dividers only, too faint for control borders                              |
+| `control`                | Borders of inputs and checkboxes (≥ 3:1)                                  |
+| `link`                   | Text links                                                                |
+| `route`                  | Route line, ticks, progress bar; `on-route` for the tick mark             |
+| `open`, `soon`, `closed` | Office status text                                                        |
 
-| Token     | Use                                                      |
-| --------- | -------------------------------------------------------- |
-| `paper`   | Page background                                          |
-| `surface` | Footer, table stripes, quiet blocks                      |
-| `ink`     | Text, heavy rules                                        |
-| `muted`   | Secondary text; borders of interactive controls (≥3:1)   |
-| `rule`    | Decorative dividers only (too faint for control borders) |
-| `accent`  | Links, focus ring, checkbox accent. Use sparingly        |
-| `notice`  | Callouts for things people commonly forget               |
-
-All text pairs pass WCAG AA in both schemes. Exception: don't put `muted` text on `notice` (dark mode 4.4:1); use `ink`.
+- Every token is a light/dark pair; components never need `dark:` for colour.
+- Tailwind's default colours, radii, shadows and text sizes are removed: only tokens exist.
+- The `.verify-mark` yellow is fixed in both schemes so editors always spot `[VERIFY]`.
 
 ## Light / dark
 
-- Follows the system by default. The header toggle overrides it (two states; switching back to the system's choice removes the override).
-- Source of truth: `<meta name="color-scheme">`. CSS reads it with `:has()`; JS only edits the meta.
-- Colors adapt via `light-dark()` tokens, so components never need `dark:` for color.
-- `dark:` variant = "currently rendered dark" (system or override). Use it for non-color branches only.
-- Browsers without `light-dark()` follow the system only; the toggle is hidden there.
+Follows the system by default; the moon/sun button in the app bar overrides it. Source of truth
+is `<meta name="color-scheme">`, read by CSS with `:has()`. Browsers without `light-dark()`
+follow the system only and hide the toggle. See `decisions/0003`.
+
+## Type
+
+- **Atkinson Hyperlegible Next** (variable) for all reading text. Size-matched fallback in CSS.
+- **Archivo Narrow 700** via the `sign` utility: page titles, the home question, step numerals.
+  One static weight to keep it small on prepaid data.
+- Scale: `text-sm` 16px · `text-base` 18px (body) · `text-lg` 20 · `text-xl` 24 (section
+  headings) · `text-2xl` 32–40 (titles) · `text-display` 40–56 (home question). Nothing smaller.
+- Text blocks use `max-w-prose`. Headings balance; paragraphs `text-wrap: pretty`.
 
 ## Shape & depth
 
-- Radius: `rounded-sm` (2px), `rounded-md` (4px). Nothing rounder.
-- Shadow: `shadow-pop` only for menus, popovers, dialogs.
+- Radius by hierarchy: `rounded-control` (10px) for inputs and buttons, `rounded-card` (14px)
+  for containers, `rounded-pill` for tabs and chips, circles for route stops.
+- No drop shadows on content. Raised tiles use `shadow-lip` (a 2px edge). `shadow-pop` only for
+  things that float.
+
+## Layout
+
+- Mobile first at 375px; content column `max-w-3xl` inside `max-w-page` (72rem).
+- Every page: teal `SiteHeader` app bar, then a teal `PageHeader` band (back link, title,
+  subtitle), then content on `bg`.
+- Block grids always declare `grid-cols-1` (a shrinkable column), so long values can't push the
+  page wider than the phone.
+
+## Components
+
+| Component                             | Where             | Notes                                                                                          |
+| ------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------- |
+| `GuideRows`, `OfficeRows`, `CityList` | lists             | Whole row is the tap target (`tap-area` + `stretched`). Title short; agency or status under it |
+| `TopicTiles`                          | city home         | Two across on phones; empty topics say "Coming soon"                                           |
+| `AtAGlance`                           | guide             | Fees, takes, checked. Overlaps the title band                                                  |
+| `SectionTabs`                         | guide             | Sticky jump links; marks the section you're reading                                            |
+| `RequirementChecklist`                | guide             | Real checkboxes, "X of N ready", saved on this phone                                           |
+| `StepRoute`                           | guide             | The signature. Last step = finish flag. Plain numbered list on paper                           |
+| `OfficeCard`, `OpenStatusLabel`       | guide, agency     | Four states, each with its own marker shape and words                                          |
+| `Notice`                              | guide, contribute | Draft · may be out of date · good to know. Only these                                          |
+| `buttonClass()`                       | anywhere          | 48px tall, verb first, one primary per screen                                                  |
 
 ## Rules
 
-- Only token utilities. Tailwind's default colors, radii, shadows and text sizes are removed on purpose.
-- No arbitrary values (`[13px]`) without a comment explaining why.
-- Every interactive element: visible `:focus-visible`, 44px minimum tap target.
-
-## Lists
-
-- Lists of things to pick (categories, guides, cities) are ruled rows: a 2px `ink` rule on top, 1px `rule` dividers between rows. No cards.
-- The whole row is clickable via a stretched link (`after:absolute after:inset-0` on the link, `relative` on the row). The link text stays short.
-- Every styled `<ul>`/`<ol>` outside `<nav>` gets `role="list"` (Safari drops list semantics without bullets).
-- Empty lists say why they're empty and offer "Suggest a service".
-
-## The guide page (signature)
-
-- Order follows the errand: at a glance (fees, processing time, last checked) → what to bring → steps → fees → where to go → online → tips → questions → sources.
-- Steps: big `ink` numerals in their own column, timetable rows, "Where / Takes" underneath. Numerals are `aria-hidden`; the `<ol>` carries the order.
-- What to bring: ruled checklist with empty boxes (real tick-boxes in Lesson 07).
-- `notice` callouts: draft banner, "may be outdated" warning, Good to know. Nothing else.
-- One column at every width; the reading order never changes.
+- Only token utilities. No arbitrary values (`[13px]`) without a comment explaining why.
+- Every interactive element: visible focus (yellow halo, ink inner edge), at least 44px tall.
+- Icons (Lucide, 2px stroke, 22px) sit beside a visible word and are `aria-hidden`.
+- Status and errors always use words, never colour alone.
+- Every styled `<ul>`/`<ol>` outside `<nav>` gets `role="list"`.
 - Formatting (₱, dates, times, days) only through `src/lib/utils/format.ts`.
-
-## Checklist
-
-- "What to bring" uses real checkboxes with `.tick-box` (appearance:none, 2px ink square, CSS-mask checkmark). Not `accent-color`: it isn't in older Safari.
-- The whole row is the `<label>`, ≥44px tall. Ticked rows fade and strike through (`peer-checked:`).
-- Ticks are saved per guide in `localStorage` (`govguide:checklist:<path>`), by requirement label. Nothing leaves the phone.
 
 ## Print
 
-- Always prints the light palette; hides header, footer, breadcrumbs, buttons, jump links, FAQs, related guides and the report link.
-- Adds a print-only line: independent guide + online address.
-- `.print-urls` sections print link addresses; `li`, `tr` and `.print-keep` never split across pages.
-- Use `print:hidden` for anything that only makes sense on screen.
+Always the light palette on white. Hides the app bar, footer, tabs, buttons, FAQs, related
+guides and report links. Adds a line saying what the sheet is and its web address. The route
+becomes a numbered list; source and online links print their addresses.
 
-## Share card
+## Large text and high contrast
 
-- 1200×630, always light palette (hex copies in `og-card.tsx`; keep in sync with tokens).
-- Heavy ink top rule, "GovGuide / city · category", big title, agency, independence line.
-- Favicon: a ticked box (`app/icon.svg`), colors flip in dark browser UI.
-
-## Large text (phones set to 200%)
-
-- `<meta name="text-scale">` opts Chrome/Android into the phone's text size. Never set font-size on `html`/`:root` for screen.
-- Rows that put a label and a value side by side use `flex-wrap`; text never gets `shrink-0` or `whitespace-nowrap` (except money).
-- `text-2xl` and `text-display` are capped with `min(…, vw)` so headings don't split mid-word; headings also have `overflow-wrap: break-word`.
-- Filled controls (bg-ink buttons) get `border-transparent` so they keep an edge in Windows High Contrast mode.
+- `<meta name="text-scale">` lets Android's text size apply. Never set font-size on `html`.
+- Label/value rows wrap; headings break long words rather than overflow.
+- Filled controls keep a transparent border so they have an edge in Windows High Contrast mode.

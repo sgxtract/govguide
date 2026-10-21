@@ -71,3 +71,17 @@ export function formatDays(days: readonly Weekday[]): string {
   }
   return sorted.map((d) => DAY_NAMES[d]).join(", ");
 }
+
+/** "mon" → "Monday". */
+export function dayName(day: Weekday): string {
+  return DAY_NAMES[day];
+}
+
+/** 40 → "40 minutes", 60 → "1 hour", 75 → "1 hour 15 minutes". */
+export function formatDuration(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  const hours = h > 0 ? countLabel(h, "hour") : "";
+  const mins = m > 0 ? countLabel(m, "minute") : "";
+  return [hours, mins].filter(Boolean).join(" ") || "0 minutes";
+}

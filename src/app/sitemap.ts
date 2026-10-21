@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ]);
       return [
         { url: absoluteUrl(base) },
+        { url: absoluteUrl(`${base}/services`) },
         { url: absoluteUrl(`${base}/agencies`) },
         ...categories.map((c) => ({
           url: absoluteUrl(`${base}/categories/${c.slug}`),
@@ -44,5 +45,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   );
 
-  return [...perCity.flat(), { url: absoluteUrl("/contribute") }];
+  const standalone = ["/about", "/contribute", "/disclaimer", "/privacy"];
+  return [
+    ...perCity.flat(),
+    ...standalone.map((path) => ({ url: absoluteUrl(path) })),
+  ];
 }

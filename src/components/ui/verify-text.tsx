@@ -16,9 +16,7 @@ export function VerifyText({ text }: { text: string | number }) {
         <span key={index}>
           {part}
           {index < parts.length - 1 && (
-            <mark className="rounded-sm bg-notice px-1 text-sm font-bold text-ink">
-              {VERIFY}
-            </mark>
+            <mark className="verify-mark">{VERIFY}</mark>
           )}
         </span>
       ))}

@@ -1,29 +1,32 @@
+import { ExternalLink, Globe, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { PageHeader } from "@/components/layout/page-header";
+import { Icon } from "@/components/ui/icons";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { VerifyText } from "@/components/ui/verify-text";
 import {
   agencyDisplayName,
   agencyLevelLabel,
 } from "@/features/agencies/agency-level";
-import { OfficeDetails } from "@/features/offices/office-details";
-import { getAgencyNames } from "@/features/services/agency-names";
-import { ServiceList } from "@/features/services/service-list";
-import {
-  getAgency,
-  getCity,
-  listCityAgencies,
-  listOffices,
-  listServices,
-} from "@/lib/content/repository";
-import { VERIFY } from "@/lib/content/schemas";
-import Link from "next/dist/client/link";
-import { pageMetadata } from "@/features/seo/page-metadata";
 import {
   ReportOutdated,
   SuggestService,
 } from "@/features/feedback/report-actions";
+import { OfficeCard } from "@/features/offices/office-card";
+import { pageMetadata } from "@/features/seo/page-metadata";
+import { getAgencyNames } from "@/features/services/agency-names";
+import { GuideRows } from "@/features/services/guide-rows";
+import {
+  getAgency,
+  getCity,
+  listCityAgencies,
+  listHolidays,
+  listOffices,
+  listServices,
+} from "@/lib/content/repository";
+import { VERIFY } from "@/lib/content/schemas";
 
 // The parent [city] layout supplies `city`; only agencies active there get a page.
 export async function generateStaticParams({
@@ -67,123 +70,150 @@ export default async function AgencyPage({
   if (!data) notFound();
   const { city, agency } = data;
 
-  const [offices, services, agencyNames] = await Promise.all([
+  const [offices, services, holidays, agencyNames] = await Promise.all([
     listOffices(city.slug, { agency: agency.slug }),
     listServices(city.slug, { agency: agency.slug }),
+    listHolidays(),
     getAgencyNames(),
   ]);
+  const path = `/${city.slug}/agencies/${agency.slug}`;
+  const hasChannels =
+    agency.website || agency.portals.length > 0 || agency.hotline;
 
   return (
-    <div className="mx-auto max-w-page px-4 py-10">
-      <Breadcrumbs
-        path={`/${city.slug}/agencies/${agency.slug}`}
-        items={[
-          { label: city.name, href: `/${city.slug}` },
-          { label: "Offices", href: `/${city.slug}/agencies` },
-          { label: agency.acronym ?? agency.name },
-        ]}
+    <>
+      <PageHeader
+        title={agencyDisplayName(agency)}
+        subtitle={agencyLevelLabel(agency.level)}
+        back={{ href: `/${city.slug}/agencies`, label: "All offices" }}
+        breadcrumbs={{
+          path,
+          items: [
+            { label: city.name, href: `/${city.slug}` },
+            { label: "Offices", href: `/${city.slug}/agencies` },
+            { label: agency.acronym ?? agency.name },
+          ],
+        }}
       />
 
-      <div className="max-w-3xl">
-        <h1 className="mt-4 text-2xl font-extrabold tracking-tight">
-          <p className="mt-2">
-            <Link href={`/${city.slug}/agencies/${agency.slug}`}>
-              {agencyDisplayName(agency)}
-            </Link>
-          </p>
-        </h1>
-        <p className="mt-1 text-muted">{agencyLevelLabel(agency.level)}</p>
-        <p className="mt-3 text-lg">{agency.description}</p>
+      <div className="mx-auto max-w-page px-4 pt-6">
+        <div className="grid max-w-3xl grid-cols-1 gap-10">
+          <p className="text-lg">{agency.description}</p>
 
-        {(agency.website || agency.portals.length > 0 || agency.hotline) && (
-          <section aria-labelledby="contact-heading" className="mt-8">
-            <h2 id="contact-heading" className="mb-3 text-xl font-bold">
-              Official channels
-            </h2>
-            <ul role="list" className="border-t-2 border-ink">
-              {agency.website && (
-                <li className="border-b border-rule py-3">
-                  <span className="text-sm text-muted">Website: </span>
-                  {agency.website === VERIFY ? (
-                    <VerifyText text={VERIFY} />
-                  ) : (
-                    <a href={agency.website}>{agency.website}</a>
-                  )}
-                </li>
-              )}
-              {agency.portals.map((portal) => (
-                <li key={portal.label} className="border-b border-rule py-3">
-                  <span className="text-sm text-muted">Online: </span>
-                  {portal.url === VERIFY ? (
-                    <span>
-                      {portal.label} <VerifyText text={VERIFY} />
-                    </span>
-                  ) : (
-                    <a href={portal.url}>{portal.label}</a>
-                  )}
-                </li>
-              ))}
-              {agency.hotline && (
-                <li className="border-b border-rule py-3">
-                  <span className="text-sm text-muted">Hotline: </span>
-                  {agency.hotline.includes(VERIFY) ? (
-                    <VerifyText text={agency.hotline} />
-                  ) : (
-                    <a href={`tel:${agency.hotline.replace(/[^\d+]/g, "")}`}>
-                      {agency.hotline}
-                    </a>
-                  )}
-                </li>
-              )}
-            </ul>
-          </section>
-        )}
-
-        <section aria-labelledby="offices-heading" className="mt-10">
-          <h2 id="offices-heading" className="mb-3 text-xl font-bold">
-            Offices in {city.name}
-          </h2>
-          {offices.length > 0 ? (
-            <div className="space-y-8">
-              {offices.map((office) => (
-                // id lets guides link straight to one office: /agencies/lto#lto-sorsogon-district-office
-                <div key={office.slug} id={office.slug} className="scroll-mt-4">
-                  <OfficeDetails office={office} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="border-t-2 border-ink pt-4">
-              No local office listed. Check the official channels above.
-            </p>
-          )}
-        </section>
-
-        <section aria-labelledby="guides-heading" className="mt-10">
-          <h2 id="guides-heading" className="mb-3 text-xl font-bold">
-            Guides for this agency
-          </h2>
-          {services.length > 0 ? (
-            <ServiceList services={services} agencyNames={agencyNames} />
-          ) : (
-            <div className="border-t-2 border-ink pt-4">
-              <p>No guides for this agency yet.</p>
-              <p className="mt-2">
-                <SuggestService city={city.name} />
+          <section aria-labelledby="offices-heading">
+            <SectionHeading id="offices-heading">
+              Offices in {city.name}
+            </SectionHeading>
+            {offices.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4">
+                {offices.map((office) => (
+                  <OfficeCard
+                    key={office.slug}
+                    office={office}
+                    holidays={holidays}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="rounded-card bg-surface px-4 py-3">
+                No local office listed. Use the official channels below.
               </p>
-            </div>
+            )}
+          </section>
+
+          {hasChannels && (
+            <section aria-labelledby="channels-heading" className="print-urls">
+              <SectionHeading id="channels-heading">
+                Official channels
+              </SectionHeading>
+              <ul role="list" className="rounded-card bg-surface">
+                {agency.website && (
+                  <Channel icon={Globe} label="Website">
+                    {agency.website === VERIFY ? (
+                      <VerifyText text={VERIFY} />
+                    ) : (
+                      <a href={agency.website}>{agency.website}</a>
+                    )}
+                  </Channel>
+                )}
+                {agency.portals.map((portal) => (
+                  <Channel
+                    key={portal.label}
+                    icon={ExternalLink}
+                    label="Online"
+                  >
+                    {portal.url === VERIFY ? (
+                      <span>
+                        <VerifyText text={portal.label} />{" "}
+                        <VerifyText text={VERIFY} />
+                      </span>
+                    ) : (
+                      <a href={portal.url}>
+                        <VerifyText text={portal.label} />
+                      </a>
+                    )}
+                  </Channel>
+                ))}
+                {agency.hotline && (
+                  <Channel icon={Phone} label="Hotline">
+                    {agency.hotline.includes(VERIFY) ? (
+                      <VerifyText text={agency.hotline} />
+                    ) : (
+                      <a href={`tel:${agency.hotline.replace(/[^\d+]/g, "")}`}>
+                        {agency.hotline}
+                      </a>
+                    )}
+                  </Channel>
+                )}
+              </ul>
+            </section>
           )}
-        </section>
-        <section
-          aria-label="Report a change"
-          className="mt-10 border-t-2 border-ink pt-4"
-        >
-          <ReportOutdated
-            subject={`${agencyDisplayName(agency)} in ${city.name}`}
-            path={`/${city.slug}/agencies/${agency.slug}`}
-          />
-        </section>
+
+          <section aria-labelledby="guides-heading">
+            <SectionHeading id="guides-heading">
+              Guides for this agency
+            </SectionHeading>
+            {services.length > 0 ? (
+              <GuideRows services={services} agencyNames={agencyNames} />
+            ) : (
+              <div className="rounded-card bg-surface p-5">
+                <p>No guides for this agency yet.</p>
+                <SuggestService city={city.name} />
+              </div>
+            )}
+          </section>
+
+          <section
+            aria-label="Report a change"
+            className="border-t-2 border-ink pt-5"
+          >
+            <ReportOutdated
+              subject={`${agencyDisplayName(agency)} in ${city.name}`}
+              path={path}
+            />
+          </section>
+        </div>
       </div>
-    </div>
+    </>
+  );
+}
+
+function Channel({
+  icon,
+  label,
+  children,
+}: {
+  icon: typeof Globe;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <li className="flex gap-3 border-b border-line px-4 py-3 last:border-0">
+      <Icon icon={icon} className="mt-0.5 shrink-0 text-muted" />
+      <div className="min-w-0 wrap-anywhere">
+        <span className="block text-sm text-muted">{label}</span>
+        {children}
+      </div>
+    </li>
   );
 }

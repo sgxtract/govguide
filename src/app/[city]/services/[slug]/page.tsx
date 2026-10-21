@@ -1,15 +1,28 @@
+import { ChevronRight, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
-import { Link } from "@/components/ui/link";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { PageHeader } from "@/components/layout/page-header";
+import { JsonLd } from "@/components/seo/json-ld";
+import { Icon } from "@/components/ui/icons";
+import { Link } from "@/components/ui/link";
+import { Notice } from "@/components/ui/notice";
 import { VerifyText } from "@/components/ui/verify-text";
 import { siteConfig } from "@/config/site";
-import { OfficeDetails } from "@/features/offices/office-details";
+import { absoluteUrl } from "@/config/site-url";
+import { agencyDisplayName } from "@/features/agencies/agency-level";
+import { ReportOutdated } from "@/features/feedback/report-actions";
+import { OfficeCard } from "@/features/offices/office-card";
+import { pageMetadata } from "@/features/seo/page-metadata";
+import { serviceJsonLd } from "@/features/seo/structured-data";
+import { AtAGlance } from "@/features/services/at-a-glance";
 import { FeeTable } from "@/features/services/fee-table";
-import { RequirementList } from "@/features/services/requirement-list";
+import { PrintButton } from "@/features/services/print-button";
+import { RequirementChecklist } from "@/features/services/requirement-checklist";
+import { SectionTabs } from "@/features/services/section-tabs";
 import { SourceList } from "@/features/services/source-list";
-import { StepList } from "@/features/services/step-list";
+import { StepRoute } from "@/features/services/step-route";
 import { isDueForReverification } from "@/lib/content/freshness";
 import {
   getAgency,
@@ -17,17 +30,11 @@ import {
   getCity,
   getOffice,
   getService,
+  listHolidays,
   listServices,
 } from "@/lib/content/repository";
 import { VERIFY } from "@/lib/content/schemas";
-import { formatDate, formatPeso } from "@/lib/utils/format";
-import { ChecklistMemory } from "@/features/services/checklist-memory";
-import { PrintButton } from "@/features/services/print-button";
-import { pageMetadata } from "@/features/seo/page-metadata";
-import { JsonLd } from "@/components/seo/json-ld";
-import { absoluteUrl } from "@/config/site-url";
-import { serviceJsonLd } from "@/features/seo/structured-data";
-import { ReportOutdated } from "@/features/feedback/report-actions";
+import { formatDate } from "@/lib/utils/format";
 
 // The parent [city] layout supplies `city`; we add every visible guide in it.
 export async function generateStaticParams({
@@ -51,11 +58,12 @@ async function load(params: Params) {
   ]);
   if (!city || !service) return undefined;
 
-  const [agency, category, offices, related] = await Promise.all([
+  const [agency, category, offices, related, holidays] = await Promise.all([
     getAgency(service.agency),
     getCategory(service.category),
     Promise.all(service.offices.map((o) => getOffice(city.slug, o))),
     Promise.all(service.related.map((r) => getService(city.slug, r))),
+    listHolidays(),
   ]);
   if (!agency || !category) return undefined;
 
@@ -64,6 +72,7 @@ async function load(params: Params) {
     service,
     agency,
     category,
+    holidays,
     // Drop references that aren't visible (e.g. a related draft in production).
     offices: offices.filter((o) => o !== undefined),
     related: related.filter((r) => r !== undefined),
@@ -92,36 +101,25 @@ export default async function ServicePage({
 }: PageProps<"/[city]/services/[slug]">) {
   const data = await load(params);
   if (!data) notFound();
-  const { city, service, agency, category, offices, related } = data;
+  const { city, service, agency, category, offices, related, holidays } = data;
 
   const path = `/${city.slug}/services/${service.slug}`;
   const isDraft = service.status === "draft";
   const isStale = !isDraft && isDueForReverification(service.lastVerified);
-  const totalFee = service.fees.every((f) => typeof f.amount === "number")
-    ? service.fees.reduce(
-        (sum, f) => (typeof f.amount === "number" ? sum + f.amount : sum),
-        0,
-      )
-    : undefined;
 
-  // Only link to sections that exist on this guide.
+  // Tabs only for sections this guide has, in reading order.
   const sections = [
-    { id: "requirements", label: "What to bring" },
-    { id: "steps", label: "Steps" },
+    { id: "bring", label: "What to bring" },
+    { id: "route", label: "Your route" },
     service.fees.length > 0 && { id: "fees", label: "Fees" },
     offices.length > 0 && { id: "where", label: "Where to go" },
     service.online.length > 0 && { id: "online", label: "Online" },
-    service.faqs.length > 0 && { id: "faqs", label: "Questions" },
+    service.faqs.length > 0 && { id: "questions", label: "Questions" },
     { id: "sources", label: "Sources" },
   ].filter((s) => s !== false);
 
   return (
-    <article className="mx-auto max-w-page px-4 py-10">
-      {/* Paper has no header or footer, so the print copy says what it is. */}
-      <p className="mb-4 hidden border-b-2 border-ink pb-2 text-sm print:block">
-        {siteConfig.name}: an independent guide, not an official government
-        website. Online version: {absoluteUrl(path)}
-      </p>
+    <article>
       {!isDraft && (
         <JsonLd
           data={serviceJsonLd({
@@ -134,271 +132,254 @@ export default async function ServicePage({
           })}
         />
       )}
-      <Breadcrumbs
-        path={path}
-        items={[
-          { label: city.name, href: `/${city.slug}` },
-          {
-            label: category.name,
-            href: `/${city.slug}/categories/${category.slug}`,
-          },
-          { label: service.title },
-        ]}
+
+      {/* Paper has no header or footer, so the print copy says what it is. */}
+      <p className="mx-4 mb-4 hidden border-b-2 border-ink pb-2 text-sm print:block">
+        {siteConfig.name}: an independent guide, not an official government
+        website. Online version: {absoluteUrl(path)}
+      </p>
+
+      <PageHeader
+        title={service.title}
+        subtitle={agencyDisplayName(agency)}
+        back={{
+          href: `/${city.slug}/categories/${category.slug}`,
+          label: category.name,
+        }}
+        breadcrumbs={{
+          path,
+          items: [
+            { label: city.name, href: `/${city.slug}` },
+            {
+              label: category.name,
+              href: `/${city.slug}/categories/${category.slug}`,
+            },
+            { label: service.title },
+          ],
+        }}
+        overlap
       />
 
-      <div className="max-w-3xl">
-        {isDraft && (
-          <p className="mt-6 rounded-md border-l-6 border-ink bg-notice px-4 py-3">
-            <strong>Draft, not published.</strong> Highlighted {VERIFY} values
-            still need checking against an official source.
+      <div className="mx-auto max-w-page px-4">
+        <div className="max-w-3xl">
+          <AtAGlance service={service} />
+
+          <div className="mt-5 grid grid-cols-1 gap-3">
+            {isDraft && (
+              <Notice kind="draft" title="Draft, not published">
+                <p>
+                  Highlighted <VerifyText text={VERIFY} /> values still need
+                  checking against an official source.
+                </p>
+              </Notice>
+            )}
+            {isStale && (
+              <Notice kind="warning" title="This guide may be out of date">
+                <p>
+                  Last checked{" "}
+                  <time dateTime={service.lastVerified}>
+                    {formatDate(service.lastVerified)}
+                  </time>
+                  . Confirm with the office before you go.
+                </p>
+              </Notice>
+            )}
+          </div>
+
+          <p className="mt-5 text-lg">
+            <VerifyText text={service.summary} />
           </p>
-        )}
 
-        <h1 className="mt-4 text-2xl font-extrabold tracking-tight">
-          {service.title}
-        </h1>
-        <p className="mt-3 text-lg">
-          <VerifyText text={service.summary} />
-        </p>
-        <p className="mt-2 text-muted">
-          {agency.name}
-          {agency.acronym && ` (${agency.acronym})`}
-        </p>
-
-        {isStale && (
-          <p className="mt-4 rounded-md border-l-6 border-ink bg-notice px-4 py-3">
-            This guide was last checked on{" "}
-            <time dateTime={service.lastVerified}>
-              {formatDate(service.lastVerified)}
-            </time>
-            . Things may have changed, so confirm with the office before you go.
-          </p>
-        )}
-
-        {/* At a glance: the three things people ask first. */}
-        <dl className="mt-6 grid border-t-2 border-ink sm:grid-cols-3">
-          <div className="border-b border-rule py-3 sm:pr-4">
-            <dt className="text-sm text-muted">Fees</dt>
-            <dd className="font-bold tabular-nums">
-              {totalFee !== undefined ? (
-                service.fees.length === 0 ? (
-                  "Not listed"
-                ) : (
-                  formatPeso(totalFee)
-                )
-              ) : (
-                <VerifyText text={VERIFY} />
-              )}
-            </dd>
+          <div className="mt-4">
+            <SectionTabs sections={sections} />
           </div>
-          <div className="border-b border-rule py-3 sm:pr-4">
-            <dt className="text-sm text-muted">Processing time</dt>
-            <dd className="font-bold">
-              <VerifyText text={service.processingTime} />
-            </dd>
-          </div>
-          <div className="border-b border-rule py-3">
-            <dt className="text-sm text-muted">Last checked</dt>
-            <dd className="font-bold">
-              {service.lastVerified === VERIFY ? (
-                <VerifyText text={VERIFY} />
-              ) : (
-                <time dateTime={service.lastVerified}>
-                  {formatDate(service.lastVerified)}
-                </time>
-              )}
-            </dd>
-          </div>
-        </dl>
 
-        <div className="mt-6">
-          <PrintButton />
+          <div className="grid grid-cols-1 gap-12 pt-4">
+            {service.whoCanApply.length > 0 && (
+              <GuideSection id="who" title="Who can apply">
+                <ul role="list" className="list-disc space-y-1 pl-5">
+                  {service.whoCanApply.map((item) => (
+                    <li key={item}>
+                      <VerifyText text={item} />
+                    </li>
+                  ))}
+                </ul>
+              </GuideSection>
+            )}
+
+            <GuideSection id="bring" title="What to bring">
+              <RequirementChecklist
+                guide={path}
+                requirements={service.requirements}
+                labelledBy="bring-heading"
+              />
+              <div className="mt-4">
+                <PrintButton />
+              </div>
+            </GuideSection>
+
+            <GuideSection id="route" title="Your route">
+              <StepRoute steps={service.steps} />
+            </GuideSection>
+
+            {service.fees.length > 0 && (
+              <GuideSection id="fees" title="Fees">
+                <FeeTable fees={service.fees} />
+              </GuideSection>
+            )}
+
+            {offices.length > 0 && (
+              <GuideSection id="where" title="Where to go">
+                <div className="grid grid-cols-1 gap-4">
+                  {offices.map((office) => (
+                    <OfficeCard
+                      key={office.slug}
+                      office={office}
+                      holidays={holidays}
+                    />
+                  ))}
+                </div>
+              </GuideSection>
+            )}
+
+            {service.online.length > 0 && (
+              <GuideSection id="online" title="What you can do online">
+                <ul role="list" className="print-urls rounded-card bg-surface">
+                  {service.online.map((item) => (
+                    <li
+                      key={item.label}
+                      className="border-b border-line px-4 py-3 last:border-0"
+                    >
+                      {item.url === VERIFY ? (
+                        <span className="font-bold">
+                          <VerifyText text={item.label} />{" "}
+                          <VerifyText text={item.url} />
+                        </span>
+                      ) : (
+                        <a
+                          href={item.url}
+                          className="inline-flex items-center gap-1.5 font-bold"
+                        >
+                          <VerifyText text={item.label} />
+                          <Icon icon={ExternalLink} size={18} />
+                        </a>
+                      )}
+                      <span className="ml-2 text-sm text-muted">
+                        official site
+                      </span>
+                      <p className="mt-1">
+                        <VerifyText text={item.whatYouCanDo} />
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </GuideSection>
+            )}
+
+            {service.tips.length > 0 && (
+              <Notice kind="info" title="Good to know">
+                <ul role="list" className="list-disc space-y-1 pl-5">
+                  {service.tips.map((tip) => (
+                    <li key={tip}>
+                      <VerifyText text={tip} />
+                    </li>
+                  ))}
+                </ul>
+              </Notice>
+            )}
+
+            {service.faqs.length > 0 && (
+              <GuideSection id="questions" title="Common questions" noPrint>
+                <div className="rounded-card bg-surface">
+                  {service.faqs.map((faq) => (
+                    // Native disclosure: works without JS, and Ctrl+F finds hidden answers.
+                    <details
+                      key={faq.question}
+                      className="group border-b border-line last:border-0"
+                    >
+                      <summary className="flex min-h-14 list-none items-center justify-between gap-3 px-4 py-3 font-bold [&::-webkit-details-marker]:hidden">
+                        <span>
+                          <VerifyText text={faq.question} />
+                        </span>
+                        <Icon
+                          icon={ChevronRight}
+                          className="shrink-0 text-muted transition-transform group-open:rotate-90"
+                        />
+                      </summary>
+                      <p className="px-4 pb-4">
+                        <VerifyText text={faq.answer} />
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </GuideSection>
+            )}
+
+            {related.length > 0 && (
+              <GuideSection id="related" title="Related guides" noPrint>
+                <ul role="list" className="rounded-card bg-surface">
+                  {related.map((r) => (
+                    <li
+                      key={r.slug}
+                      className="tap-area flex min-h-14 items-center gap-3 border-b border-line px-4 py-3 first:rounded-t-card last:rounded-b-card last:border-0 hover:bg-brand-tint/40"
+                    >
+                      <Link
+                        href={`/${city.slug}/services/${r.slug}`}
+                        className="stretched flex-1 font-bold text-ink no-underline"
+                      >
+                        {r.title}
+                      </Link>
+                      <Icon
+                        icon={ChevronRight}
+                        className="shrink-0 text-muted"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </GuideSection>
+            )}
+
+            <section
+              id="sources"
+              aria-labelledby="sources-heading"
+              className="print-urls border-t-2 border-ink pt-5"
+            >
+              <h2 id="sources-heading" className="mb-3 text-xl font-extrabold">
+                Sources
+              </h2>
+              <SourceList sources={service.sources} />
+              <div className="mt-8">
+                <ReportOutdated subject={service.title} path={path} />
+              </div>
+            </section>
+          </div>
         </div>
-
-        <nav aria-label="On this page" className="mt-6 text-sm print:hidden">
-          <ul className="flex flex-wrap gap-x-4 gap-y-1">
-            {sections.map((s) => (
-              <li key={s.id}>
-                <a href={`#${s.id}`}>{s.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {service.whoCanApply.length > 0 && (
-          <section aria-labelledby="who-heading" className="mt-10">
-            <h2 id="who-heading" className="text-xl font-bold">
-              Who can apply
-            </h2>
-            <ul role="list" className="mt-3 list-disc space-y-1 pl-5">
-              {service.whoCanApply.map((item) => (
-                <li key={item}>
-                  <VerifyText text={item} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <section
-          id="requirements"
-          aria-labelledby="requirements-heading"
-          className="mt-10 scroll-mt-4"
-        >
-          <h2 id="requirements-heading" className="mb-3 text-xl font-bold">
-            What to bring
-          </h2>
-          <ChecklistMemory guide={path}>
-            <RequirementList requirements={service.requirements} />
-          </ChecklistMemory>
-        </section>
-
-        <section
-          id="steps"
-          aria-labelledby="steps-heading"
-          className="mt-10 scroll-mt-4"
-        >
-          <h2 id="steps-heading" className="mb-3 text-xl font-bold">
-            Steps
-          </h2>
-          <StepList steps={service.steps} />
-        </section>
-
-        {service.fees.length > 0 && (
-          <section
-            id="fees"
-            aria-labelledby="fees-heading"
-            className="mt-10 scroll-mt-4"
-          >
-            <h2 id="fees-heading" className="mb-3 text-xl font-bold">
-              Fees
-            </h2>
-            <FeeTable fees={service.fees} />
-          </section>
-        )}
-
-        {offices.length > 0 && (
-          <section
-            id="where"
-            aria-labelledby="where-heading"
-            className="mt-10 scroll-mt-4"
-          >
-            <h2 id="where-heading" className="mb-3 text-xl font-bold">
-              Where to go
-            </h2>
-            <div className="space-y-8">
-              {offices.map((office) => (
-                <OfficeDetails key={office.slug} office={office} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {service.online.length > 0 && (
-          <section
-            id="online"
-            aria-labelledby="online-heading"
-            className="print-urls mt-10 scroll-mt-4"
-          >
-            <h2 id="online-heading" className="mb-3 text-xl font-bold">
-              What you can do online
-            </h2>
-            <ul role="list" className="border-t-2 border-ink">
-              {service.online.map((item) => (
-                <li key={item.label} className="border-b border-rule py-3">
-                  {item.url === VERIFY ? (
-                    <span className="font-bold">
-                      {item.label} <VerifyText text={item.url} />
-                    </span>
-                  ) : (
-                    <a href={item.url} className="font-bold">
-                      {item.label}
-                    </a>
-                  )}
-                  <span className="ml-2 text-sm text-muted">official site</span>
-                  <p className="mt-1">
-                    <VerifyText text={item.whatYouCanDo} />
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {service.tips.length > 0 && (
-          <section
-            aria-labelledby="tips-heading"
-            className="mt-10 rounded-md border-l-6 border-ink bg-notice px-4 py-4"
-          >
-            <h2 id="tips-heading" className="text-lg font-bold">
-              Good to know
-            </h2>
-            <ul role="list" className="mt-2 list-disc space-y-1 pl-5">
-              {service.tips.map((tip) => (
-                <li key={tip}>
-                  <VerifyText text={tip} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {service.faqs.length > 0 && (
-          <section
-            id="faqs"
-            aria-labelledby="faqs-heading"
-            className="mt-10 scroll-mt-4 print:hidden"
-          >
-            <h2 id="faqs-heading" className="mb-3 text-xl font-bold">
-              Common questions
-            </h2>
-            <div className="border-t-2 border-ink">
-              {service.faqs.map((faq) => (
-                // Native disclosure: works without JS, and Ctrl+F finds hidden answers.
-                <details key={faq.question} className="border-b border-rule">
-                  <summary className="cursor-pointer py-3 font-bold">
-                    <VerifyText text={faq.question} />
-                  </summary>
-                  <p className="pb-4">
-                    <VerifyText text={faq.answer} />
-                  </p>
-                </details>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {related.length > 0 && (
-          <section aria-labelledby="related-heading" className="mt-10">
-            <h2 id="related-heading" className="mb-3 text-xl font-bold">
-              Related guides
-            </h2>
-            <ul role="list" className="space-y-1">
-              {related.map((r) => (
-                <li key={r.slug}>
-                  <Link href={`/${city.slug}/services/${r.slug}`}>
-                    {r.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <section
-          id="sources"
-          aria-labelledby="sources-heading"
-          className="print-urls mt-10 scroll-mt-4 border-t-2 border-ink pt-4"
-        >
-          <h2 id="sources-heading" className="mb-3 text-xl font-bold">
-            Sources
-          </h2>
-          <SourceList sources={service.sources} />
-          <div className="mt-6">
-            <ReportOutdated subject={service.title} path={path} />
-          </div>
-        </section>
       </div>
     </article>
+  );
+}
+
+function GuideSection({
+  id,
+  title,
+  noPrint = false,
+  children,
+}: {
+  id: string;
+  title: string;
+  noPrint?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      id={id}
+      aria-labelledby={`${id}-heading`}
+      className={noPrint ? "print:hidden" : undefined}
+    >
+      <h2 id={`${id}-heading`} className="mb-3 text-xl font-extrabold">
+        {title}
+      </h2>
+      {children}
+    </section>
   );
 }

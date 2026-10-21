@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Size-matched fallback shown while Atkinson Hyperlegible Next loads, so text
-   doesn't jump when the real font arrives. Values measured from the font file
+   doesn't jump when the real font arrives. Measured from the font file
    (unitsPerEm 1000, ascent 984, descent -316, avg width 444) against Arial;
    Roboto and Liberation Sans are within 0.2%. Re-measure if the font changes. */
 @font-face {
@@ -16,27 +16,53 @@
 }
 
 /*
- * GovGuide design tokens. See docs/design-system.md.
- * Direction: a printed Citizen's Charter / transit timetable.
- * Warm paper neutrals, one teal accent, ruled lines instead of shadows.
+ * GovGuide design tokens. See docs/design-system.md and /styleguide.
+ * Direction: the counter window. Bay teal frames each screen, "now serving"
+ * yellow marks the stops on your route, reading text is large and plain.
  */
 
 /* ── 1. Raw palette: every color as a light/dark pair ─────────────────── */
 :root {
-  --paper-light: oklch(97.5% 0.008 85);
-  --paper-dark: oklch(19% 0.008 70);
-  --surface-light: oklch(94.5% 0.012 85);
-  --surface-dark: oklch(24% 0.01 70);
-  --ink-light: oklch(22% 0.015 60);
-  --ink-dark: oklch(93% 0.01 85);
-  --muted-light: oklch(45% 0.015 60);
-  --muted-dark: oklch(74% 0.012 80);
-  --rule-light: oklch(84% 0.012 80);
-  --rule-dark: oklch(36% 0.01 70);
-  --accent-light: oklch(45% 0.075 200);
-  --accent-dark: oklch(80% 0.09 190);
-  --notice-light: oklch(92% 0.09 95);
-  --notice-dark: oklch(38% 0.07 85);
+  --brand-light: #1d6e75; /* headers, primary buttons. White on it: 5.9:1 */
+  --brand-dark: #155a60;
+  --brand-strong-light: #155a60; /* hover / pressed */
+  --brand-strong-dark: #0f474c;
+  --brand-tint-light: #d6e8e7; /* icon wells, row hover */
+  --brand-tint-dark: #1f3836;
+  --on-brand-light: #ffffff;
+  --on-brand-dark: #ffffff;
+  --signal-light: #f5c842; /* route stops, search button, focus halo */
+  --signal-dark: #f5c842;
+  --on-signal-light: #15201f;
+  --on-signal-dark: #15201f;
+  --signal-tint-light: #fff3c4; /* notices */
+  --signal-tint-dark: #3a3214;
+  --bg-light: #ecf0ef;
+  --bg-dark: #0e1615;
+  --surface-light: #ffffff;
+  --surface-dark: #172221;
+  --ink-light: #15201f;
+  --ink-dark: #e6eeed;
+  --muted-light: #4a5857; /* 6.4:1 on bg, 7.4:1 on surface */
+  --muted-dark: #a3b2b0;
+  --line-light: #d3dcdb; /* dividers only, too faint for control borders */
+  --line-dark: #2c3a39;
+  --control-light: #7a8b89; /* input and checkbox borders, 3:1 or more */
+  --control-dark: #71817f;
+  --link-light: #0d5c63;
+  --link-dark: #7fd3d7;
+  --route-light: #1d6e75; /* route line, ticks, progress */
+  --route-dark: #3fa7ae;
+  --on-route-light: #ffffff;
+  --on-route-dark: #0e1615;
+  --open-light: #1e7b3a;
+  --open-dark: #62c784;
+  --soon-light: #8a5a00;
+  --soon-dark: #f2b84b;
+  --closed-light: #b3261e;
+  --closed-dark: #ff8f85;
+  --lip-light: #c9d3d2; /* the 2px edge under raised tiles */
+  --lip-dark: #0a100f;
 }
 
 /* ── 2. Color scheme: system by default, overridable via <meta> ───────── */
@@ -52,37 +78,82 @@
 
   /* Fallback for browsers without light-dark() (Safari < 17.5, Chrome < 123):
      follow the system setting only. The toggle is hidden there. */
-  --paper: var(--paper-light);
+  --brand: var(--brand-light);
+  --brand-strong: var(--brand-strong-light);
+  --brand-tint: var(--brand-tint-light);
+  --on-brand: var(--on-brand-light);
+  --signal: var(--signal-light);
+  --on-signal: var(--on-signal-light);
+  --signal-tint: var(--signal-tint-light);
+  --bg: var(--bg-light);
   --surface: var(--surface-light);
   --ink: var(--ink-light);
   --muted: var(--muted-light);
-  --rule: var(--rule-light);
-  --accent: var(--accent-light);
-  --notice: var(--notice-light);
+  --line: var(--line-light);
+  --control: var(--control-light);
+  --link: var(--link-light);
+  --route: var(--route-light);
+  --on-route: var(--on-route-light);
+  --open: var(--open-light);
+  --soon: var(--soon-light);
+  --closed: var(--closed-light);
+  --lip: var(--lip-light);
 
   @media (prefers-color-scheme: dark) {
-    --paper: var(--paper-dark);
+    --brand: var(--brand-dark);
+    --brand-strong: var(--brand-strong-dark);
+    --brand-tint: var(--brand-tint-dark);
+    --on-brand: var(--on-brand-dark);
+    --signal: var(--signal-dark);
+    --on-signal: var(--on-signal-dark);
+    --signal-tint: var(--signal-tint-dark);
+    --bg: var(--bg-dark);
     --surface: var(--surface-dark);
     --ink: var(--ink-dark);
     --muted: var(--muted-dark);
-    --rule: var(--rule-dark);
-    --accent: var(--accent-dark);
-    --notice: var(--notice-dark);
+    --line: var(--line-dark);
+    --control: var(--control-dark);
+    --link: var(--link-dark);
+    --route: var(--route-dark);
+    --on-route: var(--on-route-dark);
+    --open: var(--open-dark);
+    --soon: var(--soon-dark);
+    --closed: var(--closed-dark);
+    --lip: var(--lip-dark);
   }
 
   @supports (color: light-dark(white, black)) {
-    --paper: light-dark(var(--paper-light), var(--paper-dark));
+    --brand: light-dark(var(--brand-light), var(--brand-dark));
+    --brand-strong: light-dark(
+      var(--brand-strong-light),
+      var(--brand-strong-dark)
+    );
+    --brand-tint: light-dark(var(--brand-tint-light), var(--brand-tint-dark));
+    --on-brand: light-dark(var(--on-brand-light), var(--on-brand-dark));
+    --signal: light-dark(var(--signal-light), var(--signal-dark));
+    --on-signal: light-dark(var(--on-signal-light), var(--on-signal-dark));
+    --signal-tint: light-dark(
+      var(--signal-tint-light),
+      var(--signal-tint-dark)
+    );
+    --bg: light-dark(var(--bg-light), var(--bg-dark));
     --surface: light-dark(var(--surface-light), var(--surface-dark));
     --ink: light-dark(var(--ink-light), var(--ink-dark));
     --muted: light-dark(var(--muted-light), var(--muted-dark));
-    --rule: light-dark(var(--rule-light), var(--rule-dark));
-    --accent: light-dark(var(--accent-light), var(--accent-dark));
-    --notice: light-dark(var(--notice-light), var(--notice-dark));
+    --line: light-dark(var(--line-light), var(--line-dark));
+    --control: light-dark(var(--control-light), var(--control-dark));
+    --link: light-dark(var(--link-light), var(--link-dark));
+    --route: light-dark(var(--route-light), var(--route-dark));
+    --on-route: light-dark(var(--on-route-light), var(--on-route-dark));
+    --open: light-dark(var(--open-light), var(--open-dark));
+    --soon: light-dark(var(--soon-light), var(--soon-dark));
+    --closed: light-dark(var(--closed-light), var(--closed-dark));
+    --lip: light-dark(var(--lip-light), var(--lip-dark));
   }
 }
 
 /* `dark:` = "the page is currently rendered dark", whether from the system
-   or from the toggle. Use it only for non-color branches (e.g. icons);
+   or from the toggle. Use it only for non-color branches (e.g. which icon);
    colors already adapt through the tokens above. */
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
@@ -104,52 +175,78 @@
   --radius-*: initial;
   --shadow-*: initial;
 
-  /* Type scale. Nothing below 1rem; body is 1.125rem for outdoor/phone reading. */
+  /* Type scale. Nothing below 1rem; body is 1.125rem for outdoor/phone reading.
+     The two big sizes are capped with vw so huge phone text settings don't
+     split words mid-line. */
   --text-sm: 1rem;
-  --text-sm--line-height: 1.5;
+  --text-sm--line-height: 1.45;
   --text-base: 1.125rem;
-  --text-base--line-height: 1.6;
-  --text-lg: 1.375rem;
-  --text-lg--line-height: 1.4;
-  --text-xl: 1.75rem;
+  --text-base--line-height: 1.55;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.35;
+  --text-xl: 1.5rem;
   --text-xl--line-height: 1.25;
-  --text-2xl: min(clamp(2rem, 1.6rem + 2vw, 2.75rem), 10vw);
-  --text-2xl--line-height: 1.15;
-  --text-display: min(clamp(2.5rem, 1.9rem + 3.2vw, 4.25rem), 13vw);
-  --text-display--line-height: 1.05;
+  --text-2xl: min(clamp(2rem, 1.6rem + 2vw, 2.5rem), 11vw);
+  --text-2xl--line-height: 1.05;
+  --text-display: min(clamp(2.5rem, 1.9rem + 3vw, 3.5rem), 12.5vw);
+  --text-display--line-height: 1.02;
 
-  /* Shape: nearly square, like printed notices. */
-  --radius-sm: 0.125rem;
-  --radius-md: 0.25rem;
+  /* Shape follows hierarchy: controls, containers, pills. */
+  --radius-control: 0.625rem;
+  --radius-card: 0.875rem;
+  --radius-pill: 999px;
 
-  /* Shadows only for things that truly float (menus, dialogs). */
-  --shadow-pop: 0 0.5rem 1.5rem oklch(0% 0 0 / 0.18);
+  /* No drop shadows on content; a 2px "lip" under raised tiles. Real
+     shadows only for things that float (menus, dialogs). */
+  --shadow-lip: 0 2px 0 var(--lip);
+  --shadow-pop: 0 0.5rem 1.5rem rgb(0 0 0 / 0.18);
 
-  /* Page width (text blocks use the built-in max-w-prose, 65ch) */
   --container-page: 72rem;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-tint: var(--brand-tint);
+  --color-on-brand: var(--on-brand);
+  --color-signal: var(--signal);
+  --color-on-signal: var(--on-signal);
+  --color-signal-tint: var(--signal-tint);
+  --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-rule: var(--rule);
-  --color-accent: var(--accent);
-  --color-notice: var(--notice);
+  --color-line: var(--line);
+  --color-control: var(--control);
+  --color-link: var(--link);
+  --color-route: var(--route);
+  --color-on-route: var(--on-route);
+  --color-open: var(--open);
+  --color-soon: var(--soon);
+  --color-closed: var(--closed);
+  --color-transparent: transparent;
 
   --font-sans: var(--font-atkinson);
+  --font-sign: var(--font-archivo);
+}
+
+/* Counter-sign type: page titles, the home question, step numerals.
+   Archivo Narrow ships one weight (700), so don't ask for another. */
+@utility sign {
+  font-family: var(--font-sign);
+  font-weight: 700;
+  letter-spacing: -0.005em;
 }
 
 /* ── 4. Base styles ───────────────────────────────────────────────────── */
 @layer base {
   html {
-    accent-color: var(--accent);
     -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 4.5rem; /* jump links land below the sticky tabs */
   }
 
   body {
-    background-color: var(--color-paper);
+    background-color: var(--color-bg);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-base);
@@ -158,9 +255,9 @@
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     text-wrap: balance;
-    /* With very large text, break a long word rather than overflow. */
     overflow-wrap: break-word;
   }
 
@@ -171,7 +268,7 @@
   }
 
   a {
-    color: var(--color-accent);
+    color: var(--color-link);
     text-decoration-line: underline;
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.2em;
@@ -181,9 +278,19 @@
     text-decoration-thickness: 0.16em;
   }
 
+  /* Yellow halo with an ink inner edge: visible on teal, white and dark. */
   :focus-visible {
-    outline: 3px solid var(--color-accent);
+    outline: 3px solid var(--color-signal);
     outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-ink);
+  }
+
+  button,
+  [role="button"],
+  summary,
+  label:has(input) {
+    cursor: pointer;
+    touch-action: manipulation;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -192,49 +299,107 @@
     *::after {
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }
 
 /* ── 5. Components that need real CSS ─────────────────────────────────── */
 @layer components {
-  /* Tick-box for the "What to bring" checklist. appearance:none gives the
-     same square ink box on every phone (accent-color only reached Safari in
-     late 2025), and it still behaves as a real checkbox. */
+  /* Stretched link: the whole row or tile is the tap target. Put `tap-area`
+     on the container and `stretched` on its one link. The focus ring moves to
+     the container so it outlines what you're about to open. */
+  .tap-area {
+    position: relative;
+    &:has(.stretched:focus-visible) {
+      outline: 3px solid var(--color-signal);
+      outline-offset: -3px;
+      box-shadow: inset 0 0 0 5px var(--color-ink);
+    }
+  }
+  .stretched {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+    &:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Tick-box for "What to bring". appearance:none gives the same box on
+     every phone (accent-color only reached Safari recently) and it still
+     behaves as a real checkbox. */
   .tick-box {
     appearance: none;
     display: inline-grid;
     place-content: center;
     flex-shrink: 0;
-    inline-size: 1.25em;
+    inline-size: 1.75rem;
     aspect-ratio: 1;
     margin: 0;
-    border: 2px solid currentColor;
-    border-radius: var(--radius-sm);
-    background-color: var(--color-paper);
+    border: 2.5px solid var(--color-control);
+    border-radius: 0.4375rem;
+    background-color: var(--color-surface);
     cursor: pointer;
 
     &::before {
       content: "";
-      inline-size: 0.8em;
+      inline-size: 1rem;
       aspect-ratio: 1;
-      background-color: currentColor;
-      mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>")
+      background-color: var(--color-on-route);
+      mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>")
         no-repeat center / contain;
       scale: 0;
       print-color-adjust: exact; /* keep the tick when printing */
-
-      @media (prefers-reduced-motion: no-preference) {
-        transition: scale 150ms ease;
-      }
       @media (forced-colors: active) {
         background-color: CanvasText;
       }
     }
 
+    &:checked {
+      background-color: var(--color-route);
+      border-color: var(--color-route);
+    }
     &:checked::before {
       scale: 1;
     }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition:
+        background-color 150ms ease,
+        border-color 150ms ease;
+      &::before {
+        transition: scale 150ms ease-out;
+      }
+    }
+  }
+
+  /* The route: a teal line joining yellow "now serving" stops. */
+  .route-step {
+    position: relative;
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 1.0625rem; /* centre of the 2.5rem stop */
+      inset-block: 2.25rem 0;
+      inline-size: 6px;
+      border-radius: 3px;
+      background-color: var(--color-route);
+    }
+  }
+
+  /* [VERIFY] placeholders on draft pages. Same in both schemes. */
+  .verify-mark {
+    background-color: #ffe58a;
+    color: #3b2f00;
+    border-radius: 0.25rem;
+    padding-inline: 0.3em;
+    font-weight: 800;
+    font-size: 0.88em;
   }
 }
 
@@ -244,13 +409,21 @@
      !important beats the :root:has(meta…) override from section 2. */
   :root {
     color-scheme: light !important;
-    --paper: var(--paper-light);
+    --brand: var(--surface-light);
+    --on-brand: var(--ink-light);
+    --bg: var(--surface-light);
     --surface: var(--surface-light);
     --ink: var(--ink-light);
     --muted: var(--muted-light);
-    --rule: var(--rule-light);
-    --accent: var(--ink-light);
-    --notice: var(--paper-light);
+    --line: var(--line-light);
+    --control: var(--ink-light);
+    --link: var(--ink-light);
+    --route: var(--ink-light);
+    --on-route: #ffffff;
+    --signal: var(--surface-light);
+    --on-signal: var(--ink-light);
+    --signal-tint: var(--surface-light);
+    --lip: transparent;
   }
 
   html {
@@ -262,7 +435,6 @@
   }
 
   a {
-    color: var(--color-ink);
     text-decoration: none;
   }
 
@@ -273,7 +445,14 @@
     overflow-wrap: anywhere;
   }
 
-  /* Don't split a requirement, step, fee or office across two pages. */
+  /* On paper the route is a plain numbered list. */
+  .route-step::before {
+    display: none;
+  }
+  .route-stop {
+    border-width: 2px !important;
+  }
+
   li,
   tr,
   .print-keep {

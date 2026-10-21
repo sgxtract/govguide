@@ -1,0 +1,73 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+status: draft
+title: Renew your vehicle registration
+summary: Renew the yearly registration of your car or motorcycle at the LTO.
+keywords:
+  - rehistro
+  - OR CR
+  - car registration
+  - motorcycle registration
+  - renewal
+category: vehicles-and-driving
+agency: lto
+offices:
+  - lto-sorsogon-district-office
+
+whoCanApply:
+  - "[VERIFY] who can renew: the registered owner or an authorized representative"
+
+requirements:
+  - label: "[VERIFY] Latest Certificate of Registration (CR)"
+    form: original-and-photocopy
+    copies: 1
+  - label: "[VERIFY] Latest Official Receipt of registration (OR)"
+    form: original-and-photocopy
+    copies: 1
+  - label: "[VERIFY] Compulsory third-party liability insurance (CTPL)"
+    form: original
+  - label: "[VERIFY] Emission test result"
+    form: original
+  - label: "[VERIFY] Valid government ID of the owner"
+    form: original-and-photocopy
+    copies: 1
+
+steps:
+  - title: "[VERIFY] Get your CTPL insurance and emission test"
+    where: "[VERIFY] accredited insurance provider and emission testing center"
+  - title: "[VERIFY] Submit your documents for evaluation"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Have the vehicle inspected"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Pay the registration fee"
+    where: "[VERIFY] Cashier"
+  - title: "[VERIFY] Get your new Official Receipt and sticker"
+
+fees:
+  - label: "[VERIFY] Registration fee"
+    amount: "[VERIFY]"
+    notes: "[VERIFY] depends on vehicle type and weight"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: LTMS portal
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY] what part of the renewal can be done online"
+
+tips:
+  - "[VERIFY] when renewal is due, based on the last digit of your plate number"
+  - "[VERIFY] penalty for late renewal"
+
+faqs:
+  - question: What if my registration has already expired?
+    answer: "[VERIFY]"
+
+related:
+  - drivers-license-new
+
+sources:
+  - title: "[VERIFY] LTO Citizen's Charter"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

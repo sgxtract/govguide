@@ -18,4 +18,4 @@ but it applies a `.dark` class with JavaScript, so styling depends on JS running
 ## Consequences
 
 - No dependency. Works without JS (follows the system). Native UI (scrollbars, form controls) matches automatically.
-- When we add a Content Security Policy (Lesson 09/12), the inline script needs a hash or nonce.
+- When we add a Content Security Policy (/12), the inline script needs a hash or nonce.

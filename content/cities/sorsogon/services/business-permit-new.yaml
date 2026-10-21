@@ -1,0 +1,64 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+status: draft
+title: Get a new business permit
+summary: Get a Mayor's permit to start a business in Sorsogon City.
+keywords:
+  - mayor's permit
+  - business license
+  - BPLO
+  - negosyo
+category: business
+agency: sorsogon-city
+offices:
+  - sorsogon-city-bplo
+
+whoCanApply:
+  - "[VERIFY] owners of new businesses located in Sorsogon City"
+
+requirements:
+  - label: "[VERIFY] Unified business permit application form"
+    form: original
+  - label: "[VERIFY] DTI business name registration (sole proprietor) or SEC/CDA registration"
+    form: original-and-photocopy
+    copies: 1
+  - label: "[VERIFY] Barangay business clearance"
+    form: original
+  - label: "[VERIFY] Proof of the right to use the business location (lease contract or land title)"
+    form: photocopy
+    copies: 1
+
+steps:
+  - title: "[VERIFY] Submit the application form and documents"
+    where: "[VERIFY] Business One-Stop Shop"
+  - title: "[VERIFY] Get your assessment of fees"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Pay the fees"
+    where: "[VERIFY] City Treasurer's Office"
+  - title: "[VERIFY] Go through the required inspections"
+    details: "[VERIFY] fire, sanitary, zoning, building"
+  - title: "[VERIFY] Get your business permit"
+
+fees:
+  - label: "[VERIFY] Business tax, permit and regulatory fees"
+    amount: "[VERIFY]"
+    notes: "[VERIFY] depends on the type and size of the business"
+
+processingTime: "[VERIFY]"
+
+tips:
+  - "[VERIFY] Register your business name with DTI first."
+
+faqs:
+  - question: When do I renew it?
+    answer: "[VERIFY]"
+
+related:
+  - barangay-clearance
+  - cedula
+
+sources:
+  - title: "[VERIFY] Sorsogon City Citizen's Charter"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

@@ -5,6 +5,7 @@ All content lives in `/content` as YAML, validated by `src/lib/content/schemas.t
 ```
 content/
 ├── categories.yaml                  # list of categories
+├── holidays.yaml                    # public holidays (offices show "Closed today")
 ├── agencies/<slug>.yaml             # shared by every city
 └── cities/<city>/
     ├── city.yaml
@@ -19,17 +20,24 @@ content/
 
 ## Category (`categories.yaml`)
 
-| Field             | Required | Notes        |
-| ----------------- | -------- | ------------ |
-| slug              | yes      | Used in URLs |
-| name, description | yes      |              |
+| Field             | Required | Notes                                                                 |
+| ----------------- | -------- | --------------------------------------------------------------------- |
+| slug              | yes      | Used in URLs                                                          |
+| name, description | yes      |                                                                       |
+| icon              | yes      | documents · vehicles · business · health · social · benefits (Lucide) |
+
+## Holidays (`holidays.yaml`)
+
+A list of `{ date: "YYYY-MM-DD", name }`. Optional file; an empty list is `[]`. Copy the dates
+from the official proclamation each year, plus local Sorsogon holidays.
 
 ## City (`cities/<city>/city.yaml`)
 
-| Field                       | Required | Notes                    |
-| --------------------------- | -------- | ------------------------ |
-| name, province, description | yes      |                          |
-| hotlines                    | no       | `{ label, number }` list |
+| Field                       | Required | Notes                                                                          |
+| --------------------------- | -------- | ------------------------------------------------------------------------------ |
+| name, province, description | yes      |                                                                                |
+| hotlines                    | no       | `{ label, number }` list, shown on the city home                               |
+| popular                     | no       | Service slugs for "Most looked up", in order. Drafts are skipped in production |
 
 ## Agency (`agencies/<slug>.yaml`)
 
@@ -45,14 +53,14 @@ content/
 
 ## Office (`cities/<city>/offices/<slug>.yaml`)
 
-| Field         | Required | Notes                                                  |
-| ------------- | -------- | ------------------------------------------------------ |
-| agency        | yes      | Must match an agency slug                              |
-| name, address | yes      |                                                        |
-| mapUrl        | no       |                                                        |
-| hours         | no       | `{ days: [mon…sun], opens: "HH:MM", closes: "HH:MM" }` |
-| phones, notes | no       | Lists                                                  |
-| email         | no       |                                                        |
+| Field         | Required | Notes                                                                                                                     |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------- |
+| agency        | yes      | Must match an agency slug                                                                                                 |
+| name, address | yes      |                                                                                                                           |
+| mapUrl        | no       |                                                                                                                           |
+| hours         | no       | `{ days: [mon…sun], opens: "HH:MM", closes: "HH:MM" }`. A lunch break is two entries for the same days. Drives "Open now" |
+| phones, notes | no       | Lists                                                                                                                     |
+| email         | no       |                                                                                                                           |
 
 ## Service (`cities/<city>/services/<slug>.yaml`)
 
@@ -65,7 +73,7 @@ content/
 | offices          | no       | Office slugs in the same city                                                                            |
 | whoCanApply      | no       | List                                                                                                     |
 | requirements     | yes (≥1) | `{ label, form, copies?, notes?, alternatives? }`. `form`: original · photocopy · original-and-photocopy |
-| steps            | yes (≥1) | `{ title, details?, where?, duration? }`. List order is step order                                       |
+| steps            | yes (≥1) | `{ title, details?, where?, duration? }`. List order is step order; the last step is drawn as the finish |
 | fees             | no       | `{ label, amount (PHP number, 0 = free), notes? }`                                                       |
 | processingTime   | yes      |                                                                                                          |
 | online           | no       | `{ label, url, whatYouCanDo }`                                                                           |
@@ -74,4 +82,4 @@ content/
 | related          | no       | Service slugs in the same city                                                                           |
 | sources          | yes (≥1) | `{ title, url, accessed }`                                                                               |
 | lastVerified     | yes      | `YYYY-MM-DD`. Re-verify every 6 months                                                                   |
-| keywords         | no       | Words people type: everyday names, Filipino/Bikol terms, aberivations                                    |
+| keywords         | no       | Words people type: everyday names, Filipino/Bikol terms, abbreviations                                   |

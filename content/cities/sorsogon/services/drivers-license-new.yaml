@@ -1,8 +1,10 @@
-# SAMPLE GUIDE. Every [VERIFY] must be replaced with a value from an official
-# source before this can be published. See docs/content-guide.md.
+# DRAFT. Every [VERIFY] must be replaced with a value from an official source,
+# then set status: published. See docs/content-guide.md.
+# A [VERIFY] in a requirement's label means: check the whole item, including
+# original/photocopy and the number of copies.
 status: draft
 title: Get a new driver's license
-summary: Apply for your first non-professional driver's license at the LTO. [VERIFY]
+summary: Apply for your first non-professional driver's license at the LTO.
 keywords:
   - drivers license
   - driving license
@@ -14,14 +16,16 @@ offices:
   - lto-sorsogon-district-office
 
 whoCanApply:
-  - "[VERIFY] age and permit requirements"
+  - "[VERIFY] minimum age and how long you must have held a student permit"
 
 requirements:
-  - label: Student permit [VERIFY]
+  - label: "[VERIFY] Student permit"
     form: original
-  - label: Medical certificate from an LTO-accredited clinic [VERIFY]
+  - label: "[VERIFY] Medical certificate from an LTO-accredited clinic"
     form: original
-  - label: Valid government ID [VERIFY]
+  - label: "[VERIFY] Certificate of completion of a practical driving course"
+    form: original
+  - label: "[VERIFY] Valid government ID"
     form: original-and-photocopy
     copies: 1
     alternatives:
@@ -29,17 +33,21 @@ requirements:
 
 steps:
   - title: "[VERIFY] Register or log in to the LTMS portal"
+    where: Online, before you go
   - title: "[VERIFY] Take the theoretical driving exam"
     where: "[VERIFY]"
+    duration: "[VERIFY]"
   - title: "[VERIFY] Take the practical driving exam"
     where: "[VERIFY]"
   - title: "[VERIFY] Pay the fees"
-    where: Cashier [VERIFY]
+    where: "[VERIFY] Cashier"
   - title: "[VERIFY] Get your license card or temporary paper license"
     details: "[VERIFY] what you receive and when the card is released"
 
 fees:
-  - label: License fee [VERIFY]
+  - label: "[VERIFY] License fee"
+    amount: "[VERIFY]"
+  - label: "[VERIFY] Computer fee"
     amount: "[VERIFY]"
 
 processingTime: "[VERIFY]"
@@ -47,17 +55,23 @@ processingTime: "[VERIFY]"
 online:
   - label: LTMS portal
     url: "[VERIFY]"
-    whatYouCanDo: "[VERIFY]"
+    whatYouCanDo: "[VERIFY] what part of the application can be done online"
 
 tips:
-  - Bring a black pen. [VERIFY]
+  - "[VERIFY] Bring a black pen."
+  - "[VERIFY] Arrive early; the queue can form before the office opens."
 
 faqs:
-  - question: Can someone else apply for me? [VERIFY]
+  - question: Can someone else apply for me?
+    answer: "[VERIFY]"
+  - question: What if I fail the exam?
     answer: "[VERIFY]"
 
+related:
+  - vehicle-registration-renewal
+
 sources:
-  - title: LTO Citizen's Charter [VERIFY]
+  - title: "[VERIFY] LTO Citizen's Charter"
     url: "[VERIFY]"
     accessed: "[VERIFY]"
 

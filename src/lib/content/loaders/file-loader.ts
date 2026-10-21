@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { parse } from "yaml";
@@ -9,11 +9,13 @@ import {
   agencySchema,
   categoriesFileSchema,
   citySchema,
+  holidaysFileSchema,
   officeSchema,
   serviceSchema,
   type Agency,
   type Category,
   type City,
+  type Holiday,
   type Office,
   type Service,
 } from "../schemas";
@@ -21,6 +23,7 @@ import {
 /** Everything in /content, validated. The repository is the only consumer. */
 export type ContentStore = {
   categories: Category[];
+  holidays: Holiday[];
   cities: City[];
   agencies: Agency[];
   offices: Office[];
@@ -79,11 +82,22 @@ export async function loadFileContent(root: string): Promise<ContentStore> {
     (await load(categoriesFileSchema, path.join(root, "categories.yaml"))) ??
     [];
 
+  // Optional: without it, offices are simply never shown as "closed for a holiday".
+  const holidaysFile = path.join(root, "holidays.yaml");
+  const holidays = (await exists(holidaysFile))
+    ? ((await load(holidaysFileSchema, holidaysFile)) ?? [])
+    : [];
+
+  // Files that exist but failed to load. References to them aren't reported
+  // again as "unknown", so one typo gives one error, not a cascade.
+  const broken = new Set<string>();
+
   const agencies: Agency[] = [];
   for (const file of await listYaml(path.join(root, "agencies"))) {
     const slug = slugOf(file);
     const data = await load(agencySchema, file);
     if (slug && data) agencies.push({ ...data, slug });
+    else if (slug) broken.add(`agency:${slug}`);
   }
 
   const cities: City[] = [];
@@ -100,17 +114,19 @@ export async function loadFileContent(root: string): Promise<ContentStore> {
       const slug = slugOf(file);
       const office = await load(officeSchema, file);
       if (slug && office) offices.push({ ...office, slug, city });
+      else if (slug) broken.add(`office:${city}/${slug}`);
     }
 
     for (const file of await listYaml(path.join(cityDir, "services"))) {
       const slug = slugOf(file);
       const service = await load(serviceSchema, file);
       if (slug && service) services.push({ ...service, slug, city });
+      else if (slug) broken.add(`service:${city}/${slug}`);
     }
   }
 
-  const store = { categories, cities, agencies, offices, services };
-  problems.push(...checkIntegrity(store));
+  const store = { categories, holidays, cities, agencies, offices, services };
+  problems.push(...checkIntegrity(store, broken));
 
   if (problems.length > 0) throw new ContentError(problems);
   return store;
@@ -138,5 +154,14 @@ async function readdirOrEmpty(dir: string) {
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
     throw error;
+  }
+}
+
+async function exists(file: string): Promise<boolean> {
+  try {
+    await access(file);
+    return true;
+  } catch {
+    return false;
   }
 }

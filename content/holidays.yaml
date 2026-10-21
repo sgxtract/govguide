@@ -1,0 +1,7 @@
+# Public holidays, so offices show "Closed today" instead of "Open now".
+# Copy the dates from the official proclamation for the year (regular
+# holidays, special non-working days, and local Sorsogon holidays).
+# One entry per date, e.g.
+# - date: "2027-01-01"
+#   name: New Year's Day
+[]

@@ -1,0 +1,12 @@
+agency: pnp
+name: "[VERIFY] Sorsogon City Police Station"
+address: "[VERIFY]"
+mapUrl: "[VERIFY]"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+phones:
+  - "[VERIFY]"
+notes:
+  - "[VERIFY] where police clearances are processed inside the station"

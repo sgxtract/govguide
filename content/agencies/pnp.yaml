@@ -1,0 +1,12 @@
+name: Philippine National Police
+acronym: PNP
+level: national
+description: The national police. Issues police clearances through local police stations.
+website: "[VERIFY]"
+portals:
+  - label: "[VERIFY] National Police Clearance System"
+    url: "[VERIFY]"
+hotline: "[VERIFY]"
+keywords:
+  - pulis
+  - police

@@ -6,6 +6,17 @@
 
 ---
 
+## 0. Status (v2, 2026-10-22)
+
+GovGuide was **rebuilt from scratch as v2** in one pass, at the maintainer's request (no lessons
+for the rebuild). It covers everything in the roadmap through Lesson 11, plus "Open now" office
+status. Read before changing anything:
+
+- Design: the "counter window" direction (`docs/decisions/0009`, `docs/design-system.md`, live at `/styleguide`). It replaces the printed-notice look below in §8.
+- Content: 10 draft guides, every unconfirmed fact marked `[VERIFY]`. `pnpm content:todo` lists them.
+- Next up: verify content and publish guides, then Lesson 12 (deploy, see `docs/deployment.md`), then Phase 2.
+- New work goes back to the lesson-by-lesson workflow in §1.
+
 ## 1. Who you are and how we work
 
 You are my senior full-stack mentor and pair programmer. We are building **GovGuide** together, **lesson by lesson**, the same way we built my PMS (Procurement Monitoring System).

@@ -1,0 +1,9 @@
+name: National Bureau of Investigation
+acronym: NBI
+level: national
+description: Issues NBI clearances, which many employers and agencies ask for.
+website: "[VERIFY]"
+portals:
+  - label: "[VERIFY] NBI clearance online application"
+    url: "[VERIFY]"
+hotline: "[VERIFY]"

@@ -4,7 +4,7 @@
 
 - Performance ≥ 90 · Accessibility 100 · Best Practices 100 · SEO 100 (published pages)
 - CLS 0
-- First visit to any page ≤ 200 KB transferred (now ~155 KB + 34 KB font)
+- First visit to any page ≤ 200 KB transferred (check after changes; fonts are ~34 KB body + the Archivo Narrow heading weight)
 - Most of the JavaScript is the Next/React runtime (~117 KB). Our own client code
   must stay small: no client-side libraries on page load (search loads on demand).
 

@@ -6,3 +6,10 @@ description: Guides for government offices serving Sorsogon City and the Provinc
 # - label: City Disaster Risk Reduction and Management Office
 #   number: "..."
 hotlines: []
+# "Most looked up" on the city home, in this order. Drafts are skipped in production.
+popular:
+  - drivers-license-new
+  - psa-birth-certificate
+  - barangay-clearance
+  - police-clearance
+  - nbi-clearance

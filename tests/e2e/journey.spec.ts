@@ -6,7 +6,7 @@ test("finds a guide from the home page and ticks off what to bring", async ({
   await page.goto("/");
   await expect(page).toHaveURL(/\/testville$/);
 
-  await page.getByLabel("What do you need to do?").fill("permit");
+  await page.getByLabel("What do you need to get done?").fill("permit");
   await page
     .getByRole("list", { name: "Search results" })
     .getByRole("link", { name: "Get a test permit" })
@@ -21,14 +21,17 @@ test("finds a guide from the home page and ticks off what to bring", async ({
   await page.reload();
   await expect(validId).toBeChecked(); // remembered on this phone
 
+  await expect(page.getByText("1 of 2 ready")).toBeVisible();
+
   await page.getByRole("button", { name: "Clear ticks" }).click();
   await expect(validId).not.toBeChecked();
+  await expect(page.getByText("0 of 2 ready")).toBeVisible();
 });
 
 test("guide shows the facts people came for", async ({ page }) => {
   await page.goto("/testville/services/get-a-test-permit");
 
-  const steps = page.locator("#steps ol > li");
+  const steps = page.locator("#route ol > li");
   await expect(steps).toHaveCount(3);
   await expect(steps.first()).toContainText("Fill out the application form");
 
