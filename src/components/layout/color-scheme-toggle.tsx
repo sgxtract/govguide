@@ -38,8 +38,11 @@ function applyOverride(scheme: Scheme | null) {
 }
 
 export function ColorSchemeToggle() {
-  // Keep tabs in sync when the setting changes in another tab.
+  // Re-apply the saved choice: normally the inline script in the root layout
+  // already did, but not if React re-created <head> (it resets the <meta>).
+  // Then keep tabs in sync when the setting changes in another tab.
   useEffect(() => {
+    applyOverride(readStored());
     function onStorage(event: StorageEvent) {
       if (event.key === STORAGE_KEY) applyOverride(readStored());
     }

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo_Narrow, Atkinson_Hyperlegible_Next } from "next/font/google";
 
+import { ColorSchemeScript } from "@/components/layout/color-scheme-script";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/config/site";
 import { siteUrl } from "@/config/site-url";
@@ -46,10 +47,6 @@ export const viewport: Viewport = {
   ],
 };
 
-// Runs before first paint so a saved light/dark choice never flashes.
-// Keep it tiny; the toggle component handles everything else.
-const colorSchemeScript = `try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark")document.querySelector('meta[name="color-scheme"]').content=s}catch(e){}`;
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${atkinson.variable} ${archivo.variable}`}>
@@ -61,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           content="light dark"
           suppressHydrationWarning
         />
-        <script dangerouslySetInnerHTML={{ __html: colorSchemeScript }} />
+        <ColorSchemeScript />
       </head>
       <body className="flex min-h-dvh flex-col">
         <a
