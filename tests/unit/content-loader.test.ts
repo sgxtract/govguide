@@ -58,6 +58,7 @@ describe("loadFileContent", () => {
       "draft-guide:national",
       "get-a-local-permit:local",
       "get-a-test-permit:national",
+      "get-an-online-permit:national",
     ]);
     expect(
       store.cityServices.map((c) => `${c.city}/${c.slug}:${c.scope}`).sort(),
@@ -127,6 +128,20 @@ describe("loadFileContent", () => {
 
     expect((await problemsIn(root)).join("\n")).toContain(
       "Published, but it (or its agency/offices) still contains [VERIFY]",
+    );
+  });
+
+  it("refuses to publish a city version while the guide's national file has [VERIFY]", async () => {
+    const root = await copyOfFixtures();
+    await edit(
+      root,
+      "services/get-a-local-permit.yaml",
+      "summary: Apply for a fictional permit at your city hall.",
+      'summary: "Apply for a fictional permit [VERIFY]"',
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      "services/get-a-local-permit.yaml\n  ✖ Published, but it (or its agency/offices) still contains [VERIFY]",
     );
   });
 

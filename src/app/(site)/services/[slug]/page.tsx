@@ -184,7 +184,7 @@ export default async function ServicePage({
                       }))}
                     />
                   ) : (
-                    <NotInAnyCity />
+                    <NoOfficeYet />
                   )
                 }
                 related={relatedSection}
@@ -350,6 +350,19 @@ function OfficeCards({
           holidays={holidays}
         />
       ))}
+    </div>
+  );
+}
+
+/** A national guide applies everywhere, even before any office is added. */
+function NoOfficeYet() {
+  return (
+    <div className="rounded-card bg-surface p-5">
+      <p className="max-w-prose">
+        We haven&apos;t added an office for this guide yet. The requirements and
+        steps above are the same everywhere. Tell us which city you need.
+      </p>
+      <SuggestService />
     </div>
   );
 }

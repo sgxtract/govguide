@@ -53,3 +53,27 @@ test("search finds a city-run guide by city name", async ({ page }) => {
       .getByRole("link", { name: "Get a local permit" }),
   ).toBeVisible();
 });
+
+test("a printed city-run guide names its city", async ({ page }) => {
+  await page.goto("/services/get-a-local-permit");
+  await page.getByLabel("Your city").selectOption({ label: "Otherville" });
+  await page.emulateMedia({ media: "print" });
+  // Not just present for screen readers (sr-only is a 1px box): printed.
+  const heading = page.getByRole("heading", {
+    name: "Otherville",
+    exact: true,
+  });
+  const box = await heading.boundingBox();
+  expect(box?.width ?? 0).toBeGreaterThan(40);
+});
+
+test("a guide with no office yet still says the requirements apply", async ({
+  page,
+}) => {
+  await page.goto("/services/get-an-online-permit");
+  await expect(page.getByText("Online application form")).toBeVisible();
+  await expect(
+    page.getByText("We haven't added an office for this guide yet."),
+  ).toBeVisible();
+  await expect(page.getByText("Not available in any city yet")).toHaveCount(0);
+});

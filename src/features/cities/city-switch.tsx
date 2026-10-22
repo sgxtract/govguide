@@ -91,11 +91,14 @@ export function CitySwitch({ blocks, cityNames }: Props) {
             hidden={picking && block.slug !== chosen}
             className="mt-4 first:mt-0"
           >
-            {/* Visible only while every city is shown (no JavaScript yet). */}
+            {/* Visible while every city is shown (no JavaScript yet), and on
+                paper, where the picker isn't printed. */}
             <h2
               id={headingId}
               className={
-                single || picking ? "sr-only" : "mb-3 text-xl font-extrabold"
+                single || picking
+                  ? "sr-only print:not-sr-only print:mb-3 print:block print:text-xl print:font-extrabold"
+                  : "mb-3 text-xl font-extrabold"
               }
             >
               {block.name}

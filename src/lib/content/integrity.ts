@@ -60,7 +60,20 @@ export function checkIntegrity(
         problems.push(`${where}\n  ✖ Unknown related service "${related}"`);
       }
     }
-    if (service.scope !== "national") continue;
+    if (service.scope === "local") {
+      // A city-run guide's title and summary show with every city's version,
+      // so they must be verified once any city publishes one.
+      const published = store.cityServices.some(
+        (c) =>
+          c.slug === service.slug &&
+          c.scope === "local" &&
+          c.status === "published",
+      );
+      if (published && hasPlaceholders(service)) {
+        problems.push(`${where}\n  ✖ ${UNVERIFIED}`);
+      }
+      continue;
+    }
 
     if (unknownAgency(service.agency)) {
       problems.push(`${where}\n  ✖ Unknown agency "${service.agency}"`);

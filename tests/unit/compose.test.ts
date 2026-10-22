@@ -154,6 +154,7 @@ describe("composeListings", () => {
     expect(listings.map((l) => l.slug)).toEqual([
       "get-a-local-permit",
       "get-a-test-permit",
+      "get-an-online-permit",
     ]);
     const local = listings[0];
     expect(local?.agencies).toEqual([
