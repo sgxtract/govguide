@@ -4,16 +4,21 @@ import path from "node:path";
 
 import { cache } from "react";
 
-import { hasPlaceholders } from "./integrity";
+import {
+  composeAgencies,
+  composeCityHub,
+  composeGuide,
+  composeListings,
+  composeOffices,
+  composePopular,
+  type CityHub,
+  type Guide,
+  type ServiceListing,
+} from "./compose";
 import { loadFileContent } from "./loaders/file-loader";
-import type {
-  Agency,
-  Category,
-  City,
-  Holiday,
-  Office,
-  Service,
-} from "./schemas";
+import type { Agency, Category, City, Holiday, Office } from "./schemas";
+
+export type { CityGuide, CityHub, Guide, ServiceListing } from "./compose";
 
 /**
  * The only door to content. Pages and components call these functions and
@@ -38,13 +43,7 @@ const SHOW_DRAFTS =
 // one, so edits to YAML show up on refresh in dev.
 const getStore = cache(() => loadFileContent(CONTENT_DIR));
 
-const isVisible = (service: Service) =>
-  SHOW_DRAFTS || service.status === "published";
-
-// Agencies and offices have no draft status. They're shown in production only
-// once every value is verified (no [VERIFY] left).
-const isVerified = (item: Agency | Office) =>
-  SHOW_DRAFTS || !hasPlaceholders(item);
+const visibility = { showDrafts: SHOW_DRAFTS };
 
 // ── Cities ─────────────────────────────────────────────────────────────────
 
@@ -79,89 +78,44 @@ export async function getAgency(slug: string): Promise<Agency | undefined> {
   return (await getStore()).agencies.find((a) => a.slug === slug);
 }
 
-/**
- * Agencies with something in this city: at least one office there, or at
- * least one visible guide. Agencies with neither get no page for the city.
- */
-export async function listCityAgencies(city: string): Promise<Agency[]> {
-  const store = await getStore();
-  const used = new Set([
-    ...store.offices
-      .filter((o) => o.city === city && isVerified(o))
-      .map((o) => o.agency),
-    ...store.services
-      .filter((s) => s.city === city && isVisible(s))
-      .map((s) => s.agency),
-  ]);
-  return store.agencies
-    .filter((a) => used.has(a.slug) && isVerified(a))
-    .sort((a, b) => a.name.localeCompare(b.name));
+export async function listAgencies(): Promise<Agency[]> {
+  return (await getStore()).agencies;
+}
+
+/** Agencies with a visible office or guide: the ones that get a page. */
+export async function listVisibleAgencies(): Promise<Agency[]> {
+  return composeAgencies(await getStore(), visibility);
 }
 
 // ── Offices ────────────────────────────────────────────────────────────────
 
 export async function listOffices(
-  city: string,
-  filter: { agency?: string } = {},
+  filter: { city?: string; agency?: string } = {},
 ): Promise<Office[]> {
-  return (await getStore()).offices.filter(
-    (o) =>
-      o.city === city &&
-      isVerified(o) &&
-      (!filter.agency || o.agency === filter.agency),
-  );
+  return composeOffices(await getStore(), visibility, filter);
 }
 
-export async function getOffice(
-  city: string,
-  slug: string,
-): Promise<Office | undefined> {
-  const office = (await getStore()).offices.find(
-    (o) => o.city === city && o.slug === slug,
-  );
-  return office && isVerified(office) ? office : undefined;
-}
+// ── Guides ─────────────────────────────────────────────────────────────────
 
-// ── Services ───────────────────────────────────────────────────────────────
+/** A guide with each city's part (offices, tips, or its own version). */
+export async function getGuide(slug: string): Promise<Guide | undefined> {
+  return composeGuide(await getStore(), slug, visibility);
+}
 
 export async function listServices(
-  city: string,
-  filter: { category?: string; agency?: string } = {},
-): Promise<Service[]> {
-  return (await getStore()).services
-    .filter(
-      (s) =>
-        s.city === city &&
-        isVisible(s) &&
-        (!filter.category || s.category === filter.category) &&
-        (!filter.agency || s.agency === filter.agency),
-    )
-    .sort((a, b) => a.title.localeCompare(b.title));
+  filter: { category?: string; agency?: string; city?: string } = {},
+): Promise<ServiceListing[]> {
+  return composeListings(await getStore(), visibility, filter);
 }
 
-export async function getService(
-  city: string,
-  slug: string,
-): Promise<Service | undefined> {
-  const service = (await getStore()).services.find(
-    (s) => s.city === city && s.slug === slug,
-  );
-  return service && isVisible(service) ? service : undefined;
+/** "Most looked up" on the home page, in the order of popular.yaml. */
+export async function listPopularServices(): Promise<ServiceListing[]> {
+  return composePopular(await getStore(), visibility);
 }
 
-export async function listAgencies(): Promise<Agency[]> {
-  return (await getStore()).agencies;
-}
+// ── City hub ───────────────────────────────────────────────────────────────
 
-/** The city's "Most looked up" guides, in the order listed in city.yaml. */
-export async function listPopularServices(city: string): Promise<Service[]> {
-  const store = await getStore();
-  const config = store.cities.find((c) => c.slug === city);
-  if (!config) return [];
-  return config.popular.flatMap((slug) => {
-    const service = store.services.find(
-      (s) => s.city === city && s.slug === slug,
-    );
-    return service && isVisible(service) ? [service] : [];
-  });
+/** A city's own page: its offices, hotlines and city-run guides. */
+export async function getCityHub(city: string): Promise<CityHub | undefined> {
+  return composeCityHub(await getStore(), city, visibility);
 }
