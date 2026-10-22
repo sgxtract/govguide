@@ -1,4 +1,5 @@
-# DRAFT. Replace every [VERIFY] from an official source, then publish.
+# DRAFT. Fees, the minors rule and the forfeiture rule are from the DFA Passport Application
+# Form (DFA-OCA-PDO-02, rev. 27 Dec 2024). Everything else still needs an official source.
 scope: national
 status: draft
 title: Apply for a new passport
@@ -11,13 +12,15 @@ category: ids-and-documents
 agency: dfa
 
 whoCanApply:
-  - "[VERIFY] Filipino citizens; separate rules for minors"
+  - Filipino citizens
+  - "Minors (below 18) apply with an accompanying adult, who signs the form as parent or legal guardian. [VERIFY] documents minors need"
 
 requirements:
   - label: "[VERIFY] Confirmed online appointment"
     form: original
-  - label: "[VERIFY] Accomplished application form"
+  - label: Passport application form, filled out and signed
     form: original
+    notes: Leave no space blank; write N/A where it doesn't apply. Download it from consular.dfa.gov.ph.
   - label: "[VERIFY] PSA birth certificate"
     form: original-and-photocopy
     copies: 1
@@ -40,11 +43,9 @@ steps:
     details: "[VERIFY] when and how it's released"
 
 fees:
-  - label: "[VERIFY] Regular processing"
-    amount: "[VERIFY]"
-  - label: "[VERIFY] Expedited processing"
-    amount: "[VERIFY]"
-    notes: "[VERIFY] only one of the two fees applies"
+  - label: Passport, regular processing
+    amount: 950
+    notes: "The application form also lists Expedite (₱250.00) and Lost/Damaged (₱1,300.00). [VERIFY] whether the expedite amount is added to the regular fee."
 
 processingTime: "[VERIFY]"
 
@@ -54,8 +55,9 @@ online:
     whatYouCanDo: "[VERIFY] book and pay for an appointment"
 
 tips:
+  - If you miss your appointment, or your application is denied for missing documents, your payment is forfeited and not refunded.
+  - You can only hold one Philippine passport at a time.
   - "[VERIFY] Only book through the official DFA website."
-  - "[VERIFY] dress code for the photo"
 
 faqs:
   - question: Can I walk in without an appointment?
@@ -65,7 +67,10 @@ related:
   - psa-birth-certificate
 
 sources:
-  - title: "[VERIFY] DFA passport requirements"
+  - title: "DFA Passport Application Form (DFA-OCA-PDO-02, rev. 27 Dec 2024)"
+    url: "https://consular.dfa.gov.ph/wp-content/uploads/2025/02/PASSPORT-DIV-APP-FORM.pdf"
+    accessed: "2026-10-22"
+  - title: "[VERIFY] DFA passport requirements (Citizen's Charter)"
     url: "[VERIFY]"
     accessed: "[VERIFY]"
 
