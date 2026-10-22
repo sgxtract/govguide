@@ -1,4 +1,6 @@
-# DRAFT. Replace every [VERIFY] from an official source, then publish.
+# DRAFT. Checked against the PSA RSSO V PSO Masbate Citizen's Charter Handbook 2026, 1st Edition,
+# Civil Registration Service 2 (pp. 22-33), and the PSA Citizen's Charter 2022 (PSA Serbilis,
+# pp. 799-800). Review, then publish.
 scope: national
 status: draft
 title: Get a PSA birth certificate
@@ -12,53 +14,115 @@ category: ids-and-documents
 agency: psa
 
 whoCanApply:
-  - "[VERIFY] who can request: the owner, parents, or an authorized representative"
+  - The owner of the birth certificate, 18 years old or older
+  - The owner's spouse, children or parents
+  - Anyone the owner authorizes in writing
+  - A minor's legal guardian, or the nearest relative of someone who has died
+  - First-time jobseekers get one copy free, once (Republic Act 11261)
 
 requirements:
-  - label: "[VERIFY] Accomplished request form"
+  - label: CRS appointment slip, printed or on your phone
     form: original
-  - label: "[VERIFY] Valid ID of the person requesting"
+    copies: 1
+    notes: Book it at appointment.psa.gov.ph. It must be in the name of the person who goes to the outlet. Senior citizens, PWDs and pregnant or breastfeeding women don't need one.
+  - label: Application form for a birth certificate (white form)
+    form: original
+    copies: 1
+    notes: Get it from the form dispenser at the outlet and fill it in in printed letters.
+  - label: Valid ID of the person requesting
     form: original-and-photocopy
     copies: 1
+    notes: It must have a clear photo, your full name in print and your signature. If you're getting your own birth certificate, the original is enough. Parents, spouses and children may be asked for proof of relationship, such as a birth or marriage certificate.
     alternatives:
-      - "[VERIFY] list of accepted IDs"
-  - label: "[VERIFY] Authorization letter and the owner's ID, if you're requesting for someone else"
+      - National ID (PhilSys ID or ePhilID)
+      - Passport
+      - Driver's license
+      - PRC license
+      - IBP ID
+      - GSIS or SSS ID
+      - Postal ID
+      - Pag-IBIG ID
+      - Voter's ID (COMELEC)
+      - NBI clearance
+      - AFP or PNP ID
+  - label: Authorization letter or notarized special power of attorney (SPA)
     form: original
+    notes: Only if you're getting someone else's birth certificate and you're not their spouse, child or parent. It must say it's for getting their birth certificate from the PSA; a general purpose isn't accepted. A letter sent by email or chat is accepted if the names and signatures match both IDs.
+  - label: Valid ID of the birth certificate's owner
+    form: original-and-photocopy
+    copies: 1
+    notes: Only with an authorization letter or SPA. If the letter came from abroad, a scan or photocopy of the owner's passport is enough.
+  - label: Barangay certification and Oath of Undertaking
+    form: original-and-photocopy
+    copies: 1
+    notes: First-time jobseekers only, from your barangay. You must go yourself; a representative can't claim the free copy.
 
 steps:
-  - title: "[VERIFY] Fill in the request form"
-    where: "[VERIFY]"
-  - title: "[VERIFY] Submit the form and your ID"
-    where: "[VERIFY] Window"
-  - title: "[VERIFY] Pay the fee"
-    where: "[VERIFY] Cashier"
-  - title: "[VERIFY] Get your birth certificate on security paper"
-    details: "[VERIFY] released the same day or on a later date"
+  - title: Book an appointment
+    where: "Online: appointment.psa.gov.ph, before you go"
+    details: Go to the outlet on your appointment date and time. Priority clients don't need an appointment. National ID holders getting their own or their family's birth certificate can walk in from 12 noon.
+    duration: About 5 minutes
+  - title: Show your appointment slip and ID
+    where: Entrance, information marshal or guard
+    duration: About 1 minute
+  - title: Fill in the white application form in printed letters
+    where: Form dispenser
+    duration: About 3 minutes
+  - title: Have your form and documents checked
+    where: Screening area
+    details: First-time jobseekers go to the Public Assistance and Complaints Desk instead.
+    duration: About 5 minutes
+  - title: Get a queue ticket
+    where: Queue ticket station
+    duration: About 1 minute
+  - title: Submit your form and pay
+    where: Encoding-payment window, when your number shows on the screen
+    details: Pay in cash or cashless. Check your official receipt and count your change before you leave the window. Senior citizens, PWDs, pregnant women and National ID holders use the priority lane.
+    duration: About 15 minutes
+  - title: Wait while they search for your record
+    where: Releasing area
+    details: It can take longer if the record needs extra checking.
+    duration: About 1 hour
+  - title: Get your birth certificate
+    where: Releasing window, when your number is called
+    details: Hand in your queue ticket, form, original official receipt and ID. It's printed on PSA security paper. Check it, then sign the acknowledgement on the back of your form. If the record needs manual checking or a clearer scan, they'll text you when it's ready to claim.
+    duration: About 30 minutes
 
 fees:
-  - label: "[VERIFY] Birth certificate, per copy"
-    amount: "[VERIFY]"
+  - label: Birth certificate, per copy
+    amount: 155
+    notes: ₱125 processing fee plus ₱30 documentary stamp tax. Free once for first-time jobseekers.
 
-processingTime: "[VERIFY]"
+processingTime: About 2 hours at the outlet, not counting time in line.
 
 online:
-  - label: "[VERIFY] PSA online request portal"
-    url: "[VERIFY]"
-    whatYouCanDo: "[VERIFY] order online and have it delivered"
+  - label: PSA CRS Appointment System
+    url: "https://appointment.psa.gov.ph"
+    whatYouCanDo: Book your appointment at a PSA Civil Registry System outlet.
+  - label: PSA Serbilis
+    url: "https://www.psaserbilis.com.ph"
+    whatYouCanDo: Order a copy online and have it delivered. PSA's 2022 Citizen's Charter lists ₱330 per copy, delivery included.
 
 tips:
-  - "[VERIFY] Write the names exactly as they appear on the birth record."
+  - Write the names, dates and places exactly as they appear on the birth record.
+  - Check the printed copy before you leave. If it's blurry, ask for a re-scan.
 
 faqs:
   - question: What if the PSA has no record of my birth?
-    answer: "[VERIFY]"
+    answer: You get a Negative Certification of Birth. Ask the Local Civil Registry Office of the city or town where your birth was registered to endorse your birth certificate to the PSA, then request it again.
+  - question: Can someone get it for me?
+    answer: Your spouse, children or parents can, with their own valid ID. Anyone else needs your authorization letter or SPA, your valid ID and their own valid ID.
 
 related:
   - national-id-philsys
+  - passport-new
 
 sources:
-  - title: "[VERIFY] PSA Citizen's Charter"
-    url: "[VERIFY]"
-    accessed: "[VERIFY]"
+  - title: PSA RSSO V, PSO Masbate Citizen's Charter Handbook 2026, 1st Edition (Civil Registration Service 2)
+    url: "https://rsso05.psa.gov.ph/system/files/documents/MBT%20-%202026%20Citizens%20Charter.pdf"
+    accessed: "2026-10-22"
+  - title: PSA Citizen's Charter 2022, 1st Edition (PSA Serbilis)
+    url: "https://psa.gov.ph/system/files/2022%20Version%202%20PSA%20CC%20as%20of%2031%20March%202022-v4.pdf"
+    accessed: "2026-10-22"
 
-lastVerified: "[VERIFY]"
+lastVerified: "2026-10-22"

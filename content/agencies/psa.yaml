@@ -3,13 +3,12 @@ name: Philippine Statistics Authority
 acronym: PSA
 level: national
 description: Keeps the national civil registry and issues certified copies of birth, marriage and death certificates. Also runs the Philippine Identification System (PhilSys).
-website: "[VERIFY]"
+website: "https://psa.gov.ph"
 portals:
-  - label: "[VERIFY] online civil registry request portal"
-    url: "[VERIFY]"
+  - label: CRS Appointment System (birth, marriage and death certificates)
+    url: "https://appointment.psa.gov.ph"
   - label: PhilSys (National ID)
     url: "https://philsys.gov.ph"
-hotline: "[VERIFY]"
 keywords:
   - NSO
   - civil registry
