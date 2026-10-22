@@ -1,8 +1,8 @@
 # DRAFT. Requirements and accepted IDs are from the DFA Office of Consular Affairs pages
 # "Requirements for Adult New Applications" and "List of Acceptable IDs for Philippine Passport
 # Application" (read 2026-10-22). Fees, the minors rule and the forfeiture rule are from the DFA
-# Passport Application Form (DFA-OCA-PDO-02, rev. 27 Dec 2024). Steps, processing time and the
-# appointment site still need an official source.
+# Passport Application Form (DFA-OCA-PDO-02, rev. 27 Dec 2024). Steps, processing time and
+# Courtesy Lane eligibility still need an official source.
 scope: national
 status: draft
 title: Apply for a new passport
@@ -57,7 +57,7 @@ requirements:
 
 steps:
   - title: Book an appointment online
-    where: Online, before you go
+    where: "Online, before you go: passport.gov.ph"
   - title: "[VERIFY] Pay the passport fee"
     where: "[VERIFY]"
   - title: Go to the consular office on your appointment date
@@ -83,19 +83,19 @@ fees:
 processingTime: "[VERIFY]"
 
 online:
-  - label: "[VERIFY] DFA passport appointment system"
-    url: "[VERIFY]"
-    whatYouCanDo: "[VERIFY] book and pay for an appointment"
+  - label: DFA passport appointment
+    url: "https://www.passport.gov.ph/"
+    whatYouCanDo: Book your passport appointment.
 
 tips:
   - If you miss your appointment, or your application is denied for missing documents, your payment is forfeited and not refunded.
   - You can only hold one Philippine passport at a time.
   - The DFA may ask for more documents if it needs them.
-  - "[VERIFY] Only book through the official DFA website."
+  - Only book at passport.gov.ph, the DFA's own appointment site.
 
 faqs:
   - question: Can I walk in without an appointment?
-    answer: "Only if you can use the Courtesy Lane. Everyone else needs a confirmed online appointment. [VERIFY] who can use the Courtesy Lane"
+    answer: "Only if you can use the Courtesy Lane. Everyone else needs a confirmed online appointment. [VERIFY] who can use the Courtesy Lane, from https://consular.dfa.gov.ph/courtesy-lane-eligibility/"
   - question: What if my birth certificate was registered late or has errors?
     answer: You'll need more documents. The DFA lists them case by case under "Supporting documents" on its adult new application page, including late registration, missing data, misspelled names or clerical errors, a name changed by court order, details that don't match across documents, an unreadable PSA copy, and no PSA birth certificate at all.
 
@@ -108,7 +108,7 @@ sources:
     url: "https://consular.dfa.gov.ph/adult-new/"
     accessed: "2026-10-22"
   - title: "DFA Office of Consular Affairs: List of Acceptable IDs for Philippine Passport Application"
-    url: "[VERIFY]"
+    url: "https://consular.dfa.gov.ph/valid-ids-for-passport-application/"
     accessed: "2026-10-22"
   - title: "DFA Passport Application Form (DFA-OCA-PDO-02, rev. 27 Dec 2024)"
     url: "https://consular.dfa.gov.ph/wp-content/uploads/2025/02/PASSPORT-DIV-APP-FORM.pdf"
