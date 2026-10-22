@@ -7,8 +7,8 @@ website: "[VERIFY]"
 portals:
   - label: "[VERIFY] online civil registry request portal"
     url: "[VERIFY]"
-  - label: "[VERIFY] PhilSys online registration"
-    url: "[VERIFY]"
+  - label: PhilSys (National ID)
+    url: "https://philsys.gov.ph"
 hotline: "[VERIFY]"
 keywords:
   - NSO
