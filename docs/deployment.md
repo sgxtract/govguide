@@ -5,8 +5,9 @@ Vercel, on the maintainer's personal account (sgxtract).
 
 ## How a change reaches the site
 
-- Every pull request gets a **preview deployment**; its URL is posted on the PR.
-  `robots.ts` blocks search engines on previews.
+- Every pull request gets a **preview deployment**; its URL is posted on the PR. Only people
+  signed in to the Vercel team can open it (Vercel Authentication, on by default), so drafts
+  shown there aren't public. `robots.ts` also blocks search engines on previews.
 - Merging to `main` deploys **production**.
 - CI (GitHub Actions) still runs on every PR. Merge only when CI and the Vercel check are green.
 
