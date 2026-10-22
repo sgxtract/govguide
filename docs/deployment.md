@@ -30,9 +30,15 @@ Vercel, on the maintainer's personal account (sgxtract).
 ## After a deploy
 
 - Open the production URL on a phone: home, a published guide, search, `/privacy`.
+- Open `/sitemap.xml` and `/robots.txt`: every link starts with the production address. They're
+  written at build time, so after changing the domain or `NEXT_PUBLIC_SITE_URL`, redeploy.
 - Analytics: on any page, DevTools → Network shows a request ending in `/view`. The address it
   sends has no `?q=` (see ADR 0013).
 - Run the Lighthouse and manual checks in `quality.md` on the production URL.
+
+## Production address
+
+Now: https://ph-govguide.vercel.app (`NEXT_PUBLIC_SITE_URL` on Production).
 
 ## Custom domain (later)
 
