@@ -19,12 +19,12 @@ export function OfficeRows({
     <ul role="list" className="rounded-card bg-surface">
       {offices.map((office) => (
         <li
-          key={office.slug}
+          key={`${office.city}-${office.slug}`}
           className="tap-area flex min-h-16 items-center gap-3 border-b border-line px-4 py-3 first:rounded-t-card last:rounded-b-card last:border-0 hover:bg-brand-tint/40"
         >
           <div className="min-w-0 flex-1">
             <Link
-              href={`/${office.city}/agencies/${office.agency}#${office.slug}`}
+              href={`/agencies/${office.agency}#${office.city}-${office.slug}`}
               className="stretched leading-snug font-bold text-ink no-underline"
             >
               <VerifyText text={office.name} />

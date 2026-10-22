@@ -20,63 +20,55 @@ import { getAgencyNames } from "@/features/services/agency-names";
 import { GuideRows } from "@/features/services/guide-rows";
 import {
   getAgency,
-  getCity,
-  listCityAgencies,
+  listCities,
   listHolidays,
   listOffices,
   listServices,
+  listVisibleAgencies,
 } from "@/lib/content/repository";
 import { VERIFY } from "@/lib/content/schemas";
 
-// The parent [city] layout supplies `city`; only agencies active there get a page.
-export async function generateStaticParams({
-  params,
-}: {
-  params: { city: string };
-}) {
-  const agencies = await listCityAgencies(params.city);
+// Only agencies with a visible guide or office get a page.
+export async function generateStaticParams() {
+  const agencies = await listVisibleAgencies();
   return agencies.map((agency) => ({ slug: agency.slug }));
 }
 
 export const dynamicParams = false;
 
-type Params = PageProps<"/[city]/agencies/[slug]">["params"];
-
-async function load(params: Params) {
-  const { city: citySlug, slug } = await params;
-  const [city, agency] = await Promise.all([
-    getCity(citySlug),
-    getAgency(slug),
-  ]);
-  return city && agency ? { city, agency } : undefined;
-}
-
 export async function generateMetadata({
   params,
-}: PageProps<"/[city]/agencies/[slug]">): Promise<Metadata> {
-  const data = await load(params);
-  if (!data) return {};
+}: PageProps<"/agencies/[slug]">): Promise<Metadata> {
+  const agency = await getAgency((await params).slug);
+  if (!agency) return {};
   return pageMetadata({
-    title: `${agencyDisplayName(data.agency)} in ${data.city.name}`,
-    description: data.agency.description,
-    path: `/${data.city.slug}/agencies/${data.agency.slug}`,
+    title: agencyDisplayName(agency),
+    description: agency.description,
+    path: `/agencies/${agency.slug}`,
   });
 }
 
 export default async function AgencyPage({
   params,
-}: PageProps<"/[city]/agencies/[slug]">) {
-  const data = await load(params);
-  if (!data) notFound();
-  const { city, agency } = data;
+}: PageProps<"/agencies/[slug]">) {
+  const agency = await getAgency((await params).slug);
+  if (!agency) notFound();
 
-  const [offices, services, holidays, agencyNames] = await Promise.all([
-    listOffices(city.slug, { agency: agency.slug }),
-    listServices(city.slug, { agency: agency.slug }),
+  const [offices, services, holidays, agencyNames, cities] = await Promise.all([
+    listOffices({ agency: agency.slug }),
+    listServices({ agency: agency.slug }),
     listHolidays(),
     getAgencyNames(),
+    listCities(),
   ]);
-  const path = `/${city.slug}/agencies/${agency.slug}`;
+  // Offices grouped by city, in city name order; cities without one are left out.
+  const byCity = cities
+    .map((city) => ({
+      city,
+      offices: offices.filter((o) => o.city === city.slug),
+    }))
+    .filter((group) => group.offices.length > 0);
+  const path = `/agencies/${agency.slug}`;
   const hasChannels =
     agency.website || agency.portals.length > 0 || agency.hotline;
 
@@ -85,12 +77,12 @@ export default async function AgencyPage({
       <PageHeader
         title={agencyDisplayName(agency)}
         subtitle={agencyLevelLabel(agency.level)}
-        back={{ href: `/${city.slug}/agencies`, label: "All offices" }}
+        back={{ href: "/agencies", label: "All offices" }}
         breadcrumbs={{
           path,
           items: [
-            { label: city.name, href: `/${city.slug}` },
-            { label: "Offices", href: `/${city.slug}/agencies` },
+            { label: "Home", href: "/" },
+            { label: "Offices", href: "/agencies" },
             { label: agency.acronym ?? agency.name },
           ],
         }}
@@ -100,26 +92,34 @@ export default async function AgencyPage({
         <div className="grid max-w-3xl grid-cols-1 gap-10">
           <p className="text-lg">{agency.description}</p>
 
-          <section aria-labelledby="offices-heading">
-            <SectionHeading id="offices-heading">
-              Offices in {city.name}
-            </SectionHeading>
-            {offices.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4">
-                {offices.map((office) => (
-                  <OfficeCard
-                    key={office.slug}
-                    office={office}
-                    holidays={holidays}
-                  />
-                ))}
-              </div>
-            ) : (
+          {byCity.length > 0 ? (
+            byCity.map(({ city, offices: cityOffices }) => (
+              <section
+                key={city.slug}
+                aria-labelledby={`${city.slug}-offices-heading`}
+              >
+                <SectionHeading id={`${city.slug}-offices-heading`}>
+                  Offices in {city.name}
+                </SectionHeading>
+                <div className="grid grid-cols-1 gap-4">
+                  {cityOffices.map((office) => (
+                    <OfficeCard
+                      key={`${office.city}-${office.slug}`}
+                      office={office}
+                      holidays={holidays}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))
+          ) : (
+            <section aria-labelledby="offices-heading">
+              <SectionHeading id="offices-heading">Offices</SectionHeading>
               <p className="rounded-card bg-surface px-4 py-3">
                 No local office listed. Use the official channels below.
               </p>
-            )}
-          </section>
+            </section>
+          )}
 
           {hasChannels && (
             <section aria-labelledby="channels-heading" className="print-urls">
@@ -178,7 +178,7 @@ export default async function AgencyPage({
             ) : (
               <div className="rounded-card bg-surface p-5">
                 <p>No guides for this agency yet.</p>
-                <SuggestService city={city.name} />
+                <SuggestService />
               </div>
             )}
           </section>
@@ -187,10 +187,7 @@ export default async function AgencyPage({
             aria-label="Report a change"
             className="border-t-2 border-ink pt-5"
           >
-            <ReportOutdated
-              subject={`${agencyDisplayName(agency)} in ${city.name}`}
-              path={path}
-            />
+            <ReportOutdated subject={agencyDisplayName(agency)} path={path} />
           </section>
         </div>
       </div>

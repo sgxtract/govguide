@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -11,34 +10,23 @@ import { OfficeRows } from "@/features/offices/office-rows";
 import { pageMetadata } from "@/features/seo/page-metadata";
 import { Link } from "@/components/ui/link";
 import {
-  getCity,
-  listCityAgencies,
   listHolidays,
   listOffices,
+  listVisibleAgencies,
 } from "@/lib/content/repository";
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/[city]/agencies">): Promise<Metadata> {
-  const city = await getCity((await params).city);
-  if (!city) return {};
-  return pageMetadata({
-    title: `Government offices in ${city.name}`,
-    description: `Addresses, office hours and contact details of government offices in ${city.name}.`,
-    path: `/${city.slug}/agencies`,
-  });
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Government offices",
+  description:
+    "Addresses, office hours and contact details of government offices, by agency.",
+  path: "/agencies",
+});
 
-/** Every agency with something in this city, and its local offices. */
-export default async function OfficesPage({
-  params,
-}: PageProps<"/[city]/agencies">) {
-  const city = await getCity((await params).city);
-  if (!city) notFound();
-
+/** Every agency with a guide or an office, and its offices. */
+export default async function OfficesPage() {
   const [agencies, offices, holidays] = await Promise.all([
-    listCityAgencies(city.slug),
-    listOffices(city.slug),
+    listVisibleAgencies(),
+    listOffices(),
     listHolidays(),
   ]);
 
@@ -46,14 +34,11 @@ export default async function OfficesPage({
     <>
       <PageHeader
         title="Offices and hours"
-        subtitle={`Government offices serving ${city.name}`}
-        back={{ href: `/${city.slug}`, label: city.name }}
+        subtitle="By agency, with each office's hours"
+        back={{ href: "/", label: "Home" }}
         breadcrumbs={{
-          path: `/${city.slug}/agencies`,
-          items: [
-            { label: city.name, href: `/${city.slug}` },
-            { label: "Offices" },
-          ],
+          path: "/agencies",
+          items: [{ label: "Home", href: "/" }, { label: "Offices" }],
         }}
       />
 
@@ -75,7 +60,7 @@ export default async function OfficesPage({
                 <SectionHeading
                   id={`${agency.slug}-heading`}
                   more={{
-                    href: `/${city.slug}/agencies/${agency.slug}`,
+                    href: `/agencies/${agency.slug}`,
                     label: "Details and guides",
                   }}
                 >
@@ -89,7 +74,7 @@ export default async function OfficesPage({
                 ) : (
                   <p className="rounded-card bg-surface px-4 py-3">
                     No local office listed.{" "}
-                    <Link href={`/${city.slug}/agencies/${agency.slug}`}>
+                    <Link href={`/agencies/${agency.slug}`}>
                       See how to reach them
                     </Link>
                     .

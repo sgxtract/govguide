@@ -27,14 +27,16 @@ export function OfficeCard({
   const phone = office.phones.find((p) => !p.includes(VERIFY));
   const mapUrl = office.mapUrl !== VERIFY ? office.mapUrl : undefined;
   const email = office.email !== VERIFY ? office.email : undefined;
+  // Office slugs are unique within a city, so the anchor includes the city.
+  const anchor = `${office.city}-${office.slug}`;
 
   return (
     <article
-      id={office.slug}
-      aria-labelledby={`${office.slug}-name`}
+      id={anchor}
+      aria-labelledby={`${anchor}-name`}
       className="print-keep grid scroll-mt-20 grid-cols-1 gap-3 rounded-card bg-surface p-4 print:border print:border-line"
     >
-      <Heading id={`${office.slug}-name`} className="text-lg font-extrabold">
+      <Heading id={`${anchor}-name`} className="text-lg font-extrabold">
         <VerifyText text={office.name} />
       </Heading>
 
