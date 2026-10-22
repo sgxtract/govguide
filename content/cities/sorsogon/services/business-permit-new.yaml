@@ -1,54 +1,88 @@
-# DRAFT. Replace every [VERIFY] from an official source, then publish.
-# Sorsogon City's version of this city-run guide. Title, summary and topic are in
+# DRAFT. Sorsogon City's version of this city-run guide. Title, summary and topic are in
 # content/services/business-permit-new.yaml.
+# Checked against the Sorsogon City Citizen's Charter, 2nd Edition (approved 25 May 2021),
+# section 17.1, Availment of New or Renewal of Mayor's Permit (pp. 249-253). The charter is
+# from 2021: confirm with the Permits and Licensing Division before publishing.
 status: draft
 agency: sorsogon-city
 offices:
   - sorsogon-city-bplo
 
 whoCanApply:
-  - "[VERIFY] owners of new businesses located in Sorsogon City"
+  - Anyone starting a business in Sorsogon City
 
 requirements:
-  - label: "[VERIFY] Unified business permit application form"
+  - label: Business application form, filled out
     form: original
-  - label: "[VERIFY] DTI business name registration (sole proprietor) or SEC/CDA registration"
-    form: original-and-photocopy
-    copies: 1
-  - label: "[VERIFY] Barangay business clearance"
-    form: original
-  - label: "[VERIFY] Proof of the right to use the business location (lease contract or land title)"
+    notes: Get it at the Permits and Licensing Division (PLD).
+  - label: Community Tax Certificate (cedula), individual or corporate
     form: photocopy
     copies: 1
+  - label: Barangay Business Clearance
+    form: photocopy
+    copies: 1
+  - label: DTI, SEC or CDA registration
+    form: photocopy
+    copies: 1
+    alternatives:
+      - "Sole proprietor: DTI"
+      - "Corporation or partnership: SEC"
+      - "Cooperative: CDA"
+  - label: Zoning Clearance
+    form: photocopy
+    copies: 1
+    notes: This and the regulatory documents below can be presented when you claim your permit (last step).
+  - label: Sanitary Permit
+    form: photocopy
+    copies: 1
+  - label: Certificate of Annual/Electrical Inspection
+    form: photocopy
+    copies: 1
+    notes: For an existing building.
+  - label: Occupancy Permit
+    form: photocopy
+    copies: 1
+    notes: For a new building.
+  - label: CENRO Certification
+    form: photocopy
+    copies: 1
+  - label: Fire Safety Inspection Certificate (FSIC)
+    form: original
+    notes: The duplicate copy, from the Bureau of Fire Protection (BFP) during step 2.
+  - label: Locational Clearance and Contract of Lease
+    form: photocopy
+    copies: 1
+    notes: Only if your business is in the City Public Market. Both are issued by the City Public Market Administrator.
 
 steps:
-  - title: "[VERIFY] Submit the application form and documents"
-    where: "[VERIFY] Business One-Stop Shop"
-  - title: "[VERIFY] Get your assessment of fees"
-    where: "[VERIFY]"
-  - title: "[VERIFY] Pay the fees"
-    where: "[VERIFY] City Treasurer's Office"
-  - title: "[VERIFY] Go through the required inspections"
-    details: "[VERIFY] fire, sanitary, zoning, building"
-  - title: "[VERIFY] Get your business permit"
+  - title: Submit your application form and first documents
+    where: Permits and Licensing Division (PLD)
+    details: Bring your cedula, barangay business clearance and DTI, SEC or CDA registration. The PLD checks them and sends your details to the City Treasurer's Office.
+    duration: About 5 minutes
+  - title: Get your assessment and Fire Safety Inspection Certificate, then pay
+    where: City Treasurer's Office (CTO) and Bureau of Fire Protection (BFP)
+    details: Get your Assessment Record at the CTO and your FSIC at the BFP, pay the taxes, fees and charges, then get the Order of Payment from the PLD.
+  - title: Get your Mayor's Permit
+    where: Permits and Licensing Division (PLD)
+    details: Show your Official Receipt and your complete regulatory and special requirements. The PLD releases your Mayor's Permit.
+    duration: About 25 minutes
 
 fees:
-  - label: "[VERIFY] Business tax, permit and regulatory fees"
+  - label: Business tax for a new business
     amount: "[VERIFY]"
-    notes: "[VERIFY] depends on the type and size of the business"
+    notes: 1/30 of 1% of your capital investment (City Revenue Code of 2013). Regulatory fees are set by each regulatory office.
 
-processingTime: "[VERIFY]"
-
-tips:
-  - "[VERIFY] Register your business name with DTI first."
+processingTime: About 30 minutes at the Permits and Licensing Division, not counting the City Treasurer's Office and the BFP.
 
 faqs:
-  - question: When do I renew it?
-    answer: "[VERIFY]"
+  - question: My business needs a special license. Which one?
+    answer: "Banks, pawnshops, money changers and remittance agents: Central Bank certificate. Drugstores, bakeries and food processing: FDA registration. Employment agencies: DOLE license. Water refilling stations: DOH water test result. Schools: DepEd or CHED permit. Rice retailers: NFA license. Auto and motor repair shops: DTI accreditation. Travel agencies: DOT accreditation. Security agencies: license from the Security Agencies and Guard Supervision Division. Video rentals: Optical Media Board. Feeds and piggeries: BAI registration. Cellphone dealers: NTC registration."
+  - question: What do I need to renew?
+    answer: "Your cedula, barangay business clearance, DTI/SEC/CDA registration, Income Tax Return, CENRO certification, sanitary permit, certificate of annual/electrical inspection, latest annual inspection report, and Fire Safety Inspection Certificate (photocopies), plus any special license. The business tax is based on your gross receipts or sales."
 
 sources:
-  - title: "[VERIFY] Sorsogon City Citizen's Charter"
-    url: "[VERIFY]"
-    accessed: "[VERIFY]"
+  - title: "Sorsogon City Citizen's Charter, 2nd Edition (approved 2021): Availment of New or Renewal of Mayor's Permit, section 17.1"
+    url: "https://sorsogoncity.gov.ph/wp-content/uploads/2023/11/Sorsogon-City-Citizens-Charter-2nd-Edition.pdf"
+    accessed: "2026-10-22"
 
-lastVerified: "[VERIFY]"
+lastVerified: "2026-10-22"

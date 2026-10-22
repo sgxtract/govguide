@@ -1,0 +1,15 @@
+# A local branch. Folder = city, file name = slug.
+# PhilHealth's Regional Offices Directory (philhealth.gov.ph/about_us/directory) lists the
+# values below; older PhilHealth pages give other addresses and phone numbers.
+agency: philhealth
+name: PhilHealth Local Health Insurance Office, Sorsogon City
+address: "[VERIFY] SORCOM Building, Burgos Street, Brgy. Talisay, Sorsogon City"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+phones:
+  - "[VERIFY] (052) 820-5368"
+email: "[VERIFY]"
+notes:
+  - "[VERIFY] Email in PhilHealth's directory: sorsogon.pro5@philhealth.gov.ph"

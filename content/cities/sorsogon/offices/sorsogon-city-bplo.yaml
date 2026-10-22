@@ -1,10 +1,11 @@
+# Name and hours: Sorsogon City Citizen's Charter, 2nd Edition, section 17.1.
 agency: sorsogon-city
-name: "[VERIFY] Business Permits and Licensing Office, Sorsogon City Hall"
+name: Permits and Licensing Division, Sorsogon City
 address: "[VERIFY]"
 mapUrl: "[VERIFY]"
 hours:
   - days: [mon, tue, wed, thu, fri]
-    opens: "[VERIFY]"
-    closes: "[VERIFY]"
+    opens: "08:00"
+    closes: "17:00"
 phones:
   - "[VERIFY]"

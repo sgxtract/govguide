@@ -1,0 +1,11 @@
+# National agency, shared by every city. File name = slug.
+# Website from the SSS Citizen's Charter 2025.
+name: Social Security System
+acronym: SSS
+level: national
+description: Runs social security for private-sector workers, the self-employed and OFWs, including the SS number, contributions, loans and benefits.
+website: "https://www.sss.gov.ph"
+keywords:
+  - social security
+  - SS number
+  - My.SSS

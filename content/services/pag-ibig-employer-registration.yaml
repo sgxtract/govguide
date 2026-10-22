@@ -1,0 +1,40 @@
+# DRAFT. No official source checked yet: pagibigfund.gov.ph blocks automated access.
+# Fill every [VERIFY] from the Pag-IBIG Fund Citizen's Charter, then publish.
+scope: national
+status: draft
+title: Register as an employer with Pag-IBIG
+summary: Register your business with the Pag-IBIG Fund so you can enroll and remit for your employees.
+keywords:
+  - pagibig employer
+  - HDMF employer
+  - employer ID
+category: business
+agency: pag-ibig
+
+whoCanApply:
+  - "[VERIFY] which employers must register"
+
+requirements:
+  - label: "[VERIFY] Employer's Data Form"
+    form: original
+  - label: "[VERIFY] Proof of business registration (DTI, SEC or CDA)"
+    form: photocopy
+    copies: 1
+
+steps:
+  - title: "[VERIFY] Submit your registration"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Get your Pag-IBIG Employer ID number"
+
+processingTime: "[VERIFY]"
+
+related:
+  - sss-employer-registration
+  - philhealth-employer-registration
+
+sources:
+  - title: "[VERIFY] Pag-IBIG Fund Citizen's Charter"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

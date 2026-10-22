@@ -1,0 +1,71 @@
+# DRAFT. Checked against the SSS Citizen's Charter 2025, 1st Edition: service 63,
+# Application for Employer ID Number (PDF p. 209). Review, then set status: published.
+scope: national
+status: draft
+title: Register as an employer with SSS
+summary: Get an SSS Employer ID number for your business so you can report and pay for your employees.
+keywords:
+  - employer number
+  - SS Form R-1
+  - SSS employer registration
+category: business
+agency: sss
+
+whoCanApply:
+  - All business employers
+
+requirements:
+  - label: Employer Registration form (SS Form R-1)
+    form: original
+    notes: 2 filled-out originals. Download it from www.sss.gov.ph or get it at the branch; read the instructions on the back.
+  - label: Certification and Agreement on Data Privacy Notice
+    form: original
+    notes: 2 originals, from the SSS branch.
+  - label: Valid ID of the owner or authorized signatory
+    form: original-and-photocopy
+    copies: 1
+    alternatives:
+      - "One primary ID: UMID, SS card, driver's license, passport, Philippine ID (National ID), postal ID, voter's ID, NBI clearance, Seaman's Book, Alien Certificate of Registration, or a PNP firearm license"
+      - Or any two IDs, both with your signature and at least one with your photo
+  - label: Proof of business registration
+    form: original-and-photocopy
+    copies: 1
+    alternatives:
+      - "Sole proprietor: DTI Certificate of Business Name Registration, or your Business Permit"
+      - "Partnership: approved Articles of Partnership (SEC)"
+      - "Corporation, including non-stock and non-profit: approved Articles of Incorporation (SEC)"
+      - "Cooperative: approved Articles of Cooperation (CDA)"
+  - label: Letter of Authority or Special Power of Attorney
+    form: original
+    notes: Only if a representative files for you. Bring their valid ID and yours (original and photocopy).
+
+steps:
+  - title: Get a queue number
+    where: Member Services Section, SSS branch
+    duration: About 1 hour 30 minutes, including waiting
+  - title: Submit your forms, documents and IDs
+    where: Member Services Section, SSS branch
+    details: If something is missing or doesn't match, the branch returns your documents with a Rejection Notice.
+    duration: About 1 hour
+  - title: Get your Employer ID documents
+    where: Member Services Section, SSS branch
+    details: You receive your processed SS Form R-1, a Letter to Employer and your Certificate of Registration.
+    duration: About 5 minutes
+
+fees:
+  - label: Employer registration
+    amount: 0
+
+processingTime: About 3 hours 10 minutes in one visit, including waiting.
+
+related:
+  - bir-business-registration
+  - philhealth-employer-registration
+  - pag-ibig-employer-registration
+
+sources:
+  - title: "SSS Citizen's Charter 2025, 1st Edition: Application for Employer ID Number (SS Form R-1), service 63"
+    url: "https://www.sss.gov.ph/wp-content/uploads/2025/06/SSS-Citizens-Charter-2025-1st-Edition.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"

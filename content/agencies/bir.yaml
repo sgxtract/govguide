@@ -1,0 +1,14 @@
+# National agency, shared by every city. File name = slug.
+# Website and ORUS address from the BIR Citizen's Charter 2026.
+name: Bureau of Internal Revenue
+acronym: BIR
+level: national
+description: Collects national taxes. Issues the Taxpayer Identification Number (TIN) and registers businesses.
+website: "https://www.bir.gov.ph"
+portals:
+  - label: ORUS (Online Registration and Update System)
+    url: "https://orus.bir.gov.ph"
+keywords:
+  - TIN
+  - tax
+  - RDO

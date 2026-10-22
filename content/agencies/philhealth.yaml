@@ -1,0 +1,11 @@
+# National agency, shared by every city. File name = slug.
+# Website from the PhilHealth Citizen's Charter 2026.
+name: Philippine Health Insurance Corporation
+acronym: PhilHealth
+level: national
+description: Runs national health insurance. Registers members and employers and issues the PhilHealth Identification Number (PIN).
+website: "https://www.philhealth.gov.ph"
+keywords:
+  - phil health
+  - PIN
+  - PMRF

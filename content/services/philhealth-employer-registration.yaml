@@ -1,0 +1,63 @@
+# DRAFT. Checked against the PhilHealth Citizen's Charter 2026, 1st Edition: Local Health
+# Insurance Office service 3, Enrollment/Registration of Employers (pp. 257-259).
+scope: national
+status: draft
+title: Register as an employer with PhilHealth
+summary: Register your business or household as a PhilHealth employer and get your Employer Data Record and Certificate of Registration.
+keywords:
+  - ER1
+  - philhealth employer
+  - PEN
+category: business
+agency: philhealth
+
+whoCanApply:
+  - All private employers and government agencies
+
+requirements:
+  - label: Employer Data Record form (ER1), filled out
+    form: original
+    notes: Household employers (kasambahay) use the Household Employer Unified Registration Form (HEUR1) instead. Download from www.philhealth.gov.ph/downloads or get it at any PhilHealth office.
+  - label: BIR Certificate of Registration (BIR Form 2303)
+    form: photocopy
+    copies: 1
+  - label: Valid ID of the authorized signatory
+    form: photocopy
+    copies: 1
+  - label: Proof of business registration
+    form: photocopy
+    copies: 1
+    alternatives:
+      - "Sole proprietor: DTI registration"
+      - "Partnership, corporation, foundation or other non-profit: SEC registration"
+      - "Cooperative: CDA registration"
+      - "Backyard industry or micro-business: barangay certification and/or Mayor's permit"
+
+steps:
+  - title: Get a queue number
+    where: Public Assistance and Complaint's Desk (PACD)
+    duration: About 1 hour, including waiting
+  - title: Submit your form and documents
+    where: Frontline Officer
+    duration: About 18 minutes
+  - title: Get your Employer Data Record and Certificate of Registration
+    where: Frontline Officer
+    duration: About 1 minute
+
+fees:
+  - label: Employer registration
+    amount: 0
+
+processingTime: About 1 hour 20 minutes in one visit, including waiting.
+
+related:
+  - bir-business-registration
+  - sss-employer-registration
+  - pag-ibig-employer-registration
+
+sources:
+  - title: "PhilHealth Citizen's Charter 2026, 1st Edition: Enrollment/Registration of Employers, Local Health Insurance Office service 3"
+    url: "https://www.philhealth.gov.ph/about_us/transparency/PhilHealthCitizen'sCharter_Handbook2026_1stEdition.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"

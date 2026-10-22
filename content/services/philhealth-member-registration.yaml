@@ -1,0 +1,64 @@
+# DRAFT. Checked against the PhilHealth Citizen's Charter 2026, 1st Edition: Local Health
+# Insurance Office service 1, Enrollment of Members (pp. 245-251). Review, then publish.
+scope: national
+status: draft
+title: Register with PhilHealth
+summary: Get your PhilHealth Identification Number (PIN), Member Data Record and PhilHealth ID card.
+keywords:
+  - PIN
+  - PMRF
+  - philhealth ID
+  - MDR
+category: benefits-and-contributions
+agency: philhealth
+
+whoCanApply:
+  - All Filipinos and foreign nationals
+
+requirements:
+  - label: PhilHealth Member Registration Form (PMRF), signed
+    form: original
+    notes: Download it from www.philhealth.gov.ph/downloads or get it at any PhilHealth Local Health Insurance Office (LHIO).
+  - label: Birth certificate, baptismal certificate or valid ID
+    form: photocopy
+    copies: 1
+    notes: If you have none, bring a notarized affidavit of two disinterested persons stating your date of birth (1 original).
+  - label: "[VERIFY] Birth or baptismal certificate with registry number"
+    form: original
+    notes: The charter lists this with the item above under "general requirements for all members"; check whether both are needed.
+  - label: Proof of income
+    form: photocopy
+    copies: 1
+    notes: Only for professionals, self-earning individuals (sole proprietors), land-based migrant workers and dual citizens. Income tax return, employment contract or financial statement. If you can't, write your monthly income on the PMRF.
+
+steps:
+  - title: Get a queue number
+    where: Public Assistance and Complaint's Desk (PACD)
+    duration: About 1 hour, including waiting
+  - title: Submit your form and documents
+    where: Frontline Officer
+    details: The officer checks your records and encodes your registration.
+    duration: About 50 minutes
+  - title: Get your Member Data Record and PhilHealth ID card
+    where: Frontline Officer
+    duration: About 1 minute
+
+fees:
+  - label: Registration
+    amount: 0
+
+processingTime: About 1 hour 50 minutes in one visit, including waiting.
+
+tips:
+  - If you're employed, your employer registers you with a Report of Employee-Member (ER-2).
+
+related:
+  - sss-number
+  - pag-ibig-membership
+
+sources:
+  - title: "PhilHealth Citizen's Charter 2026, 1st Edition: Enrollment of Members, Local Health Insurance Office service 1"
+    url: "https://www.philhealth.gov.ph/about_us/transparency/PhilHealthCitizen'sCharter_Handbook2026_1stEdition.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"

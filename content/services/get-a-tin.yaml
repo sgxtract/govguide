@@ -1,0 +1,85 @@
+# DRAFT. Checked against the BIR Citizen's Charter 2026, 1st Edition: RDO external services
+# 2 (TIN of local employee, walk-in) and 4 (TIN under E.O. 98, walk-in), printed pp. 4-12.
+scope: national
+status: draft
+title: Get your TIN
+summary: Get a Taxpayer Identification Number (TIN) from the BIR as a new employee or a first-time jobseeker.
+keywords:
+  - TIN
+  - tax identification number
+  - BIR 1902
+  - BIR 1904
+  - first time jobseeker
+category: ids-and-documents
+agency: bir
+
+whoCanApply:
+  - "New employees without a TIN who earn only from their job (BIR Form 1902). Register within 10 days of starting work."
+  - "Anyone else who needs a TIN to deal with a government office, including first-time jobseekers (BIR Form 1904)"
+
+requirements:
+  - label: BIR Form 1902 (new employees) or BIR Form 1904 (everyone else)
+    form: original
+    notes: 2 filled-out originals. Download from www.bir.gov.ph.
+  - label: Government-issued ID showing your name, address and birthdate
+    form: photocopy
+    copies: 1
+    notes: If your ID has no address, bring proof of residence too.
+    alternatives:
+      - PhilID or ePhilID (National ID)
+      - Driver's license
+      - UMID
+      - Voter's ID
+      - Passport
+      - Digitized postal ID
+      - PRC ID
+      - OWWA ID
+  - label: Marriage contract
+    form: photocopy
+    copies: 1
+    notes: Married women only.
+  - label: Barangay certification that you live in the barangay and are a first-time jobseeker
+    form: original
+    notes: First-time jobseekers using BIR Form 1904 only. A certified true copy.
+  - label: Special Power of Attorney (SPA)
+    form: original
+    notes: Only if someone applies for you with BIR Form 1904. Bring their government-issued ID and yours (photocopies, each with a wet signature).
+
+steps:
+  - title: Get a queue number and wait for your turn
+    where: Revenue District Office (RDO) for the place where you live
+    details: Get one queue number per application.
+    duration: About 2 hours
+  - title: Submit your form and documents
+    where: Registration Officer counter
+    details: The officer checks your documents and generates your TIN.
+    duration: About 4 hours
+  - title: Get your TIN
+    where: Registration Officer counter
+    details: Your TIN is written on your copy of the form.
+    duration: About 5 minutes
+
+fees:
+  - label: TIN application
+    amount: 0
+
+processingTime: About 6 hours in one visit.
+
+online:
+  - label: ORUS (Online Registration and Update System)
+    url: "https://orus.bir.gov.ph"
+    whatYouCanDo: Apply for a TIN online. The charter lists ORUS for new employees and for applicants under E.O. 98.
+
+tips:
+  - The TIN card is a separate application at the RDO.
+
+related:
+  - bir-business-registration
+  - sss-number
+
+sources:
+  - title: "BIR Citizen's Charter 2026, 1st Edition: Application for TIN of Local Employee and under E.O. 98 (RDO services 2 and 4)"
+    url: "https://bir-cdn.bir.gov.ph/BIR/pdf/BIR%20Citizen's%20Charter%20(2026%20Edition)%20final.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"

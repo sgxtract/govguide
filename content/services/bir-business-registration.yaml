@@ -1,0 +1,89 @@
+# DRAFT. Checked against the BIR Citizen's Charter 2026, 1st Edition: RDO external service 7,
+# Application for TIN and Registration of Individual New Business Registrants, walk-in.
+scope: national
+status: draft
+title: Register your business with the BIR
+summary: Get your Certificate of Registration (COR) and invoices from the BIR as a sole proprietor or self-employed professional.
+keywords:
+  - BIR registration
+  - COR
+  - BIR Form 2303
+  - BIR 1901
+  - sole proprietor
+category: business
+agency: bir
+
+whoCanApply:
+  - Sole proprietors and self-employed professionals
+  - "Register before you start (your first sale), or within 30 days of getting your Mayor's Permit or DTI business name certificate"
+
+requirements:
+  - label: BIR Form 1901
+    form: original
+    notes: 2 filled-out originals. Download from www.bir.gov.ph.
+  - label: Government-issued ID showing your name, address and birthdate
+    form: photocopy
+    copies: 1
+    notes: If your ID has no address, bring proof of residence or business address in your name. Professionals regulated by the PRC bring their PRC ID plus a government ID or proof of address.
+    alternatives:
+      - PhilID or ePhilID (National ID)
+      - Driver's license
+      - UMID
+      - Voter's ID
+      - Passport
+      - Digitized postal ID
+      - PRC ID
+      - OWWA ID
+  - label: Invoices
+    form: original
+    notes: Buy BIR Printed Invoices at the New Business Registrant Counter, or bring a final sample of your own invoices from a BIR-accredited printer.
+  - label: DTI business name certificate
+    form: photocopy
+    copies: 1
+    notes: Only if your business has a business name.
+  - label: Special Power of Attorney (SPA)
+    form: original
+    notes: Only if someone registers for you. Bring their government-issued ID and yours (photocopies, each with a wet signature).
+
+steps:
+  - title: Get a queue number and submit your documents
+    where: New Business Registrant Counter, Revenue District Office (RDO) where your business is
+    details: Professionals with no business address go to the RDO for where they live, as do online sellers and others with no physical business address.
+    duration: About 2 hours
+  - title: Have your interview
+    where: New Business Registrant Counter
+    details: An officer sets your tax types and computes any penalty for late registration, then generates your TIN.
+    duration: About 2 hours 50 minutes
+  - title: Pay the documentary stamp tax and buy your invoices
+    where: New Business Registrant Counter
+    details: Pay at the counter, not at a bank.
+    duration: About 1 hour
+  - title: Get your Certificate of Registration
+    where: New Business Registrant Counter
+    details: You receive your BIR Form 1901, Certificate of Registration (COR), Notice to Issue Invoice, and your BIR Printed Invoices or Authority to Print.
+    duration: About 2 hours
+
+fees:
+  - label: Documentary stamp tax (DST)
+    amount: 30
+    notes: Plus the printing cost of BIR Printed Invoices, which varies per RDO.
+
+processingTime: About 1 day.
+
+online:
+  - label: ORUS (Online Registration and Update System)
+    url: "https://orus.bir.gov.ph"
+    whatYouCanDo: Register your business online instead of walking in.
+
+related:
+  - business-permit-new
+  - get-a-tin
+  - sss-employer-registration
+  - philhealth-employer-registration
+
+sources:
+  - title: "BIR Citizen's Charter 2026, 1st Edition: Registration of Individual New Business Registrants, walk-in (RDO service 7)"
+    url: "https://bir-cdn.bir.gov.ph/BIR/pdf/BIR%20Citizen's%20Charter%20(2026%20Edition)%20final.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"

@@ -1,0 +1,72 @@
+# DRAFT. Checked against the SSS Citizen's Charter 2025, 1st Edition: services 13 and 19
+# (PDF pp. 49 and 64). Review, then set status: published. See docs/content-guide.md.
+scope: national
+status: draft
+title: Get your SSS number
+summary: Apply online for your Social Security System (SSS) number, then upload your documents so it becomes permanent.
+keywords:
+  - SS number
+  - SSS registration
+  - social security number
+  - E-1
+category: benefits-and-contributions
+agency: sss
+
+whoCanApply:
+  - Self-employed people
+  - Overseas Filipino Workers (OFWs)
+  - Non-working spouses
+  - Prior registrants, claimants, and survivor pensioners or their guardians
+
+requirements:
+  - label: PSA birth certificate
+    form: original-and-photocopy
+    copies: 1
+    notes: You upload a scan when you apply online. The charter lists the original or a certified true copy, plus one photocopy.
+    alternatives:
+      - "[VERIFY] If you have no birth certificate: the IDs SSS accepts instead (the charter's list doesn't display)"
+      - "Or any two documents with your correct name, at least one showing your date of birth: for example a baptismal certificate, school ID, voter's ID, NBI or police clearance, TIN card, or PhilHealth ID"
+
+steps:
+  - title: Fill out the online application
+    where: 'Online: www.sss.gov.ph, "Apply for an SS number online"'
+    details: Enter your details, tick "I'm not a robot" and the certification, then submit.
+    duration: About 5 minutes
+  - title: Open the link SSS sends to your email
+    where: Your email
+    details: If SSS already has a record of you, the email asks you to visit an SSS branch instead.
+    duration: About 5 minutes
+  - title: Finish the form and generate your SS number
+    where: Online
+    details: Fill in your details up to your beneficiaries, choose a My.SSS user ID, add your height and weight, then click "Generate SS Number".
+    duration: About 5 minutes
+  - title: Upload your documents and get your SS number made permanent
+    where: Online
+    details: SSS checks your documents. Once approved, your SS number is tagged "Permanent".
+    duration: About 2 working days
+
+fees:
+  - label: SS number application
+    amount: 0
+
+processingTime: About 2 working days. You get your SS number right away; it becomes permanent once your documents are approved.
+
+online:
+  - label: SSS website
+    url: "https://www.sss.gov.ph"
+    whatYouCanDo: Apply for your SS number and upload your documents.
+
+tips:
+  - Until your documents are approved, your SS number stays "Temporary". You can pay contributions, but not apply for loans or claim benefits online.
+  - You can also bring your documents to any SSS branch to make your SS number permanent.
+
+related:
+  - sss-employer-registration
+  - philhealth-member-registration
+
+sources:
+  - title: "SSS Citizen's Charter 2025, 1st Edition: Online Application of SS Number (services 13 and 19)"
+    url: "https://www.sss.gov.ph/wp-content/uploads/2025/06/SSS-Citizens-Charter-2025-1st-Edition.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"
