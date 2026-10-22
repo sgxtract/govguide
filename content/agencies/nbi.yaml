@@ -2,8 +2,8 @@ name: National Bureau of Investigation
 acronym: NBI
 level: national
 description: Issues NBI clearances, which many employers and agencies ask for.
-website: "[VERIFY]"
+website: "https://nbi.gov.ph"
 portals:
-  - label: "[VERIFY] NBI clearance online application"
-    url: "[VERIFY]"
+  - label: NBI Clearance online application
+    url: "https://clearance.nbi.gov.ph"
 hotline: "[VERIFY]"

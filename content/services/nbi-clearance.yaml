@@ -1,4 +1,5 @@
-# DRAFT. Replace every [VERIFY] from an official source, then publish.
+# DRAFT. Checked against the NBI Citizen's Charter Handbook 2025, 1st Edition: NBI Clearance
+# Center (regional and district offices) services 1, 4 and 5 (pp. 71-84). Review, then publish.
 scope: national
 status: draft
 title: Get an NBI clearance
@@ -11,51 +12,82 @@ category: ids-and-documents
 agency: nbi
 
 whoCanApply:
-  - "[VERIFY]"
+  - Filipinos and foreigners who need an NBI clearance for work, travel or immigration, or for permits and licenses
+  - First-time jobseekers get it free with a barangay certificate (Republic Act 11261)
 
 requirements:
-  - label: "[VERIFY] Online appointment reference number"
+  - label: Paid reference number from the online application
     form: original
-  - label: "[VERIFY] Two valid government IDs"
+    notes: Register and pay at clearance.nbi.gov.ph before you go. First-time jobseekers register on the "First Time Job Seeker" portal there instead and don't pay.
+  - label: Your National ID (PhilSys ID), or any two valid IDs
     form: original
     alternatives:
-      - "[VERIFY] list of accepted IDs"
+      - TIN ID
+      - Driver's license
+      - Passport
+      - UMID (SSS or GSIS)
+      - PhilHealth ID
+      - Pag-IBIG (HDMF) loyalty card
+      - Postal ID
+      - PRC license
+      - Voter's ID or certification of registration
+      - PSA birth certificate (authenticated)
+      - School ID with your current registration card
+      - Government employee ID
+      - MARINA ID or Seaman's book
+      - IBP card
+      - Senior citizen's, PWD or solo parent ID
+      - Security guard license
+      - DSWD foundling certificate, or Malacañang certification of indigenous or tribal membership
+  - label: Barangay certificate and Oath of Undertaking
+    form: original
+    notes: First-time jobseekers only. From your barangay, stating you're a first-time jobseeker and have lived there for at least 6 months. First-time jobseekers can't use a UMID, Pag-IBIG card, IBP card, government employee ID or senior citizen's ID as one of their two IDs.
+  - label: Valid passport
+    form: original-and-photocopy
+    copies: 1
+    notes: Foreigners only. New foreign applicants can only apply at the NBI Main Office in Manila or an NBI regional or district office.
 
 steps:
-  - title: "[VERIFY] Register and set an appointment online"
-    where: Online, before you go
-  - title: "[VERIFY] Pay the clearance fee"
-    where: "[VERIFY] online or through a payment partner"
-  - title: "[VERIFY] Go to the NBI clearance center on your appointment date"
-    where: "[VERIFY]"
-  - title: "[VERIFY] Have your photo, fingerprints and signature taken"
-  - title: "[VERIFY] Get your NBI clearance"
-    details: "[VERIFY] same day, or a later release date if you have a 'hit'"
+  - title: Register online and get a reference number
+    where: "Online: clearance.nbi.gov.ph"
+    duration: About 10 minutes
+  - title: Pay the clearance fee
+    where: An authorized e-payment channel, such as GCash, 7-Eleven or Bayad Center
+    details: First-time jobseekers skip this step.
+    duration: About 2 minutes
+  - title: Have your photo, fingerprints and signature taken
+    where: Biometrics window, NBI clearance center, on your appointment day
+    duration: About 3 minutes
+  - title: Get your NBI clearance
+    where: Releasing window
+    details: Printed on the spot if you have no "hit". With a hit, you come back on a scheduled date, about 15 working days later.
+    duration: Under 1 minute
 
 fees:
-  - label: "[VERIFY] NBI clearance"
-    amount: "[VERIFY]"
+  - label: Clearance application
+    amount: 130
+    notes: Free for first-time jobseekers.
+  - label: E-payment convenience fee
+    amount: 30
 
-processingTime: "[VERIFY]"
+processingTime: About 15 minutes at the clearance center with no hit; about 15 working days with a hit.
 
 online:
-  - label: "[VERIFY] NBI clearance online application"
-    url: "[VERIFY]"
-    whatYouCanDo: "[VERIFY] register, book and pay"
-
-tips:
-  - "[VERIFY] Renewing? Check if your old clearance lets you renew online."
+  - label: NBI Clearance online
+    url: "https://clearance.nbi.gov.ph"
+    whatYouCanDo: Register, choose your appointment, and get a reference number to pay. First-time jobseekers use the "First Time Job Seeker" portal here.
 
 faqs:
   - question: What does it mean to have a "hit"?
-    answer: "[VERIFY]"
+    answer: Your name matched a record the NBI has to check. You come back on a scheduled date, about 15 working days later, and some applicants are interviewed at the Quality Control window before their clearance is printed.
 
 related:
   - police-clearance
+  - get-a-tin
 
 sources:
-  - title: "[VERIFY] NBI clearance guidelines"
-    url: "[VERIFY]"
-    accessed: "[VERIFY]"
+  - title: "NBI Citizen's Charter Handbook 2025, 1st Edition: Issuance of NBI Clearance Certificate, NBI Clearance Centers (services 1, 4 and 5)"
+    url: "https://nbi.gov.ph/uploads/2025/04/2025-CITIZENS-CHARTER-HANDBOOK-1st-EDITION.pdf"
+    accessed: "2026-10-22"
 
-lastVerified: "[VERIFY]"
+lastVerified: "2026-10-22"

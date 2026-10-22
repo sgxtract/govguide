@@ -1,4 +1,6 @@
-# DRAFT. Replace every [VERIFY] from an official source, then publish.
+# DRAFT. Checked against the PhilSys Citizen's Charter (PhilSys Registry Office external
+# services 1 and 2) and philsys.gov.ph's registration process and supporting documents
+# pages. Review, then publish.
 scope: national
 status: draft
 title: Register for the national ID (PhilSys)
@@ -12,50 +14,66 @@ category: ids-and-documents
 agency: psa
 
 whoCanApply:
-  - "[VERIFY] who can register: Filipino citizens and resident aliens"
+  - Filipino citizens
 
 requirements:
-  - label: "[VERIFY] PSA birth certificate"
+  - label: PhilSys Registration Form 1A, filled out in capital letters
     form: original
+    notes: Get it at the registration center.
+  - label: At least one identification document
+    form: original
+    notes: If your birth certificate and ID don't match, the birth certificate is followed.
     alternatives:
-      - "[VERIFY] other accepted primary documents"
-  - label: "[VERIFY] One valid government ID with photo"
-    form: original
+      - PSA birth certificate plus one government ID with your full name, front-facing photo, and signature or thumbmark
+      - Philippine passport or ePassport
+      - UMID card
+      - LTO student permit or driver's license
+      - "If you have none of these: other documents such as an LCRO birth certificate, PRC ID, SSS ID, PhilHealth ID, voter's ID, postal ID, TIN ID, senior citizen's ID, PWD ID, or NBI or police clearance (full list at philsys.gov.ph)"
 
 steps:
-  - title: "[VERIFY] Set an appointment or go to a registration center"
-    where: "[VERIFY]"
-  - title: "[VERIFY] Have your documents checked"
-    where: "[VERIFY]"
-  - title: "[VERIFY] Have your photo, fingerprints and iris scan taken"
-    where: "[VERIFY]"
-  - title: "[VERIFY] Get your transaction slip, then wait for your ID"
-    details: "[VERIFY] how the ID is delivered and how to get the printed ePhilID"
+  - title: Go to a registration center and submit your form and documents
+    where: PhilSys registration center (PSA office, mall-based or LGU center)
+    duration: About 6 minutes
+  - title: Have your details checked and your fingerprints, irises and photo taken
+    where: Registration Kit Operator
+    duration: About 10 minutes
+  - title: Review and confirm your information
+    where: Registration Kit Operator
+    duration: About 3 minutes
+  - title: Get your transaction slip and your ePhilID
+    where: Registration Kit Operator
+    details: Keep the slip. Its transaction reference number (TRN) tracks your ID's delivery.
+    duration: About 10 minutes
+  - title: Receive your PhilID card by delivery
+    where: Your address, through PHLPost
+    details: Show your transaction slip or the ID you registered with, and sign the delivery receipt. Someone else can receive it with an authorization letter, your ID and theirs.
+    duration: About 12 days in urban areas, 17 days in rural areas, or up to 62 days in remote areas
 
 fees:
-  - label: "[VERIFY] Registration"
-    amount: "[VERIFY]"
+  - label: Registration
+    amount: 0
 
-processingTime: "[VERIFY]"
-
-online:
-  - label: "[VERIFY] PhilSys online registration"
-    url: "[VERIFY]"
-    whatYouCanDo: "[VERIFY]"
+processingTime: Registration takes under an hour; the PhilID card arrives in about 12 days (urban), 17 days (rural) or 62 days (remote areas).
 
 tips:
-  - "[VERIFY] Keep your transaction slip; you need it to follow up."
+  - Keep your transaction slip. Its TRN tracks your PhilID delivery and lets you get the ePhilID or the National ID in paper format.
 
 faqs:
   - question: Can children register?
-    answer: "[VERIFY]"
+    answer: Yes. A child below five is registered with a parent or guardian, who brings their own ePhilID or PhilID, proof of relationship, and the child's birth certificate or another accepted document.
 
 related:
   - psa-birth-certificate
 
 sources:
-  - title: "[VERIFY] PhilSys official website"
-    url: "[VERIFY]"
-    accessed: "[VERIFY]"
+  - title: "PhilSys Citizen's Charter: PhilSys Registry Office external services (PhilSys Registration; Registration of Children Below Five)"
+    url: "https://philsys.gov.ph/wp-content/uploads/2024/09/signedPRO_EXTERNAL-SERVICES.pdf"
+    accessed: "2026-10-22"
+  - title: "PhilSys: Registration Process"
+    url: "https://philsys.gov.ph/registration-process/"
+    accessed: "2026-10-22"
+  - title: "PhilSys: Supporting Documents"
+    url: "https://philsys.gov.ph/supporting-documents/"
+    accessed: "2026-10-22"
 
-lastVerified: "[VERIFY]"
+lastVerified: "2026-10-22"
