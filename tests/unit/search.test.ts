@@ -12,7 +12,7 @@ const docs: SearchDoc[] = [
     keywords: "lisensya driving license",
     agency: "Land Transportation Office (LTO)",
     category: "Vehicles & Driving",
-    url: "/x/services/license",
+    url: "/services/license",
   },
   {
     id: "guide:birth",
@@ -22,7 +22,7 @@ const docs: SearchDoc[] = [
     keywords: "birth cert NSO",
     agency: "Philippine Statistics Authority (PSA)",
     category: "IDs & Documents",
-    url: "/x/services/birth",
+    url: "/services/birth",
   },
 ];
 

@@ -29,7 +29,7 @@ export function formLabel({ form, copies }: Requirement): string {
 }
 
 type Props = {
-  /** One list of ticks per guide, e.g. "/sorsogon/services/drivers-license-new". */
+  /** One list of ticks per guide, e.g. "/services/drivers-license-new" (plus "#<city>" for a city-run guide). */
   guide: string;
   requirements: Requirement[];
   /** Id of the section heading, which labels the list. */

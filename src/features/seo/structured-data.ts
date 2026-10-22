@@ -15,8 +15,8 @@ import type {
   Agency,
   Category,
   City,
+  GuideBody,
   Office,
-  Service,
 } from "@/lib/content/schemas";
 import { VERIFY } from "@/lib/content/verify";
 
@@ -82,20 +82,25 @@ function hoursJsonLd(office: Office): OpeningHoursSpecification[] {
  * `known()` checks are a second line of defence.
  */
 export function serviceJsonLd(input: {
-  service: Service;
+  title: string;
+  summary: string;
+  body: GuideBody;
   agency: Agency;
   category: Category;
-  city: City;
-  offices: Office[];
+  /** The city a city-run guide's version is for; omitted = nationwide. */
+  area?: City;
+  /** Offices to list, each with its city (for the address region). */
+  channels: { office: Office; city: City }[];
   path: string;
 }): WithContext<GovernmentService> {
-  const { service, agency, category, city, offices, path } = input;
+  const { title, summary, body, agency, category, area, channels, path } =
+    input;
 
   return {
     "@context": "https://schema.org",
     "@type": "GovernmentService",
-    name: service.title,
-    description: service.summary,
+    name: title,
+    description: summary,
     url: absoluteUrl(path),
     serviceType: category.name,
     provider: {
@@ -104,16 +109,18 @@ export function serviceJsonLd(input: {
       alternateName: agency.acronym,
       url: known(agency.website),
     },
-    areaServed: {
-      "@type": "City",
-      name: city.name,
-      containedInPlace: {
-        "@type": "AdministrativeArea",
-        name: `${city.province}, Philippines`,
-      },
-    },
+    areaServed: area
+      ? {
+          "@type": "City",
+          name: area.name,
+          containedInPlace: {
+            "@type": "AdministrativeArea",
+            name: `${area.province}, Philippines`,
+          },
+        }
+      : { "@type": "Country", name: "Philippines" },
     availableChannel: [
-      ...offices.map((office) => ({
+      ...channels.map(({ office, city }) => ({
         "@type": "ServiceChannel" as const,
         name: office.name,
         serviceLocation: {
@@ -129,7 +136,7 @@ export function serviceJsonLd(input: {
           openingHoursSpecification: hoursJsonLd(office),
         },
       })),
-      ...service.online.flatMap((item) =>
+      ...body.online.flatMap((item) =>
         known(item.url)
           ? [
               {
@@ -141,7 +148,7 @@ export function serviceJsonLd(input: {
           : [],
       ),
     ],
-    offers: service.fees.flatMap((fee) =>
+    offers: body.fees.flatMap((fee) =>
       typeof fee.amount === "number"
         ? [
             {

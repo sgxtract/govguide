@@ -21,23 +21,39 @@ async function main() {
   const store = await loadFileContent(root);
 
   console.log("✔ Content is valid\n");
+  const local = store.services.filter((s) => s.scope === "local");
   console.log(
     `  ${store.cities.length} cities, ${store.agencies.length} agencies, ` +
-      `${store.offices.length} offices, ${store.services.length} guides\n`,
+      `${store.offices.length} offices, ${store.services.length} guides ` +
+      `(${store.services.length - local.length} national, ${local.length} local), ` +
+      `${store.cityServices.length} city files\n`,
   );
 
   for (const s of store.services) {
-    const notes = [
-      s.status,
-      hasPlaceholders(s) && `has ${VERIFY}`,
-      s.status === "published" &&
-        isDueForReverification(s.lastVerified) &&
-        "due for re-verification",
-    ].filter(Boolean);
-    console.log(`  ${s.city}/${s.slug}  (${notes.join(", ")})`);
+    if (s.scope === "national") {
+      console.log(`  ${s.slug}  (${notes(s).join(", ")})`);
+      continue;
+    }
+    console.log(`  ${s.slug}  (local)`);
+    for (const version of store.cityServices) {
+      if (version.scope === "local" && version.slug === s.slug) {
+        console.log(`    ${version.city}: ${notes(version).join(", ")}`);
+      }
+    }
   }
 
   if (process.argv.includes("--todo")) await printTodo();
+}
+
+/** "published, has [VERIFY], due for re-verification" for one guide. */
+function notes(guide: { status: string; lastVerified: string }): string[] {
+  return [
+    guide.status,
+    hasPlaceholders(guide) && `has ${VERIFY}`,
+    guide.status === "published" &&
+      isDueForReverification(guide.lastVerified) &&
+      "due for re-verification",
+  ].filter((note): note is string => typeof note === "string");
 }
 
 /** Every line that still contains [VERIFY], grouped by file. */

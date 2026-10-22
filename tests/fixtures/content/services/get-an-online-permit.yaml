@@ -1,0 +1,19 @@
+# FICTIONAL test content. Never shown on the real site.
+# Published, but no city has an office for it yet.
+scope: national
+status: published
+title: Get an online permit
+summary: Apply for a fictional permit from an agency with no local office yet.
+category: permits
+agency: test-online-agency
+requirements:
+  - label: Online application form
+    form: original
+steps:
+  - title: Get your online permit
+processingTime: Same day
+sources:
+  - title: Test Online Charter
+    url: https://example.test/online-charter
+    accessed: "2026-10-01"
+lastVerified: "2026-10-01"

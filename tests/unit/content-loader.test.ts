@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -10,7 +10,8 @@ import {
 } from "@/lib/content/loaders/file-loader";
 
 const FIXTURES = path.join(process.cwd(), "tests/fixtures/content");
-const GUIDE = "cities/testville/services/get-a-test-permit.yaml";
+const GUIDE = "services/get-a-test-permit.yaml";
+const LOCAL = "cities/testville/services/get-a-local-permit.yaml";
 
 const tempDirs: string[] = [];
 
@@ -46,17 +47,31 @@ afterEach(async () => {
 });
 
 describe("loadFileContent", () => {
-  it("loads valid content and derives slugs from file names", async () => {
+  it("loads national guides, city files and popular", async () => {
     const store = await loadFileContent(FIXTURES);
 
-    expect(store.cities.map((c) => c.slug)).toEqual(["testville"]);
-    expect(store.services.map((s) => s.slug).sort()).toEqual([
-      "draft-guide",
-      "get-a-test-permit",
+    expect(store.cities.map((c) => c.slug)).toEqual([
+      "otherville",
+      "testville",
     ]);
+    expect(store.services.map((s) => `${s.slug}:${s.scope}`).sort()).toEqual([
+      "draft-guide:national",
+      "get-a-local-permit:local",
+      "get-a-test-permit:national",
+      "get-an-online-permit:national",
+    ]);
+    expect(
+      store.cityServices.map((c) => `${c.city}/${c.slug}:${c.scope}`).sort(),
+    ).toEqual([
+      "otherville/get-a-local-permit:local",
+      "testville/get-a-local-permit:local",
+      "testville/get-a-test-permit:national",
+    ]);
+    expect(store.popular).toEqual(["get-a-test-permit"]);
     const guide = store.services.find((s) => s.slug === "get-a-test-permit");
-    expect(guide?.city).toBe("testville");
-    expect(guide?.fees.map((f) => f.amount)).toEqual([100, 50.5]);
+    expect(
+      guide?.scope === "national" && guide.fees.map((f) => f.amount),
+    ).toEqual([100, 50.5]);
   });
 
   it("rejects a misspelled field instead of dropping it", async () => {
@@ -90,7 +105,7 @@ describe("loadFileContent", () => {
     );
   });
 
-  it("refuses to publish a guide whose office still has [VERIFY]", async () => {
+  it("hides, doesn't reject, a national guide's unverified office", async () => {
     const root = await copyOfFixtures();
     await edit(
       root,
@@ -99,23 +114,48 @@ describe("loadFileContent", () => {
       'opens: "[VERIFY]"',
     );
 
+    expect(await problemsIn(root)).toEqual([]);
+  });
+
+  it("refuses to publish a city version whose office still has [VERIFY]", async () => {
+    const root = await copyOfFixtures();
+    await edit(
+      root,
+      "cities/testville/offices/testville-city-hall-office.yaml",
+      'opens: "08:00"',
+      'opens: "[VERIFY]"',
+    );
+
     expect((await problemsIn(root)).join("\n")).toContain(
-      "still contains [VERIFY]",
+      "Published, but it (or its agency/offices) still contains [VERIFY]",
+    );
+  });
+
+  it("refuses to publish a city version while the guide's national file has [VERIFY]", async () => {
+    const root = await copyOfFixtures();
+    await edit(
+      root,
+      "services/get-a-local-permit.yaml",
+      "summary: Apply for a fictional permit at your city hall.",
+      'summary: "Apply for a fictional permit [VERIFY]"',
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      "services/get-a-local-permit.yaml\n  ✖ Published, but it (or its agency/offices) still contains [VERIFY]",
     );
   });
 
   it("allows [VERIFY] in drafts", async () => {
     const store = await loadFileContent(FIXTURES);
     const draft = store.services.find((s) => s.slug === "draft-guide");
-    expect(draft?.processingTime).toBe("[VERIFY]");
+    expect(draft?.scope === "national" && draft.processingTime).toBe(
+      "[VERIFY]",
+    );
   });
 
   it("rejects file names that aren't valid slugs", async () => {
     const root = await copyOfFixtures();
-    await cp(
-      path.join(root, GUIDE),
-      path.join(root, "cities/testville/services/Bad_Name.yaml"),
-    );
+    await cp(path.join(root, GUIDE), path.join(root, "services/Bad_Name.yaml"));
 
     expect((await problemsIn(root)).join("\n")).toContain(
       "File name must be lowercase-words-with-dashes",
@@ -127,11 +167,96 @@ describe("loadFileContent", () => {
     await edit(root, GUIDE, "tips:", "tipz:");
     await edit(
       root,
-      "cities/testville/services/draft-guide.yaml",
+      "services/draft-guide.yaml",
       "category: permits",
       "category: nope",
     );
 
     expect(await problemsIn(root)).toHaveLength(2);
+  });
+
+  it("rejects requirements in a local guide's national file", async () => {
+    const root = await copyOfFixtures();
+    await edit(
+      root,
+      "services/get-a-local-permit.yaml",
+      "category: permits",
+      "category: permits\nrequirements: []",
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'Unrecognized key: "requirements"',
+    );
+  });
+
+  it("rejects a city file for a guide that doesn't exist", async () => {
+    const root = await copyOfFixtures();
+    await cp(
+      path.join(root, "cities/testville/services/get-a-test-permit.yaml"),
+      path.join(root, "cities/testville/services/nope.yaml"),
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'Unknown guide "nope": no content/services/nope.yaml',
+    );
+  });
+
+  it("rejects requirements in a city file for a national guide", async () => {
+    const root = await copyOfFixtures();
+    await edit(
+      root,
+      "cities/testville/services/get-a-test-permit.yaml",
+      "tips:",
+      "requirements: []\ntips:",
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'Unrecognized key: "requirements"',
+    );
+  });
+
+  it("rejects an office from another city", async () => {
+    const root = await copyOfFixtures();
+    await edit(root, LOCAL, "testville-city-hall-office", "otherville-office");
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'Office "otherville-office" is not in testville',
+    );
+  });
+
+  it("rejects an office of another agency", async () => {
+    const root = await copyOfFixtures();
+    await edit(
+      root,
+      LOCAL,
+      "  - testville-city-hall-office",
+      "  - testville-main-office",
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'Office "testville-main-office" belongs to "test-permits-agency", not "testville-city-hall"',
+    );
+  });
+
+  it("rejects an unknown popular guide", async () => {
+    const root = await copyOfFixtures();
+    await edit(root, "popular.yaml", "- get-a-test-permit", "- nope");
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'Unknown popular service "nope"',
+    );
+  });
+
+  it("rejects a city folder with a reserved name", async () => {
+    const root = await copyOfFixtures();
+    await mkdir(path.join(root, "cities/services"));
+    await cp(
+      path.join(root, "cities/otherville/city.yaml"),
+      path.join(root, "cities/services/city.yaml"),
+    );
+
+    expect((await problemsIn(root)).join("\n")).toContain(
+      'City folder name "services" is reserved',
+    );
   });
 });

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("a guide's report link opens the form with the page filled in", async ({
   page,
 }) => {
-  await page.goto("/testville/services/get-a-test-permit");
+  await page.goto("/services/get-a-test-permit");
   const href = await page
     .getByRole("link", { name: "Report on GitHub" })
     .getAttribute("href");
@@ -12,30 +12,35 @@ test("a guide's report link opens the form with the page filled in", async ({
   expect(url.pathname).toMatch(/\/issues\/new$/);
   expect(url.searchParams.get("template")).toBe("outdated-info.yml");
   expect(url.searchParams.get("page")).toMatch(
-    /\/testville\/services\/get-a-test-permit$/,
+    /\/services\/get-a-test-permit$/,
   );
 });
 
 test("an office page can report a change too", async ({ page }) => {
-  await page.goto("/testville/agencies/test-permits-agency");
+  await page.goto("/agencies/test-permits-agency");
   const href = await page
     .getByRole("link", { name: "Report on GitHub" })
     .getAttribute("href");
   expect(new URL(href ?? "").searchParams.get("page")).toMatch(
-    /\/testville\/agencies\/test-permits-agency$/,
+    /\/agencies\/test-permits-agency$/,
   );
 });
 
-test("an empty category offers to suggest a service for that city", async ({
-  page,
-}) => {
-  await page.goto("/testville/categories/other");
+test("an empty category offers to suggest a service", async ({ page }) => {
+  await page.goto("/categories/other");
   const href = await page
     .getByRole("link", { name: "Report on GitHub" })
     .getAttribute("href");
   const url = new URL(href ?? "");
   expect(url.searchParams.get("template")).toBe("suggest-service.yml");
-  expect(url.searchParams.get("city")).toBe("Testville");
+});
+
+test("a city page suggests a service for that city", async ({ page }) => {
+  await page.goto("/testville");
+  const href = await page
+    .getByRole("link", { name: "Report on GitHub" })
+    .getAttribute("href");
+  expect(new URL(href ?? "").searchParams.get("city")).toBe("Testville");
 });
 
 test("every page links to the contribute page", async ({ page }) => {

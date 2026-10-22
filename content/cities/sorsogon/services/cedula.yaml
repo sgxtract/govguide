@@ -1,13 +1,7 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+# Sorsogon City's version of this city-run guide. Title, summary and topic are in
+# content/services/cedula.yaml.
 status: draft
-title: Get a cedula (community tax certificate)
-summary: Get this year's community tax certificate, often needed for barangay clearances and permits.
-keywords:
-  - cedula
-  - CTC
-  - community tax certificate
-  - sedula
-category: ids-and-documents
 agency: sorsogon-city
 offices:
   - sorsogon-city-treasurer
@@ -45,10 +39,6 @@ tips:
 faqs:
   - question: Can I get it at my barangay instead?
     answer: "[VERIFY]"
-
-related:
-  - barangay-clearance
-  - business-permit-new
 
 sources:
   - title: "[VERIFY] Sorsogon City Citizen's Charter"

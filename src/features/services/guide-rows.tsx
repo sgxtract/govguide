@@ -3,10 +3,10 @@ import { ChevronRight } from "lucide-react";
 import { Icon } from "@/components/ui/icons";
 import { Link } from "@/components/ui/link";
 import { VerifyText } from "@/components/ui/verify-text";
-import type { Service } from "@/lib/content/schemas";
+import type { ServiceListing } from "@/lib/content/repository";
 
 type Props = {
-  services: Service[];
+  services: ServiceListing[];
   /** Agency slug → display name, from getAgencyNames(). */
   agencyNames: Record<string, string>;
   /** Show the one-sentence summary under each title (lists, not home). */
@@ -28,13 +28,13 @@ export function GuideRows({
         >
           <div className="min-w-0 flex-1">
             <Link
-              href={`/${service.city}/services/${service.slug}`}
+              href={`/services/${service.slug}`}
               className="stretched leading-snug font-bold text-ink no-underline"
             >
               {service.title}
             </Link>
             <p className="text-sm text-muted">
-              {agencyNames[service.agency] ?? service.agency}
+              {service.agencies.map((a) => agencyNames[a] ?? a).join(", ")}
             </p>
             {withSummary && (
               <p className="mt-1 text-sm">

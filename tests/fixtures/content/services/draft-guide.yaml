@@ -1,0 +1,18 @@
+# FICTIONAL test content: a draft, which must never appear in production.
+scope: national
+status: draft
+title: An unfinished draft guide
+summary: Not checked yet. [VERIFY]
+category: permits
+agency: test-permits-agency
+requirements:
+  - label: Something [VERIFY]
+    form: original
+steps:
+  - title: "[VERIFY]"
+processingTime: "[VERIFY]"
+sources:
+  - title: "[VERIFY]"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+lastVerified: "[VERIFY]"

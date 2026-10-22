@@ -1,0 +1,88 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+# Checked against LTO Citizen's Charter 2025, service 52 (PDF pp. 278-286), and the
+# LTO Motor Vehicle Registration charter 2025 (fees: printed pp. 211-215; inspection: pp. 265-268).
+scope: national
+status: draft
+title: Renew your vehicle registration
+summary: Renew the yearly registration of your car or motorcycle at the LTO.
+keywords:
+  - rehistro
+  - OR CR
+  - car registration
+  - motorcycle registration
+  - renewal
+category: vehicles-and-driving
+agency: lto
+
+whoCanApply:
+  - The owner of the motor vehicle
+
+requirements:
+  - label: Insurance Certificate of Cover (COC)
+    form: original
+    notes: Your insurance company, accredited by the Insurance Commission, sends it to the LTO electronically. For government vehicles, a COC issued by GSIS.
+  - label: Inspection report
+    form: original
+    notes: Any one of these.
+    alternatives:
+      - Motor Vehicle Inspection System Report (MVISR) from a Private Motor Vehicle Inspection Center (PMVIC), sent to the LTO electronically
+      - Motor Vehicle Inspection Report (MVIR) from the LTO district office, plus a Certificate of Emission Compliance (CEC) from a Private Emission Testing Center (PETC) sent electronically (electric vehicles don't need the CEC). Not accepted for online renewal.
+  - label: Official Receipt and Certificate of Registration (OR/CR)
+    form: photocopy
+    copies: 1
+    notes: Only for a first renewal of a vehicle still on the LTO's old records system (MVIRS). Not needed for online renewal.
+
+steps:
+  - title: Get your insurance and have the vehicle inspected
+    where: An accredited insurance company, then a PMVIC or the LTO district office
+    details: The insurer and the inspection center send the results to the LTO electronically.
+  - title: Give your LTO Client ID number to the Evaluator
+    where: Evaluator, LTO district office
+    details: The Evaluator checks your requirements and prints your application confirmation. The Approving Officer then approves it.
+    duration: About 15 minutes
+  - title: Pay the fees and get your Official Receipt
+    where: Cashier
+    details: The Official Receipt (OR) is your proof that the vehicle is registered for the year.
+
+fees:
+  - label: Registration fee (MVUC), motorcycle without sidecar
+    amount: 240
+  - label: Registration fee (MVUC), motorcycle with sidecar
+    amount: 300
+  - label: Registration fee (MVUC), private car up to 1,600 kg
+    amount: 1600
+    notes: Year model 2001 onwards. Older cars, heavier cars, SUVs, and trucks pay a different amount based on weight and year model.
+  - label: Registration fee (MVUC), private car 1,600 to 2,300 kg
+    amount: 3600
+    notes: Year model 2001 onwards.
+  - label: Inspection fee at the LTO, private vehicle under 4,500 kg
+    amount: 50
+    notes: Only if the LTO inspects your vehicle. ₱75 if it's 4,500 kg or more.
+  - label: Legal Research Fund
+    amount: 10
+    notes: For online renewal.
+
+processingTime: About 15 minutes at the LTO counter, after your insurance and inspection are done.
+
+online:
+  - label: LTMS portal
+    url: "https://portal.lto.gov.ph"
+    whatYouCanDo: Renew online if your vehicle was renewed through LTMS before. Log in, check your requirements, pay, and get the Official Receipt by email. Your inspection must be from a PMVIC.
+
+tips:
+  - "Your inspection month follows the last digit of your plate: 1 is January, 2 is February, up to 0 for October."
+  - "The middle digit of your plate sets the week: 1, 2, or 3 is the first week; 4, 5, or 6 the second; 7 or 8 the third; 9 or 0 the fourth."
+  - Missing your inspection schedule costs a ₱50 penalty.
+
+related:
+  - drivers-license-new
+
+sources:
+  - title: "LTO Citizen's Charter 2025, 1st Edition: Renewal of Motor Vehicle (MV) Registration"
+    url: "https://lto.gov.ph/wp-content/uploads/2025/09/LTO-CC-2025-External.pdf"
+    accessed: "2026-10-22"
+  - title: "LTO Citizen's Charter 2025: Motor Vehicle Registration Transactions (fees and inspection schedule)"
+    url: "https://lto.gov.ph/wp-content/uploads/2025/11/MV-CC-2025.pdf"
+    accessed: "2026-10-22"
+
+lastVerified: "2026-10-22"

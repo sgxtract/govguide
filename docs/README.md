@@ -7,3 +7,4 @@
 - [Quality bar](quality.md): performance budgets and manual checks before merging UI
 - [Deployment](deployment.md)
 - [Decisions (ADRs)](decisions/)
+- [Lessons](lessons/): one short summary per lesson

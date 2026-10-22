@@ -12,8 +12,9 @@ export function hasPlaceholders(value: unknown): boolean {
  * Rules the schemas can't express on their own: references between files,
  * duplicate slugs, and "nothing unverified gets published".
  *
- * `broken` lists files that exist but failed to load ("service:city/slug",
- * "office:city/slug", "agency:slug"); references to them are not reported.
+ * `broken` lists files that exist but failed to load ("service:slug",
+ * "city-service:city/slug", "office:city/slug", "agency:slug"); references
+ * to them are not reported.
  */
 export function checkIntegrity(
   store: ContentStore,
@@ -22,6 +23,9 @@ export function checkIntegrity(
   const problems: string[] = [];
   const categories = new Set(store.categories.map((c) => c.slug));
   const agencies = new Map(store.agencies.map((a) => [a.slug, a]));
+  const services = new Set(store.services.map((s) => s.slug));
+  const unknownAgency = (slug: string) =>
+    !agencies.has(slug) && !broken.has(`agency:${slug}`);
 
   for (const slug of duplicates(store.categories.map((c) => c.slug))) {
     problems.push(`categories.yaml\n  ✖ Duplicate category "${slug}"`);
@@ -31,27 +35,14 @@ export function checkIntegrity(
     problems.push(`holidays.yaml\n  ✖ Duplicate date "${slug}"`);
   }
 
-  for (const city of store.cities) {
-    const cityServices = new Set(
-      store.services.filter((s) => s.city === city.slug).map((s) => s.slug),
-    );
-    for (const popular of city.popular) {
-      if (
-        !cityServices.has(popular) &&
-        !broken.has(`service:${city.slug}/${popular}`)
-      ) {
-        problems.push(
-          `cities/${city.slug}/city.yaml\n  ✖ Unknown popular service "${popular}"`,
-        );
-      }
+  for (const popular of store.popular) {
+    if (!services.has(popular) && !broken.has(`service:${popular}`)) {
+      problems.push(`popular.yaml\n  ✖ Unknown popular service "${popular}"`);
     }
   }
 
   for (const office of store.offices) {
-    if (
-      !agencies.has(office.agency) &&
-      !broken.has(`agency:${office.agency}`)
-    ) {
+    if (unknownAgency(office.agency)) {
       problems.push(
         `cities/${office.city}/offices/${office.slug}.yaml\n  ✖ Unknown agency "${office.agency}"`,
       );
@@ -59,62 +50,98 @@ export function checkIntegrity(
   }
 
   for (const service of store.services) {
-    const where = `cities/${service.city}/services/${service.slug}.yaml`;
-    const cityOffices = new Map(
-      store.offices
-        .filter((o) => o.city === service.city)
-        .map((o) => [o.slug, o]),
-    );
-    const cityServices = new Set(
-      store.services.filter((s) => s.city === service.city).map((s) => s.slug),
-    );
+    const where = `services/${service.slug}.yaml`;
 
     if (!categories.has(service.category)) {
       problems.push(`${where}\n  ✖ Unknown category "${service.category}"`);
     }
-    if (
-      !agencies.has(service.agency) &&
-      !broken.has(`agency:${service.agency}`)
-    ) {
-      problems.push(`${where}\n  ✖ Unknown agency "${service.agency}"`);
-    }
-    for (const office of service.offices) {
-      if (
-        !cityOffices.has(office) &&
-        !broken.has(`office:${service.city}/${office}`)
-      ) {
-        problems.push(
-          `${where}\n  ✖ Unknown office "${office}" in ${service.city}`,
-        );
-      }
-    }
     for (const related of service.related) {
-      if (
-        !cityServices.has(related) &&
-        !broken.has(`service:${service.city}/${related}`)
-      ) {
+      if (!services.has(related) && !broken.has(`service:${related}`)) {
         problems.push(`${where}\n  ✖ Unknown related service "${related}"`);
       }
     }
+    if (service.scope === "local") {
+      // A city-run guide's title and summary show with every city's version,
+      // so they must be verified once any city publishes one.
+      const published = store.cityServices.some(
+        (c) =>
+          c.slug === service.slug &&
+          c.scope === "local" &&
+          c.status === "published",
+      );
+      if (published && hasPlaceholders(service)) {
+        problems.push(`${where}\n  ✖ ${UNVERIFIED}`);
+      }
+      continue;
+    }
 
-    // The accuracy rule: a published guide (and the agency and offices it
-    // shows) must not contain a single unverified value.
-    if (service.status === "published") {
+    if (unknownAgency(service.agency)) {
+      problems.push(`${where}\n  ✖ Unknown agency "${service.agency}"`);
+    }
+    // The accuracy rule. A national guide serves every city, so one city's
+    // unverified office doesn't block it: that office is just hidden.
+    if (
+      service.status === "published" &&
+      [service, agencies.get(service.agency)].some(hasPlaceholders)
+    ) {
+      problems.push(`${where}\n  ✖ ${UNVERIFIED}`);
+    }
+  }
+
+  const serviceBySlug = new Map(store.services.map((s) => [s.slug, s]));
+  for (const extra of store.cityServices) {
+    const where = `cities/${extra.city}/services/${extra.slug}.yaml`;
+    const cityOffices = new Map(
+      store.offices
+        .filter((o) => o.city === extra.city)
+        .map((o) => [o.slug, o]),
+    );
+    // Whose offices these may be: the city version's agency for a city-run
+    // guide, the guide's agency for a national one.
+    const national = serviceBySlug.get(extra.slug);
+    const agency =
+      extra.scope === "local"
+        ? extra.agency
+        : national?.scope === "national"
+          ? national.agency
+          : undefined;
+
+    if (extra.scope === "local" && unknownAgency(extra.agency)) {
+      problems.push(`${where}\n  ✖ Unknown agency "${extra.agency}"`);
+    }
+    for (const slug of extra.offices ?? []) {
+      const office = cityOffices.get(slug);
+      if (!office) {
+        if (!broken.has(`office:${extra.city}/${slug}`)) {
+          problems.push(
+            `${where}\n  ✖ Office "${slug}" is not in ${extra.city}`,
+          );
+        }
+      } else if (agency && office.agency !== agency) {
+        problems.push(
+          `${where}\n  ✖ Office "${slug}" belongs to "${office.agency}", not "${agency}"`,
+        );
+      }
+    }
+
+    // A city's own version of a city-run guide shows exactly these offices,
+    // so all of it must be verified before it's published.
+    if (extra.scope === "local" && extra.status === "published") {
       const shown = [
-        service,
-        agencies.get(service.agency),
-        ...service.offices.map((o) => cityOffices.get(o)),
+        extra,
+        agencies.get(extra.agency),
+        ...extra.offices.map((o) => cityOffices.get(o)),
       ];
       if (shown.some(hasPlaceholders)) {
-        problems.push(
-          `${where}\n  ✖ Published, but it (or its agency/offices) still contains ${VERIFY}. Verify the values or set status: draft.`,
-        );
+        problems.push(`${where}\n  ✖ ${UNVERIFIED}`);
       }
     }
   }
 
   return problems;
 }
+
+const UNVERIFIED = `Published, but it (or its agency/offices) still contains ${VERIFY}. Verify the values or set status: draft.`;
 
 function duplicates(values: string[]): string[] {
   const seen = new Set<string>();

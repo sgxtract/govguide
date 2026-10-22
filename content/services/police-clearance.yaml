@@ -1,0 +1,63 @@
+# DRAFT. Replace every [VERIFY] from an official source, then publish.
+scope: national
+status: draft
+title: Get a police clearance
+summary: Get a national police clearance from the PNP for work, travel or other applications.
+keywords:
+  - police clearance
+  - NPCS
+  - pulis clearance
+category: ids-and-documents
+agency: pnp
+
+whoCanApply:
+  - "[VERIFY]"
+
+requirements:
+  - label: "[VERIFY] Online appointment reference number"
+    form: original
+  - label: "[VERIFY] Two valid government IDs"
+    form: original
+    alternatives:
+      - "[VERIFY] list of accepted IDs"
+  - label: "[VERIFY] Proof of payment"
+    form: original
+
+steps:
+  - title: "[VERIFY] Register and book an appointment online"
+    where: Online, before you go
+  - title: "[VERIFY] Pay the clearance fee"
+    where: "[VERIFY] online or through a payment partner"
+  - title: "[VERIFY] Go to the police station on your appointment date"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Have your photo and fingerprints taken"
+  - title: "[VERIFY] Get your police clearance"
+
+fees:
+  - label: "[VERIFY] Police clearance"
+    amount: "[VERIFY]"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: "[VERIFY] National Police Clearance System"
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY] register, book and pay"
+
+tips:
+  - "[VERIFY] Bring the IDs you entered in your online registration."
+
+faqs:
+  - question: What if I have a "hit"?
+    answer: "[VERIFY]"
+
+related:
+  - nbi-clearance
+  - barangay-clearance
+
+sources:
+  - title: "[VERIFY] PNP police clearance guidelines"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

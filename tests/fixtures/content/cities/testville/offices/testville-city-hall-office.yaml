@@ -1,0 +1,10 @@
+# FICTIONAL test content. Never shown on the real site.
+agency: testville-city-hall
+name: Testville City Hall Office
+address: 2 Example Street, Testville
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "08:00"
+    closes: "17:00"
+phones:
+  - "(000) 000-0001"

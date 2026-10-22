@@ -1,0 +1,10 @@
+# FICTIONAL test content. Never shown on the real site.
+agency: otherville-city-hall
+name: Otherville City Hall Office
+address: 2 Sample Road, Otherville
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "08:00"
+    closes: "17:00"
+phones:
+  - "(000) 000-0003"

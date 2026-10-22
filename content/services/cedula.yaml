@@ -1,0 +1,14 @@
+# A city-run guide: requirements, steps and fees differ per city, so each city
+# writes its own version in cities/<city>/services/cedula.yaml.
+scope: local
+title: Get a cedula (community tax certificate)
+summary: Get this year's community tax certificate, often needed for barangay clearances and permits.
+keywords:
+  - cedula
+  - CTC
+  - community tax certificate
+  - sedula
+category: ids-and-documents
+related:
+  - barangay-clearance
+  - business-permit-new

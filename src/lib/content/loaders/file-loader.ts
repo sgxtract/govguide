@@ -8,13 +8,18 @@ import { checkIntegrity } from "../integrity";
 import {
   agencySchema,
   categoriesFileSchema,
+  cityLocalServiceSchema,
+  cityNationalServiceSchema,
   citySchema,
   holidaysFileSchema,
   officeSchema,
+  popularFileSchema,
+  reservedCitySlugs,
   serviceSchema,
   type Agency,
   type Category,
   type City,
+  type CityService,
   type Holiday,
   type Office,
   type Service,
@@ -27,7 +32,9 @@ export type ContentStore = {
   cities: City[];
   agencies: Agency[];
   offices: Office[];
-  services: Service[];
+  services: Service[]; // content/services: one per guide, nationwide
+  cityServices: CityService[]; // cities/<city>/services: what a city adds
+  popular: string[];
 };
 
 export class ContentError extends Error {
@@ -88,6 +95,12 @@ export async function loadFileContent(root: string): Promise<ContentStore> {
     ? ((await load(holidaysFileSchema, holidaysFile)) ?? [])
     : [];
 
+  // Optional: without it, the home page shows the first few guides instead.
+  const popularFile = path.join(root, "popular.yaml");
+  const popular = (await exists(popularFile))
+    ? ((await load(popularFileSchema, popularFile)) ?? [])
+    : [];
+
   // Files that exist but failed to load. References to them aren't reported
   // again as "unknown", so one typo gives one error, not a cascade.
   const broken = new Set<string>();
@@ -100,11 +113,27 @@ export async function loadFileContent(root: string): Promise<ContentStore> {
     else if (slug) broken.add(`agency:${slug}`);
   }
 
+  const services: Service[] = [];
+  for (const file of await listYaml(path.join(root, "services"))) {
+    const slug = slugOf(file);
+    const data = await load(serviceSchema, file);
+    if (slug && data) services.push({ ...data, slug });
+    else if (slug) broken.add(`service:${slug}`);
+  }
+  const serviceBySlug = new Map(services.map((s) => [s.slug, s]));
+  const reserved: readonly string[] = reservedCitySlugs;
+
   const cities: City[] = [];
   const offices: Office[] = [];
-  const services: Service[] = [];
+  const cityServices: CityService[] = [];
 
   for (const city of await listDirs(path.join(root, "cities"))) {
+    if (reserved.includes(city)) {
+      problems.push(
+        `cities/${city}\n  ✖ City folder name "${city}" is reserved for a site page (/${city}). Rename the folder.`,
+      );
+      continue;
+    }
     const cityDir = path.join(root, "cities", city);
     const data = await load(citySchema, path.join(cityDir, "city.yaml"));
     if (!data) continue;
@@ -117,15 +146,44 @@ export async function loadFileContent(root: string): Promise<ContentStore> {
       else if (slug) broken.add(`office:${city}/${slug}`);
     }
 
+    // The national file decides what a city may add: tips and offices for a
+    // national guide, the whole guide for a city-run one.
     for (const file of await listYaml(path.join(cityDir, "services"))) {
       const slug = slugOf(file);
-      const service = await load(serviceSchema, file);
-      if (slug && service) services.push({ ...service, slug, city });
-      else if (slug) broken.add(`service:${city}/${slug}`);
+      if (!slug) continue;
+      const service = serviceBySlug.get(slug);
+      if (!service) {
+        if (!broken.has(`service:${slug}`)) {
+          problems.push(
+            `${rel(file)}\n  ✖ Unknown guide "${slug}": no content/services/${slug}.yaml`,
+          );
+        }
+        continue;
+      }
+      if (service.scope === "national") {
+        const extra = await load(cityNationalServiceSchema, file);
+        if (extra)
+          cityServices.push({ ...extra, scope: "national", city, slug });
+        else broken.add(`city-service:${city}/${slug}`);
+      } else {
+        const version = await load(cityLocalServiceSchema, file);
+        if (version)
+          cityServices.push({ ...version, scope: "local", city, slug });
+        else broken.add(`city-service:${city}/${slug}`);
+      }
     }
   }
 
-  const store = { categories, holidays, cities, agencies, offices, services };
+  const store = {
+    categories,
+    holidays,
+    cities,
+    agencies,
+    offices,
+    services,
+    cityServices,
+    popular,
+  };
   problems.push(...checkIntegrity(store, broken));
 
   if (problems.length > 0) throw new ContentError(problems);

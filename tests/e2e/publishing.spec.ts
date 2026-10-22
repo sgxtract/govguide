@@ -5,10 +5,10 @@ import { expect, test } from "@playwright/test";
 
 test("drafts and unknown pages are 404", async ({ page }) => {
   for (const path of [
-    "/testville/services/draft-guide",
+    "/services/draft-guide",
     "/nowhere",
-    "/testville/categories/nope",
-    "/testville/agencies/nope",
+    "/categories/nope",
+    "/agencies/nope",
   ]) {
     const response = await page.goto(path);
     expect(response?.status(), path).toBe(404);
@@ -17,7 +17,8 @@ test("drafts and unknown pages are 404", async ({ page }) => {
 
 test("sitemap lists published pages only", async ({ request }) => {
   const xml = await (await request.get("/sitemap.xml")).text();
-  expect(xml).toContain("/testville/services/get-a-test-permit");
+  expect(xml).toContain("/services/get-a-test-permit");
+  expect(xml).toContain("/testville</loc>");
   expect(xml).toContain("<lastmod>2026-10-01</lastmod>");
   expect(xml).not.toContain("draft-guide");
   expect(xml).not.toContain("/search");
@@ -26,7 +27,7 @@ test("sitemap lists published pages only", async ({ request }) => {
 test("guide carries structured data naming the agency as provider", async ({
   page,
 }) => {
-  await page.goto("/testville/services/get-a-test-permit");
+  await page.goto("/services/get-a-test-permit");
   const blocks = await page
     .locator('script[type="application/ld+json"]')
     .allTextContents();
@@ -40,10 +41,13 @@ test("guide carries structured data naming the agency as provider", async ({
   });
 });
 
-test("share card is generated for each guide", async ({ request }) => {
-  const res = await request.get(
-    "/testville/services/get-a-test-permit/opengraph-image",
-  );
+test("share card is generated for each guide", async ({ page, request }) => {
+  // Image routes in a route group get a hashed name, so follow the page's tag.
+  await page.goto("/services/get-a-test-permit");
+  const content = await page
+    .locator('meta[property="og:image"]')
+    .getAttribute("content");
+  const res = await request.get(new URL(content ?? "").pathname);
   expect(res.status()).toBe(200);
   expect(res.headers()["content-type"]).toBe("image/png");
 });

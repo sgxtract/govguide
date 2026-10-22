@@ -1,0 +1,20 @@
+# FICTIONAL test content. Never shown on the real site.
+status: published
+agency: otherville-city-hall
+offices:
+  - otherville-city-hall-office
+requirements:
+  - label: Otherville cedula
+    form: original
+steps:
+  - title: Get your local permit
+    where: Window 1
+fees:
+  - label: Local permit fee
+    amount: 120
+processingTime: Same day
+sources:
+  - title: Otherville Citizen's Charter
+    url: https://example.test/otherville-charter
+    accessed: "2026-10-01"
+lastVerified: "2026-10-01"

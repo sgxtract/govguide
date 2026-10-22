@@ -1,0 +1,5 @@
+# FICTIONAL test content. Never shown on the real site.
+# A national agency with no office in any test city.
+name: Test Online Agency
+level: national
+description: A fictional agency with no local offices, used only in automated tests.
