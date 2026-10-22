@@ -21,6 +21,8 @@ type Props = {
   checklistKey: string;
   /** The "Where to go" section, placed after Fees. */
   where?: ReactNode;
+  /** Related guides, placed just before Sources. */
+  related?: ReactNode;
   /** Report link under Sources. */
   report: ReactNode;
 };
@@ -34,6 +36,7 @@ export function GuideSections({
   idPrefix,
   checklistKey,
   where,
+  related,
   report,
 }: Props) {
   const id = (name: string) => `${idPrefix}${name}`;
@@ -165,6 +168,8 @@ export function GuideSections({
             </div>
           </GuideSection>
         )}
+
+        {related}
 
         <section
           id={id("sources")}

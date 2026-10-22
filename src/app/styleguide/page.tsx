@@ -22,7 +22,7 @@ import {
   categoryIcons,
   type Category,
   type Office,
-  type Service,
+  type NationalService,
 } from "@/lib/content/schemas";
 
 export const metadata: Metadata = {
@@ -37,18 +37,17 @@ function sampleService(
   slug: string,
   title: string,
   agency: string,
-  overrides: Partial<Service> = {},
-): Service {
+  overrides: Partial<NationalService> = {},
+): NationalService {
   return {
     slug,
-    city: "sorsogon",
+    scope: "national",
     status: "draft",
     title,
     summary: `${title}.`,
     keywords: [],
     category: "ids-and-documents",
     agency,
-    offices: [],
     whoCanApply: [],
     requirements: [{ label: VERIFY, form: "original", alternatives: [] }],
     steps: [{ title: VERIFY }],
@@ -455,7 +454,7 @@ export default function StyleguidePage() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <Spec title="At a glance">
                 <div className="rounded-card bg-brand px-3 pt-10 pb-1">
-                  <AtAGlance service={sampleGuide} />
+                  <AtAGlance body={sampleGuide} />
                 </div>
               </Spec>
               <Spec title="What to bring">
