@@ -1,8 +1,8 @@
-# DRAFT. Replace every [VERIFY] from an official source, then publish.
-# Checked against LTO Citizen's Charter 2025, service 52 (PDF pp. 278-286), and the
+# Published. Checked against LTO Citizen's Charter 2025, service 52 (PDF pp. 278-286), and the
 # LTO Motor Vehicle Registration charter 2025 (fees: printed pp. 211-215; inspection: pp. 265-268).
+# Re-verify every 6 months (see docs/content-guide.md).
 scope: national
-status: draft
+status: published
 title: Renew your vehicle registration
 summary: Renew the yearly registration of your car or motorcycle at the LTO.
 keywords:

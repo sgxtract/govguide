@@ -1,8 +1,7 @@
-# DRAFT. Every [VERIFY] must be replaced with a value from an official source,
-# then set status: published. See docs/content-guide.md.
-# Checked against LTO Citizen's Charter 2025, service 37 (PDF pp. 209-216).
+# Published. Checked against LTO Citizen's Charter 2025, service 37 (PDF pp. 209-216).
+# Re-verify every 6 months (see docs/content-guide.md).
 scope: national
-status: draft
+status: published
 title: Get a new driver's license
 summary: Apply for your first non-professional driver's license at the LTO.
 keywords:
