@@ -1,13 +1,7 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+# Sorsogon City's version of this city-run guide. Title, summary and topic are in
+# content/services/business-permit-new.yaml.
 status: draft
-title: Get a new business permit
-summary: Get a Mayor's permit to start a business in Sorsogon City.
-keywords:
-  - mayor's permit
-  - business license
-  - BPLO
-  - negosyo
-category: business
 agency: sorsogon-city
 offices:
   - sorsogon-city-bplo
@@ -51,10 +45,6 @@ tips:
 faqs:
   - question: When do I renew it?
     answer: "[VERIFY]"
-
-related:
-  - barangay-clearance
-  - cedula
 
 sources:
   - title: "[VERIFY] Sorsogon City Citizen's Charter"

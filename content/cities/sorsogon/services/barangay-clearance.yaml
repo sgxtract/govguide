@@ -1,14 +1,9 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
 # Requirements and fees can differ per barangay; write what is common and
 # say so in a tip.
+# Sorsogon City's version of this city-run guide. Title, summary and topic are in
+# content/services/barangay-clearance.yaml.
 status: draft
-title: Get a barangay clearance
-summary: Get a clearance from the barangay where you live, for jobs, permits and other applications.
-keywords:
-  - brgy clearance
-  - barangay certificate
-  - residency
-category: ids-and-documents
 agency: barangay
 
 whoCanApply:
@@ -43,10 +38,6 @@ tips:
 faqs:
   - question: Can I get one from a barangay where I don't live?
     answer: "[VERIFY]"
-
-related:
-  - cedula
-  - police-clearance
 
 sources:
   - title: "[VERIFY] official source for barangay clearance requirements"

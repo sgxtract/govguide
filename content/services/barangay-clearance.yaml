@@ -1,0 +1,13 @@
+# A city-run guide: requirements, steps and fees differ per city, so each city
+# writes its own version in cities/<city>/services/barangay-clearance.yaml.
+scope: local
+title: Get a barangay clearance
+summary: Get a clearance from the barangay where you live, for jobs, permits and other applications.
+keywords:
+  - brgy clearance
+  - barangay certificate
+  - residency
+category: ids-and-documents
+related:
+  - cedula
+  - police-clearance

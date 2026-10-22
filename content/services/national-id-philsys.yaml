@@ -1,4 +1,5 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+scope: national
 status: draft
 title: Register for the national ID (PhilSys)
 summary: Register for the Philippine Identification System and get your national ID.
@@ -9,8 +10,6 @@ keywords:
   - ePhilID
 category: ids-and-documents
 agency: psa
-offices:
-  - psa-sorsogon
 
 whoCanApply:
   - "[VERIFY] who can register: Filipino citizens and resident aliens"

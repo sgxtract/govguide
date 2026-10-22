@@ -1,4 +1,5 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+scope: national
 status: draft
 title: Get a police clearance
 summary: Get a national police clearance from the PNP for work, travel or other applications.
@@ -8,8 +9,6 @@ keywords:
   - pulis clearance
 category: ids-and-documents
 agency: pnp
-offices:
-  - sorsogon-city-police-station
 
 whoCanApply:
   - "[VERIFY]"

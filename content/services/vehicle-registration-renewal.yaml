@@ -1,6 +1,7 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
 # Checked against LTO Citizen's Charter 2025, service 52 (PDF pp. 278-286), and the
 # LTO Motor Vehicle Registration charter 2025 (fees: printed pp. 211-215; inspection: pp. 265-268).
+scope: national
 status: draft
 title: Renew your vehicle registration
 summary: Renew the yearly registration of your car or motorcycle at the LTO.
@@ -12,8 +13,6 @@ keywords:
   - renewal
 category: vehicles-and-driving
 agency: lto
-offices:
-  - lto-sorsogon-district-office
 
 whoCanApply:
   - The owner of the motor vehicle

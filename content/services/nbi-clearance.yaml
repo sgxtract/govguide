@@ -1,4 +1,5 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+scope: national
 status: draft
 title: Get an NBI clearance
 summary: Get an NBI clearance for employment, travel or other applications.
@@ -8,8 +9,6 @@ keywords:
   - trabaho
 category: ids-and-documents
 agency: nbi
-offices:
-  - nbi-clearance-center
 
 whoCanApply:
   - "[VERIFY]"

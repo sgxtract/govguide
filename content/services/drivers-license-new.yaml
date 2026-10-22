@@ -1,6 +1,7 @@
 # DRAFT. Every [VERIFY] must be replaced with a value from an official source,
 # then set status: published. See docs/content-guide.md.
 # Checked against LTO Citizen's Charter 2025, service 37 (PDF pp. 209-216).
+scope: national
 status: draft
 title: Get a new driver's license
 summary: Apply for your first non-professional driver's license at the LTO.
@@ -11,8 +12,6 @@ keywords:
   - non-pro license
 category: vehicles-and-driving
 agency: lto
-offices:
-  - lto-sorsogon-district-office
 
 whoCanApply:
   - At least 17 years old (18 for foreigners)

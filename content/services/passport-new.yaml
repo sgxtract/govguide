@@ -1,4 +1,5 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+scope: national
 status: draft
 title: Apply for a new passport
 summary: Apply for your first Philippine passport at a DFA consular office.
@@ -8,8 +9,6 @@ keywords:
   - DFA appointment
 category: ids-and-documents
 agency: dfa
-offices:
-  - dfa-consular-office
 
 whoCanApply:
   - "[VERIFY] Filipino citizens; separate rules for minors"

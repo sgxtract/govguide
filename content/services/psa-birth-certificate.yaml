@@ -1,4 +1,5 @@
 # DRAFT. Replace every [VERIFY] from an official source, then publish.
+scope: national
 status: draft
 title: Get a PSA birth certificate
 summary: Get a certified copy of a birth certificate from the Philippine Statistics Authority.
@@ -9,8 +10,6 @@ keywords:
   - live birth
 category: ids-and-documents
 agency: psa
-offices:
-  - psa-sorsogon
 
 whoCanApply:
   - "[VERIFY] who can request: the owner, parents, or an authorized representative"

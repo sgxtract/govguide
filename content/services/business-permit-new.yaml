@@ -1,0 +1,14 @@
+# A city-run guide: requirements, steps and fees differ per city, so each city
+# writes its own version in cities/<city>/services/business-permit-new.yaml.
+scope: local
+title: Get a new business permit
+summary: Get a Mayor's permit to start a business in your city or municipality.
+keywords:
+  - mayor's permit
+  - business license
+  - BPLO
+  - negosyo
+category: business
+related:
+  - barangay-clearance
+  - cedula
