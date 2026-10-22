@@ -94,9 +94,27 @@ export const citySchema = z.strictObject({
   province: text,
   description: text,
   hotlines: z.array(hotlineSchema).default([]),
-  // Guides shown under "Most looked up" on the city home, in this order.
-  popular: z.array(slug).default([]),
 });
+
+/**
+ * City folder names that would clash with a site page at the same URL
+ * (/services, /about…). The loader rejects them.
+ */
+export const reservedCitySlugs = [
+  "about",
+  "agencies",
+  "categories",
+  "contribute",
+  "disclaimer",
+  "opengraph-image",
+  "privacy",
+  "search",
+  "services",
+  "styleguide",
+] as const;
+
+// "Most looked up" on the home page, in this order (content/popular.yaml).
+export const popularFileSchema = z.array(slug).default([]);
 
 // ── Agency (shared by all cities) ─────────────────────────────────────────
 
@@ -167,15 +185,11 @@ export const feeSchema = z.strictObject({
   notes: text.optional(),
 });
 
-export const serviceSchema = z.strictObject({
-  status: z.enum(["draft", "published"]),
-  title: text, // plain-language task: "Get a new driver's license"
-  summary: text, // one sentence
-  // Everyday and Filipino words people type: "birth cert", "lisensya".
-  keywords: z.array(text).default([]),
-  category: slug,
-  agency: slug,
-  offices: z.array(slug).default([]),
+/**
+ * What a guide tells you to do: the same shape whether it's written once
+ * nationally or by one city for a city-run service.
+ */
+export const guideBodySchema = z.strictObject({
   whoCanApply: z.array(text).default([]),
   requirements: z.array(requirementSchema).min(1),
   // In order; numbering comes from position. The last step is drawn as the
@@ -194,9 +208,55 @@ export const serviceSchema = z.strictObject({
     .default([]),
   tips: z.array(text).default([]),
   faqs: z.array(z.strictObject({ question: text, answer: text })).default([]),
-  related: z.array(slug).default([]),
   sources: z.array(sourceSchema).min(1), // no source, no guide
   lastVerified: orVerify(isoDate),
+});
+
+const status = z.enum(["draft", "published"]);
+
+/** What every guide has, in content/services/<slug>.yaml. */
+const serviceBase = {
+  title: text, // plain-language task: "Get a new driver's license"
+  summary: text, // one sentence
+  // Everyday and Filipino words people type: "birth cert", "lisensya".
+  keywords: z.array(text).default([]),
+  category: slug,
+  related: z.array(slug).default([]),
+};
+
+/** Same everywhere in the country (LTO, PSA…): written once. */
+export const nationalServiceSchema = z.strictObject({
+  scope: z.literal("national"),
+  status,
+  ...serviceBase,
+  agency: slug,
+  ...guideBodySchema.shape,
+});
+
+/** Run by each city (business permit, cedula): each city writes the rest. */
+export const localServiceSchema = z.strictObject({
+  scope: z.literal("local"),
+  ...serviceBase,
+});
+
+export const serviceSchema = z.discriminatedUnion("scope", [
+  nationalServiceSchema,
+  localServiceSchema,
+]);
+
+/** cities/<city>/services/<slug>.yaml for a national guide (optional). */
+export const cityNationalServiceSchema = z.strictObject({
+  // Replaces the default: the city's offices of the guide's agency.
+  offices: z.array(slug).optional(),
+  tips: z.array(text).default([]), // local tips: "Photocopy shop across the street"
+});
+
+/** cities/<city>/services/<slug>.yaml for a local guide: the city's version. */
+export const cityLocalServiceSchema = z.strictObject({
+  status,
+  agency: slug,
+  offices: z.array(slug).default([]),
+  ...guideBodySchema.shape,
 });
 
 // ── Inferred types (with slug/city added by the loader) ───────────────────
@@ -212,10 +272,25 @@ export type Office = z.infer<typeof officeSchema> & {
 };
 export type OfficeHours = z.infer<typeof hoursSchema>;
 export type Weekday = z.infer<typeof weekdaySchema>;
-export type Service = z.infer<typeof serviceSchema> & {
+export type GuideBody = z.infer<typeof guideBodySchema>;
+export type NationalService = z.infer<typeof nationalServiceSchema> & {
   slug: string;
-  city: string;
 };
+export type LocalService = z.infer<typeof localServiceSchema> & {
+  slug: string;
+};
+export type Service = NationalService | LocalService;
+export type CityNationalService = z.infer<typeof cityNationalServiceSchema> & {
+  scope: "national";
+  city: string;
+  slug: string;
+};
+export type CityLocalService = z.infer<typeof cityLocalServiceSchema> & {
+  scope: "local";
+  city: string;
+  slug: string;
+};
+export type CityService = CityNationalService | CityLocalService;
 export type Requirement = z.infer<typeof requirementSchema>;
 export type Step = z.infer<typeof stepSchema>;
 export type Fee = z.infer<typeof feeSchema>;

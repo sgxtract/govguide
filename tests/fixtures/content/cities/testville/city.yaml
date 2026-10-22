@@ -3,5 +3,3 @@ name: Testville
 province: Test Province
 description: A fictional city used only in automated tests.
 hotlines: []
-popular:
-  - get-a-test-permit

@@ -1,0 +1,7 @@
+# FICTIONAL test content. Never shown on the real site.
+name: Otherville
+province: Other Province
+description: A second fictional city, so the city picker is tested with two cities.
+hotlines:
+  - label: Otherville Rescue
+    number: "(000) 222-2222"

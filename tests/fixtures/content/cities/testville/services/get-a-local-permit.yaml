@@ -1,0 +1,20 @@
+# FICTIONAL test content. Never shown on the real site.
+status: published
+agency: testville-city-hall
+offices:
+  - testville-city-hall-office
+requirements:
+  - label: Testville barangay clearance
+    form: original
+steps:
+  - title: Get your local permit
+    where: Window 1
+fees:
+  - label: Local permit fee
+    amount: 75
+processingTime: Same day
+sources:
+  - title: Testville Citizen's Charter
+    url: https://example.test/testville-charter
+    accessed: "2026-10-01"
+lastVerified: "2026-10-01"
