@@ -25,6 +25,9 @@ highlighted in yellow, and are hidden on the live site.
    - Amounts are in pesos. Any of these work: `585`, `"585"`, `₱585.00`, `"PHP 1,234.50"`.
      Free = `amount: 0`. Also remove `[VERIFY]` from the fee's `label` once it's checked.
      Don't mix a number and `[VERIFY]` (`"585 [VERIFY]"`): it's either checked or not.
+   - A fee that only applies in some cases (a vehicle type, expedited processing, online
+     only) gets a `when`: `when: Motorcycle with sidecar`. It shows under the fee and isn't added
+     to the total. If every fee has a `when`, the guide says "Varies" instead of a total.
    - Times are 24-hour in quotes: `opens: "08:00"`, `closes: "17:00"`.
    - Dates are `"YYYY-MM-DD"`.
    - The **last step** is drawn as the finish flag. Make it what you leave with
