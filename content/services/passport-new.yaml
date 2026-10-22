@@ -45,7 +45,14 @@ steps:
 fees:
   - label: Passport, regular processing
     amount: 950
-    notes: "The application form also lists Expedite (₱250.00) and Lost/Damaged (₱1,300.00). [VERIFY] whether the expedite amount is added to the regular fee."
+  - label: Expedite
+    when: Expedited processing
+    amount: 250
+    notes: "[VERIFY] whether this is added to the ₱950."
+  - label: Lost or damaged passport
+    when: Your old passport was lost or damaged
+    amount: 1300
+    notes: "[VERIFY] whether this is added to the ₱950 or replaces it."
 
 processingTime: "[VERIFY]"
 
