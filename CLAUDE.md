@@ -15,7 +15,8 @@ status. Read before changing anything:
 - Design: the "counter window" direction (`docs/decisions/0009`, `docs/design-system.md`, live at `/styleguide`). It replaces the printed-notice look below in §8.
 - Content: 18 guides. The two LTO guides are published; the rest are drafts, with every unconfirmed fact marked `[VERIFY]`. `pnpm content:todo` lists them. The SSS, PhilHealth, BIR, NBI, PhilSys, PSA birth certificate and Sorsogon business permit guides are filled from the agencies' Citizen's Charters; the passport requirements and accepted IDs are from the DFA consular site; the Pag-IBIG guides and the passport steps and processing time still need an official source.
 - Lesson 12 (national guides, city details) made guides national: written once in `content/services/`, each city adds its offices and local details (`docs/decisions/0012`). City-run services (business permit, cedula, barangay clearance) are written per city.
-- Next up: verify content and publish guides, then Lesson 13 (deploy, see `docs/deployment.md`), then Phase 2.
+- Lesson 13 (deploy) added Vercel hosting and Vercel Web Analytics without query strings (ADR 0013). Production is a quiet launch on the Vercel URL; see `docs/deployment.md`.
+- Next up: fill `content/holidays.yaml`, verify content and publish guides, announce, then Phase 2.
 - New work goes back to the lesson-by-lesson workflow in §1.
 
 ## 1. Who you are and how we work

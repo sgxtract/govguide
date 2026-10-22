@@ -5,6 +5,7 @@ import { ColorSchemeScript } from "@/components/layout/color-scheme-script";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/config/site";
 import { siteUrl } from "@/config/site-url";
+import { SiteAnalytics } from "@/features/analytics/site-analytics";
 
 import "@/styles/globals.css";
 
@@ -69,6 +70,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         {children}
         <SiteFooter />
+        {/* Only the live site counts visits: not dev, previews or local builds. */}
+        {process.env.VERCEL_ENV === "production" && <SiteAnalytics />}
       </body>
     </html>
   );

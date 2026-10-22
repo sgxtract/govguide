@@ -28,6 +28,7 @@ src/
 │   └── ui/              # Link (prefetch on intent), Icon, Notice, buttonClass, VerifyText…
 ├── features/
 │   ├── agencies/        # display names, level labels
+│   ├── analytics/       # SiteAnalytics (Vercel Web Analytics, query strings removed)
 │   ├── categories/      # TopicTiles
 │   ├── cities/          # CityList, CitySwitch (city picker) and its store
 │   ├── feedback/        # report links (pure) + ReportOutdated / SuggestService
@@ -122,3 +123,11 @@ Nothing is sent to a server. The privacy page says this.
   `SuggestService` (empty states, /contribute).
 - `feedbackEmail` and `repoUrl` in `config/site.ts`.
 - Issue forms in `.github/ISSUE_TEMPLATE/`; labels `outdated-info` and `new-service` must exist.
+
+## Analytics
+
+- `features/analytics/site-analytics.tsx`: Vercel Web Analytics in the root layout. Its
+  `beforeSend` drops the query string and #hash (`strip-query.ts`, unit tested), so search
+  words never leave the phone. Rendered only when `VERCEL_ENV` is `production`: no script in
+  `pnpm dev`, previews, local builds or e2e.
+- Changes to what is collected must update `/privacy` in the same PR (ADR 0013).
