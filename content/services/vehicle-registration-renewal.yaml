@@ -45,22 +45,26 @@ steps:
     details: The Official Receipt (OR) is your proof that the vehicle is registered for the year.
 
 fees:
-  - label: Registration fee (MVUC), motorcycle without sidecar
+  - label: Registration fee (MVUC)
+    when: Motorcycle without sidecar
     amount: 240
-  - label: Registration fee (MVUC), motorcycle with sidecar
+  - label: Registration fee (MVUC)
+    when: Motorcycle with sidecar
     amount: 300
-  - label: Registration fee (MVUC), private car up to 1,600 kg
+  - label: Registration fee (MVUC)
+    when: Private car up to 1,600 kg, year model 2001 onwards
     amount: 1600
-    notes: Year model 2001 onwards. Older cars, heavier cars, SUVs, and trucks pay a different amount based on weight and year model.
-  - label: Registration fee (MVUC), private car 1,600 to 2,300 kg
+    notes: Older cars, heavier cars, SUVs, and trucks pay a different amount based on weight and year model.
+  - label: Registration fee (MVUC)
+    when: Private car 1,600 to 2,300 kg, year model 2001 onwards
     amount: 3600
-    notes: Year model 2001 onwards.
-  - label: Inspection fee at the LTO, private vehicle under 4,500 kg
+  - label: Inspection fee at the LTO
+    when: Only if the LTO inspects your vehicle (private, under 4,500 kg)
     amount: 50
-    notes: Only if the LTO inspects your vehicle. ₱75 if it's 4,500 kg or more.
+    notes: ₱75 if it's 4,500 kg or more.
   - label: Legal Research Fund
+    when: Online renewal
     amount: 10
-    notes: For online renewal.
 
 processingTime: About 15 minutes at the LTO counter, after your insurance and inspection are done.
 

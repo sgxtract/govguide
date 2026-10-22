@@ -2,16 +2,10 @@ import { VerifyText } from "@/components/ui/verify-text";
 import type { Fee } from "@/lib/content/schemas";
 import { formatPeso } from "@/lib/utils/format";
 
-/** Sum of the fees, or undefined while any amount is still [VERIFY]. */
-export function totalFee(fees: Fee[]): number | undefined {
-  const amounts = fees.map((f) => f.amount);
-  return amounts.every((a): a is number => typeof a === "number")
-    ? amounts.reduce((sum, a) => sum + a, 0)
-    : undefined;
-}
+import { feeSummary } from "./fee-summary";
 
 export function FeeTable({ fees }: { fees: Fee[] }) {
-  const total = totalFee(fees);
+  const summary = feeSummary(fees);
 
   return (
     <div className="overflow-hidden rounded-card bg-surface">
@@ -28,13 +22,22 @@ export function FeeTable({ fees }: { fees: Fee[] }) {
           </tr>
         </thead>
         <tbody>
-          {fees.map((fee) => (
-            <tr key={fee.label} className="border-b border-line last:border-0">
+          {fees.map((fee, i) => (
+            // Labels repeat when only the condition differs ("Registration fee").
+            <tr
+              key={`${fee.label}-${fee.when ?? ""}-${i}`}
+              className="border-b border-line last:border-0"
+            >
               <th
                 scope="row"
                 className="px-4 py-3 text-left align-top font-normal"
               >
                 <VerifyText text={fee.label} />
+                {fee.when && (
+                  <span className="mt-1 block text-sm font-bold">
+                    <VerifyText text={fee.when} />
+                  </span>
+                )}
                 {fee.notes && (
                   <span className="mt-1 block text-sm text-muted">
                     <VerifyText text={fee.notes} />
@@ -51,22 +54,27 @@ export function FeeTable({ fees }: { fees: Fee[] }) {
             </tr>
           ))}
         </tbody>
-        {fees.length > 1 && (
-          <tfoot>
-            <tr className="border-t-2 border-ink">
-              <th scope="row" className="px-4 py-3 text-left font-extrabold">
-                Total
-              </th>
-              <td className="px-4 py-3 text-right font-extrabold tabular-nums">
-                {total !== undefined ? (
-                  formatPeso(total)
-                ) : (
-                  <VerifyText text="[VERIFY]" />
-                )}
-              </td>
-            </tr>
-          </tfoot>
-        )}
+        {/* No total when every fee depends on the case: it would add up
+            options that never all apply. */}
+        {fees.length > 1 &&
+          (summary.kind === "total" || summary.kind === "verify") && (
+            <tfoot>
+              <tr className="border-t-2 border-ink">
+                <th scope="row" className="px-4 py-3 text-left font-extrabold">
+                  {summary.kind === "total" && summary.from
+                    ? "Always paid"
+                    : "Total"}
+                </th>
+                <td className="px-4 py-3 text-right font-extrabold tabular-nums">
+                  {summary.kind === "total" ? (
+                    formatPeso(summary.amount)
+                  ) : (
+                    <VerifyText text="[VERIFY]" />
+                  )}
+                </td>
+              </tr>
+            </tfoot>
+          )}
       </table>
     </div>
   );

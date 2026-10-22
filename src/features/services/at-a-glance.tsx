@@ -2,7 +2,7 @@ import { VerifyText } from "@/components/ui/verify-text";
 import { VERIFY, type GuideBody } from "@/lib/content/schemas";
 import { formatDate, formatPeso } from "@/lib/utils/format";
 
-import { totalFee } from "./fee-table";
+import { feeSummary } from "./fee-summary";
 
 /**
  * The three things people ask first, as raised tiles. On a national guide
@@ -16,14 +16,20 @@ export function AtAGlance({
   body: Pick<GuideBody, "fees" | "processingTime" | "lastVerified">;
   overlap?: boolean;
 }) {
-  const total = totalFee(body.fees);
+  const summary = feeSummary(body.fees);
   const fee =
-    body.fees.length === 0 ? (
+    summary.kind === "none" ? (
       "Not listed"
-    ) : total !== undefined ? (
-      formatPeso(total)
-    ) : (
+    ) : summary.kind === "verify" ? (
       <VerifyText text={VERIFY} />
+    ) : summary.kind === "varies" ||
+      // "From Free" says nothing: the extras are what people pay.
+      (summary.from && summary.amount === 0) ? (
+      "Varies"
+    ) : summary.from ? (
+      `From ${formatPeso(summary.amount)}`
+    ) : (
+      formatPeso(summary.amount)
     );
 
   return (

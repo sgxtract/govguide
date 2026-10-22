@@ -131,15 +131,15 @@ Optional. Leave it out when the city's offices of the guide's agency are the rig
 
 Used by a national guide and by each city version of a local guide.
 
-| Field          | Required | Notes                                                                                                          |
-| -------------- | -------- | -------------------------------------------------------------------------------------------------------------- |
-| whoCanApply    | no       | List                                                                                                           |
-| requirements   | yes (≥1) | `{ label, form, copies?, notes?, alternatives? }`. `form`: original · photocopy · original-and-photocopy       |
-| steps          | yes (≥1) | `{ title, details?, where?, duration? }`. List order is step order; the last step is drawn as the finish       |
-| fees           | no       | `{ label, amount, notes? }`. `amount` in pesos: `585`, `"₱1,234.50"` and similar are read as numbers; 0 = free |
-| processingTime | yes      |                                                                                                                |
-| online         | no       | `{ label, url, whatYouCanDo }`                                                                                 |
-| tips           | no       | List                                                                                                           |
-| faqs           | no       | `{ question, answer }`                                                                                         |
-| sources        | yes (≥1) | `{ title, url, accessed }`                                                                                     |
-| lastVerified   | yes      | `YYYY-MM-DD`. Re-verify every 6 months                                                                         |
+| Field          | Required | Notes                                                                                                                                                                                                                  |
+| -------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| whoCanApply    | no       | List                                                                                                                                                                                                                   |
+| requirements   | yes (≥1) | `{ label, form, copies?, notes?, alternatives? }`. `form`: original · photocopy · original-and-photocopy                                                                                                               |
+| steps          | yes (≥1) | `{ title, details?, where?, duration? }`. List order is step order; the last step is drawn as the finish                                                                                                               |
+| fees           | no       | `{ label, amount, when?, notes? }`. `amount` in pesos: `585`, `"₱1,234.50"` and similar are read as numbers; 0 = free. `when`: the case it applies to ("Motorcycle with sidecar"); such fees are left out of the total |
+| processingTime | yes      |                                                                                                                                                                                                                        |
+| online         | no       | `{ label, url, whatYouCanDo }`                                                                                                                                                                                         |
+| tips           | no       | List                                                                                                                                                                                                                   |
+| faqs           | no       | `{ question, answer }`                                                                                                                                                                                                 |
+| sources        | yes (≥1) | `{ title, url, accessed }`                                                                                                                                                                                             |
+| lastVerified   | yes      | `YYYY-MM-DD`. Re-verify every 6 months                                                                                                                                                                                 |

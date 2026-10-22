@@ -183,6 +183,9 @@ export const feeSchema = z.strictObject({
   label: text,
   amount: pesos, // 0 = free
   notes: text.optional(),
+  // Only in some cases ("Motorcycle with sidecar", "Expedited processing").
+  // Such fees aren't added to the total.
+  when: text.optional(),
 });
 
 /**
