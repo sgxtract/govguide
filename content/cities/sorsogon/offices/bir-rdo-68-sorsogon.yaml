@@ -1,0 +1,14 @@
+# A local branch. Folder = city, file name = slug.
+# Hours: operating hours in the BIR Citizen's Charter 2026 (RDO services).
+# Address and phone: older BIR pages; confirm.
+agency: bir
+name: BIR Revenue District Office No. 68, Sorsogon
+address: "[VERIFY] BIR Building, City Hall Compound, Cabid-an, Sorsogon City"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "08:00"
+    closes: "17:00"
+phones:
+  - "[VERIFY] (056) 421-5689"
+notes:
+  - "[VERIFY] Covers the whole province of Sorsogon."

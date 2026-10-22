@@ -1,0 +1,45 @@
+# DRAFT. No official source checked yet: pagibigfund.gov.ph blocks automated access.
+# Fill every [VERIFY] from the Pag-IBIG Fund Citizen's Charter, then publish.
+scope: national
+status: draft
+title: Become a Pag-IBIG member
+summary: Register with the Pag-IBIG Fund and get your Pag-IBIG MID number.
+keywords:
+  - MID number
+  - pagibig number
+  - HDMF registration
+category: benefits-and-contributions
+agency: pag-ibig
+
+whoCanApply:
+  - "[VERIFY] who must and who may register"
+
+requirements:
+  - label: "[VERIFY] Member's Data Form or online registration"
+    form: original
+  - label: "[VERIFY] Valid ID"
+    form: original-and-photocopy
+    copies: 1
+
+steps:
+  - title: "[VERIFY] Register online or at a Pag-IBIG branch"
+    where: "[VERIFY]"
+  - title: "[VERIFY] Get your Pag-IBIG MID number"
+
+processingTime: "[VERIFY]"
+
+online:
+  - label: "[VERIFY] Pag-IBIG online registration"
+    url: "[VERIFY]"
+    whatYouCanDo: "[VERIFY]"
+
+related:
+  - sss-number
+  - philhealth-member-registration
+
+sources:
+  - title: "[VERIFY] Pag-IBIG Fund Citizen's Charter"
+    url: "[VERIFY]"
+    accessed: "[VERIFY]"
+
+lastVerified: "[VERIFY]"

@@ -1,0 +1,11 @@
+# A local branch. Folder = city, file name = slug.
+# Not found in any official source yet: pagibigfund.gov.ph blocks automated access.
+agency: pag-ibig
+name: "[VERIFY] Pag-IBIG Fund branch serving Sorsogon"
+address: "[VERIFY]"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+phones:
+  - "[VERIFY]"

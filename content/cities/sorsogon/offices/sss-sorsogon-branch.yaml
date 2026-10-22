@@ -1,0 +1,13 @@
+# A local branch. Folder = city, file name = slug.
+# SSS procurement documents (2022-2024, sss.gov.ph) list two addresses; confirm the current one.
+agency: sss
+name: SSS Sorsogon Branch
+address: "[VERIFY] Jomil Enterprises Bldg., Quezon St., Brgy. Polvorista, Sorsogon City"
+hours:
+  - days: [mon, tue, wed, thu, fri]
+    opens: "[VERIFY]"
+    closes: "[VERIFY]"
+phones:
+  - "[VERIFY] (056) 211-1638"
+notes:
+  - "[VERIFY] Other SSS documents list SSS Bldg., Maharlika Highway, Brgy. Guinlajon, Sorsogon City."
