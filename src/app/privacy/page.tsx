@@ -48,9 +48,17 @@ export default function PrivacyPage() {
 
       <h2>Visitor counts</h2>
       <p>
-        GovGuide doesn&apos;t use tracking cookies or advertising. If we add
-        visitor counts later, it will be a privacy-friendly service that stores
-        no personal data, and this page will say so.
+        GovGuide doesn&apos;t use cookies or advertising. To learn which guides
+        people need, we count visits with Vercel Web Analytics. For each page
+        you open, it records the page (without what you typed in search), the
+        site that sent you, your country or region, and your type of device and
+        browser.
+      </p>
+      <p>
+        It doesn&apos;t store your name or IP address, and it can&apos;t follow
+        you to other websites. Visits on the same day are grouped by a temporary
+        code that is deleted after 24 hours. We only see totals, like &ldquo;300
+        visits to the passport guide this week&rdquo;.
       </p>
 
       <h2>Your rights</h2>
