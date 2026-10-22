@@ -1,7 +1,7 @@
 # A local branch. Folder = city, file name = slug.
 agency: lto
 name: LTO Sorsogon District Office
-address: "Brgy. Cabid-an, Sorsogon City, Sorsogon"
+address: "Brgy. Cabid-an, Sorsogon City, Sorsogon 4700"
 mapUrl: "https://maps.app.goo.gl/9zx1PUkPsfLLB1Bb8"
 hours:
   - days: [mon, tue, wed, thu, fri]
