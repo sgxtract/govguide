@@ -14,8 +14,10 @@ All 10 starting guides are drafts. Drafts show in `pnpm dev` with every `[VERIFY
 highlighted in yellow, and are hidden on the live site.
 
 1. Run **`pnpm content:todo`**. It lists every `[VERIFY]` left, by file and line.
-2. Open one guide, e.g. `content/cities/sorsogon/services/nbi-clearance.yaml`, and its
-   official source side by side.
+2. Open one guide and its official source side by side. National guides (LTO, PSA, NBI…) are
+   in `content/services/`, e.g. `content/services/nbi-clearance.yaml`. City-run guides
+   (business permit, cedula, barangay clearance) are each city's own version, e.g.
+   `content/cities/sorsogon/services/cedula.yaml`.
 3. Replace each `[VERIFY]` with the real value. Remove the `[VERIFY] ` prefix from text that
    turned out right; rewrite text that didn't.
    - A `[VERIFY]` in a requirement's **label** means check the whole item: the label, whether
@@ -28,10 +30,14 @@ highlighted in yellow, and are hidden on the live site.
    - The **last step** is drawn as the finish flag. Make it what you leave with
      ("Get your NBI clearance"), including when and where it's released.
 4. Do the same for the guide's **agency** (`content/agencies/…`) and **offices**
-   (`content/cities/sorsogon/offices/…`). A guide can't be published while they still have
-   `[VERIFY]`, and they don't get their own pages until they're clean.
+   (`content/cities/sorsogon/offices/…`).
+   - A national guide can't be published while its agency has `[VERIFY]`. An office with
+     `[VERIFY]` doesn't block it, but stays hidden on the live site until it's clean, so the
+     guide won't show that city's office yet.
+   - A city's version of a city-run guide can't be published while its agency or the offices it
+     lists have `[VERIFY]`.
 5. Set `sources` (title, URL, the date you opened it) and `lastVerified` to today.
-6. Set `status: published`.
+6. Set `status: published`. For a city-run guide, that's in the city's version.
 7. Run `pnpm content:check`. If anything is still `[VERIFY]` in a published guide, it tells you
    which file; the build refuses to ship it.
 8. Add public holidays for the year to `content/holidays.yaml`, so offices show "Closed today".
@@ -70,11 +76,39 @@ FAQs), delete the whole block instead of leaving `[VERIFY]`.
 
 ## Adding a new guide
 
-1. Copy an existing guide in `content/cities/sorsogon/services/`, keep `status: draft`.
-2. The file name is the URL: `get-a-cedula.yaml` → `/sorsogon/services/get-a-cedula`.
+First decide: is it the **same in every city** (national: LTO, PSA, DFA, NBI, PNP…) or **run
+by each city** (local: business permit, cedula, barangay clearance)?
+
+**National guide**
+
+1. Copy a guide in `content/services/`, keep `scope: national` and `status: draft`.
+2. The file name is the URL: `get-a-cedula.yaml` → `/services/get-a-cedula`.
 3. Fill in what you can from the source; `[VERIFY]` the rest.
-4. Optionally list it in `popular` in `city.yaml` to show it under "Most looked up".
-5. Run `pnpm content:check`, then open a PR with the source links in the description.
+4. Each city's offices of that `agency` show up automatically. Only add
+   `content/cities/<city>/services/<slug>.yaml` to list other offices (`offices:`) or to add
+   local tips (`tips:`), e.g. "Photocopy shop across the street".
+
+**City-run guide**
+
+1. Create `content/services/<slug>.yaml` with `scope: local`, `title`, `summary` (true in every
+   city), `category` and `keywords`. Nothing else.
+2. Create the city's version in `content/cities/<city>/services/<slug>.yaml`: `status: draft`,
+   the city's `agency`, its `offices`, and the requirements, steps, fees and sources from that
+   city's Citizen's Charter.
+
+Then, for either kind:
+
+- Optionally list it in `content/popular.yaml` to show it under "Most looked up".
+- Run `pnpm content:check`, then open a PR with the source links in the description.
+
+## Adding a city
+
+1. Create `content/cities/<city>/city.yaml` (name, province, description, hotlines). The folder
+   name is the URL: `/<city>`. It can't be a reserved name (see the end of this page).
+2. Add its offices in `content/cities/<city>/offices/`. National guides show them right away.
+3. For each city-run guide, write the city's version in `content/cities/<city>/services/`.
+
+`content/holidays.yaml` is shared by every city, so only national holidays go there for now.
 
 ## Handling reports
 
@@ -86,5 +120,6 @@ FAQs), delete the whole block instead of leaving `[VERIFY]`.
 4. Fix the guide in a PR that links the issue (`Fixes #12`), update `lastVerified` and the
    source's `accessed` date.
 
-Reserved slugs: a city folder can't be named `contribute`, `about`, `privacy`, `disclaimer` or
-`styleguide` (those are site pages).
+Reserved names: a city folder can't be named `about`, `agencies`, `categories`, `contribute`,
+`disclaimer`, `opengraph-image`, `privacy`, `search`, `services` or `styleguide` (those are site
+pages). `pnpm content:check` rejects them.

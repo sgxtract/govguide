@@ -25,6 +25,7 @@ export default function PrivacyPage() {
       <ul role="list" className="list-disc space-y-1 pl-5">
         <li>The items you tick on a &ldquo;What to bring&rdquo; checklist.</li>
         <li>Whether you chose the light or dark look.</li>
+        <li>The city you picked, so guides show its offices next time.</li>
       </ul>
       <p>
         These are saved in your browser&apos;s own storage. They are never sent

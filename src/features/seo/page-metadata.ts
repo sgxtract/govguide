@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 type Input = {
   title: string;
   description: string;
-  /** Path of this page, e.g. "/sorsogon/services/drivers-license-new". */
+  /** Path of this page, e.g. "/services/drivers-license-new". */
   path: string;
 };
 

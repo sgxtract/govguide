@@ -7,7 +7,7 @@
 type Report = {
   /** What the report is about, e.g. "Get a new driver's license". */
   subject: string;
-  /** Full URL of the page, e.g. "https://…/sorsogon/services/…". */
+  /** Full URL of the page, e.g. "https://…/services/…". */
   pageUrl: string;
 };
 

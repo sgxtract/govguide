@@ -1,6 +1,6 @@
 # 0004 — YAML content, services stored per city
 
-- Status: Accepted
+- Status: Superseded by 0012 (national guides, city details added per city)
 - Date: 2026-10-19
 
 ## Decision

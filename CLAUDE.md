@@ -13,8 +13,9 @@ for the rebuild). It covers everything in the roadmap through Lesson 11, plus "O
 status. Read before changing anything:
 
 - Design: the "counter window" direction (`docs/decisions/0009`, `docs/design-system.md`, live at `/styleguide`). It replaces the printed-notice look below in §8.
-- Content: 10 draft guides, every unconfirmed fact marked `[VERIFY]`. `pnpm content:todo` lists them.
-- Next up: verify content and publish guides, then Lesson 12 (deploy, see `docs/deployment.md`), then Phase 2.
+- Content: 10 draft guides, every unconfirmed fact marked `[VERIFY]`. `pnpm content:todo` lists them. The two LTO guides have no `[VERIFY]` left (filled from the 2025 Citizen's Charter) but are still drafts.
+- Lesson 12 (national guides, city details) made guides national: written once in `content/services/`, each city adds its offices and local details (`docs/decisions/0012`). City-run services (business permit, cedula, barangay clearance) are written per city.
+- Next up: verify content and publish guides, then Lesson 13 (deploy, see `docs/deployment.md`), then Phase 2.
 - New work goes back to the lesson-by-lesson workflow in §1.
 
 ## 1. Who you are and how we work
@@ -127,21 +128,21 @@ Why PostgreSQL/Supabase: relational data fits this domain (agencies → offices 
 
 - **Feature/domain-based structure**, not "everything in `components/`"
 - **Server Components by default**; `"use client"` only for real interactivity (search box, checklist ticks, language toggle)
-- **Static by default** — `generateStaticParams` for every city/service/agency page
+- **Static by default** — `generateStaticParams` for every service/agency/city page
 - **Single source of truth** for types: Zod schemas → inferred TypeScript types
 - **Design tokens first**, components only use tokens (no scattered arbitrary values)
-- **Multi-city ready** — city is part of the URL and the content folder from day one
+- **National first, city details added** — a guide is written once; each city adds its offices, local tips, and its own version of city-run services (ADR 0012)
 
 ### URL structure
 
 ```
-/                               → city picker (redirects to /sorsogon while there's only one city)
-/sorsogon                       → city home: search, categories, popular services
-/sorsogon/services              → all services, filter by category
-/sorsogon/services/[slug]       → service guide (the core page)
-/sorsogon/agencies/[slug]       → agency page + its local offices + its services
-/sorsogon/categories/[slug]     → e.g. IDs & Documents, Vehicles & Driving, Business, Health, Social Services
-/sorsogon/search?q=             → search results
+/                               → home: search, categories, popular guides, list of cities
+/services                       → all guides, by category
+/services/[slug]                → guide (the core page), with a city picker for "where to go"
+/agencies/[slug]                → agency page + its offices grouped by city + its guides
+/categories/[slug]              → e.g. IDs & Documents, Vehicles & Driving, Business, Health, Social Services
+/search?q=                      → search results
+/sorsogon                       → city hub: hotlines, offices, city-run guides
 /about, /disclaimer, /privacy, /contribute
 ```
 
@@ -152,11 +153,13 @@ govguide/
 ├── content/
 │   ├── agencies/                    # National agencies, shared by all cities (lto.yaml, psa.yaml, dfa.yaml…)
 │   ├── categories.yaml
+│   ├── popular.yaml                 # "Most looked up" on the home page
+│   ├── services/                    # One file per guide, nationwide (drivers-license-new.yaml…)
 │   └── cities/
 │       └── sorsogon/
 │           ├── city.yaml            # name, province, hotlines, emergency numbers
 │           ├── offices/             # Local branches (lto-sorsogon-district-office.yaml…)
-│           └── services/            # One file per service guide (drivers-license-new.mdx…)
+│           └── services/            # What Sorsogon adds: local tips, or its version of a city-run guide
 ├── docs/
 │   ├── README.md                    # Docs index
 │   ├── architecture.md
@@ -169,14 +172,15 @@ govguide/
 ├── public/
 ├── src/
 │   ├── app/
-│   │   ├── [city]/
-│   │   │   ├── page.tsx
+│   │   ├── (site)/                  # Route group: app bar layout for every content page
+│   │   │   ├── page.tsx             # Home
 │   │   │   ├── services/
 │   │   │   │   ├── page.tsx
 │   │   │   │   └── [slug]/page.tsx
 │   │   │   ├── agencies/[slug]/page.tsx
 │   │   │   ├── categories/[slug]/page.tsx
-│   │   │   └── search/page.tsx
+│   │   │   ├── search/page.tsx
+│   │   │   └── [city]/page.tsx      # City hub
 │   │   ├── layout.tsx
 │   │   ├── not-found.tsx
 │   │   ├── sitemap.ts
@@ -214,12 +218,13 @@ govguide/
 
 - **Agency** — slug, name, acronym, level (national / provincial / city / barangay), description, official website, official online portal(s), hotline
 - **Office** — slug, agency, city, address, map link, office hours, contact numbers, email, notes ("closed on holidays", "cut-off 3 PM")
-- **Service** — slug, title, agency, offices, category, summary (one sentence, plain language), who can apply, requirements, steps, fees, processing time, online option, tips, FAQs, related services, sources, `lastVerified`, `status` (draft / published)
+- **Service** — slug, scope (national / local), title, category, summary (one sentence, plain language), related services. A national service also has agency, who can apply, requirements, steps, fees, processing time, online option, tips, FAQs, sources, `lastVerified`, `status` (draft / published); a local (city-run) service gets those from each city's version
+- **City service file** — for a national guide: optional office list and local tips; for a local guide: the city's whole version, with its own agency and status
 - **Requirement** — label, original/photocopy, number of copies, notes, optional "accepted alternatives" (e.g. list of valid IDs)
 - **Step** — order, title, details, where (office window/counter), estimated time
 - **Fee** — label, amount (PHP), notes
 
-National info (agency, general requirements) and local info (office location, hours, local tips) are kept separate so a new city only adds its offices and local notes.
+National info (agency, general requirements) and local info (office location, hours, local tips) are kept separate so a new city only adds its offices and local notes. See `docs/content-model.md` for the current fields.
 
 ---
 
@@ -313,7 +318,8 @@ Maintain `docs/` as we go:
 | 09  | Accessibility & performance pass | Audit, fixes, Lighthouse targets                                                                                                         |
 | 10  | Testing & CI                     | Vitest, Playwright, GitHub Actions                                                                                                       |
 | 11  | Feedback flow                    | "Report outdated info" via GitHub Issue forms                                                                                            |
-| 12  | Deploy                           | Vercel, preview deployments, custom domain, analytics                                                                                    |
-| 13+ | Phase 2                          | i18n, PWA, Postgres/Supabase, admin                                                                                                      |
+| 12  | National guides, city details    | Guides written once nationally; cities add offices and local details; city picker; city hub (ADR 0012)                                   |
+| 13  | Deploy                           | Vercel, preview deployments, custom domain, analytics                                                                                    |
+| 14+ | Phase 2                          | i18n, PWA, Postgres/Supabase, admin                                                                                                      |
 
 **Start with Lesson 00.** Before writing any code, ask me the open questions in §9 that affect setup.
