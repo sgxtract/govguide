@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -7,35 +6,20 @@ import { SuggestService } from "@/features/feedback/report-actions";
 import { pageMetadata } from "@/features/seo/page-metadata";
 import { getAgencyNames } from "@/features/services/agency-names";
 import { GuideRows } from "@/features/services/guide-rows";
-import {
-  getCity,
-  listCategories,
-  listServices,
-} from "@/lib/content/repository";
+import { listCategories, listServices } from "@/lib/content/repository";
 import { countLabel } from "@/lib/utils/format";
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/[city]/services">): Promise<Metadata> {
-  const city = await getCity((await params).city);
-  if (!city) return {};
-  return pageMetadata({
-    title: `All guides for ${city.name}`,
-    description: `Every government service guide for ${city.name}, by topic.`,
-    path: `/${city.slug}/services`,
-  });
-}
+export const metadata: Metadata = pageMetadata({
+  title: "All guides",
+  description: "Every government service guide on GovGuide, by topic.",
+  path: "/services",
+});
 
 /** Every guide, grouped by topic, with jump links to each topic. */
-export default async function AllGuidesPage({
-  params,
-}: PageProps<"/[city]/services">) {
-  const city = await getCity((await params).city);
-  if (!city) notFound();
-
+export default async function AllGuidesPage() {
   const [categories, services, agencyNames] = await Promise.all([
     listCategories(),
-    listServices(city.slug),
+    listServices(),
     getAgencyNames(),
   ]);
   const groups = categories
@@ -49,14 +33,11 @@ export default async function AllGuidesPage({
     <>
       <PageHeader
         title="All guides"
-        subtitle={`${countLabel(services.length, "guide")} for ${city.name}`}
-        back={{ href: `/${city.slug}`, label: city.name }}
+        subtitle={countLabel(services.length, "guide")}
+        back={{ href: "/", label: "Home" }}
         breadcrumbs={{
-          path: `/${city.slug}/services`,
-          items: [
-            { label: city.name, href: `/${city.slug}` },
-            { label: "All guides" },
-          ],
+          path: "/services",
+          items: [{ label: "Home", href: "/" }, { label: "All guides" }],
         }}
       />
 
@@ -111,7 +92,7 @@ export default async function AllGuidesPage({
               Tell us which service you need. We research it from official
               sources and add a guide.
             </p>
-            <SuggestService city={city.name} />
+            <SuggestService />
           </section>
         </div>
       </div>

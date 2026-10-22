@@ -22,7 +22,6 @@ import { searchOptions, type SearchDoc } from "./engine";
 import { SearchForm } from "./search-form";
 
 type Props = {
-  city: string;
   /** "home": Enter goes to the search page. "page": the URL keeps ?q= in sync. */
   mode: "home" | "page";
   /** Id of the heading that labels the field (home page). */
@@ -31,7 +30,7 @@ type Props = {
 
 type Result = Pick<SearchDoc, "kind" | "title" | "summary" | "agency" | "url">;
 
-export function SearchBox({ city, mode, labelledBy }: Props) {
+export function SearchBox({ mode, labelledBy }: Props) {
   const inputId = useId();
   const router = useRouter();
   const initialQuery = useSearchParams().get("q") ?? "";
@@ -51,7 +50,7 @@ export function SearchBox({ city, mode, labelledBy }: Props) {
       try {
         const [{ default: MiniSearchClass }, response] = await Promise.all([
           import("minisearch"),
-          fetch(`/${city}/search-index.json`),
+          fetch("/search-index.json"),
         ]);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const docs = (await response.json()) as SearchDoc[];
@@ -64,7 +63,7 @@ export function SearchBox({ city, mode, labelledBy }: Props) {
         setFailed(true);
       }
     })();
-  }, [city]);
+  }, []);
 
   // Arriving at /search?q=… starts loading straight away.
   useEffect(() => {
@@ -96,7 +95,7 @@ export function SearchBox({ city, mode, labelledBy }: Props) {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (mode === "home" && trimmed) {
-      router.push(`/${city}/search?q=${encodeURIComponent(trimmed)}`);
+      router.push(`/search?q=${encodeURIComponent(trimmed)}`);
     } else {
       inputRef.current?.blur(); // results are already shown; hide the keyboard
     }
@@ -116,7 +115,6 @@ export function SearchBox({ city, mode, labelledBy }: Props) {
   return (
     <div>
       <SearchForm
-        city={city}
         inputId={inputId}
         variant={mode === "home" ? "hero" : "page"}
         labelledBy={labelledBy}
@@ -142,7 +140,7 @@ export function SearchBox({ city, mode, labelledBy }: Props) {
         <p className={`mt-1 ${mode === "home" ? "text-on-brand" : ""}`}>
           Try a shorter word, or{" "}
           <Link
-            href={`/${city}/services`}
+            href="/services"
             className={mode === "home" ? "text-on-brand" : undefined}
           >
             see all guides

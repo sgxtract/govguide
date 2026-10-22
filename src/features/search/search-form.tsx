@@ -4,7 +4,6 @@ import type { ComponentProps, Ref } from "react";
 import { Icon } from "@/components/ui/icons";
 
 type Props = {
-  city: string;
   inputId: string;
   /** "hero": white field on the teal home header. "page": on the page background. */
   variant: "hero" | "page";
@@ -17,10 +16,9 @@ type Props = {
 
 /**
  * The search form itself. Plain HTML that works with JavaScript off: it's a
- * GET form to /[city]/search. SearchBox adds instant results on top.
+ * GET form to /search. SearchBox adds instant results on top.
  */
 export function SearchForm({
-  city,
   inputId,
   variant,
   labelledBy,
@@ -32,7 +30,7 @@ export function SearchForm({
   const hero = variant === "hero";
   return (
     <search>
-      <form action={`/${city}/search`} method="get" onSubmit={onSubmit}>
+      <form action="/search" method="get" onSubmit={onSubmit}>
         {!labelledBy && (
           <label htmlFor={inputId} className="block text-xl font-extrabold">
             What do you need to get done?

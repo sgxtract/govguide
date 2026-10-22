@@ -4,41 +4,52 @@ import { agencyDisplayName } from "@/features/agencies/agency-level";
 import {
   listAgencies,
   listCategories,
-  listCityAgencies,
+  listCities,
   listServices,
+  listVisibleAgencies,
 } from "@/lib/content/repository";
 
 import type { SearchDoc } from "./engine";
 
 /**
- * Everything searchable in one city. Uses the repository, so drafts and
+ * Everything searchable, nationwide. Uses the repository, so drafts and
  * unverified offices are left out in production automatically.
  */
-export async function buildSearchDocs(city: string): Promise<SearchDoc[]> {
-  const [services, allAgencies, cityAgencies, categories] = await Promise.all([
-    listServices(city),
-    listAgencies(),
-    listCityAgencies(city),
-    listCategories(),
-  ]);
+export async function buildSearchDocs(): Promise<SearchDoc[]> {
+  const [services, allAgencies, visibleAgencies, categories, cities] =
+    await Promise.all([
+      listServices(),
+      listAgencies(),
+      listVisibleAgencies(),
+      listCategories(),
+      listCities(),
+    ]);
   const agencyBySlug = new Map(allAgencies.map((a) => [a.slug, a]));
   const categoryName = new Map(categories.map((c) => [c.slug, c.name]));
+  const cityName = new Map(cities.map((c) => [c.slug, c.name]));
 
   const guides: SearchDoc[] = services.map((s) => {
-    const agency = agencyBySlug.get(s.agency);
+    const agencies = s.agencies.flatMap((a) => agencyBySlug.get(a) ?? []);
     return {
       id: `guide:${s.slug}`,
       kind: "guide",
       title: s.title,
       summary: s.summary,
-      keywords: [...s.keywords, ...(agency?.keywords ?? [])].join(" "),
-      agency: agency ? agencyDisplayName(agency) : s.agency,
+      keywords: [
+        ...s.keywords,
+        ...agencies.flatMap((a) => a.keywords),
+        // A city-run guide differs per city, so its cities are searchable.
+        ...(s.scope === "local"
+          ? s.cities.map((c) => cityName.get(c) ?? c)
+          : []),
+      ].join(" "),
+      agency: agencies.map(agencyDisplayName).join(", "),
       category: categoryName.get(s.category) ?? "",
-      url: `/${city}/services/${s.slug}`,
+      url: `/services/${s.slug}`,
     };
   });
 
-  const offices: SearchDoc[] = cityAgencies.map((a) => ({
+  const offices: SearchDoc[] = visibleAgencies.map((a) => ({
     id: `office:${a.slug}`,
     kind: "office",
     title: agencyDisplayName(a),
@@ -46,7 +57,7 @@ export async function buildSearchDocs(city: string): Promise<SearchDoc[]> {
     keywords: ["office", "hours", "address", ...a.keywords].join(" "),
     agency: a.acronym ?? "",
     category: "",
-    url: `/${city}/agencies/${a.slug}`,
+    url: `/agencies/${a.slug}`,
   }));
 
   return [...guides, ...offices];

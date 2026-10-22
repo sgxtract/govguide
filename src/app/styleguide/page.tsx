@@ -24,6 +24,7 @@ import {
   type Office,
   type NationalService,
 } from "@/lib/content/schemas";
+import type { ServiceListing } from "@/lib/content/repository";
 
 export const metadata: Metadata = {
   title: "Styleguide",
@@ -63,11 +64,29 @@ function sampleService(
   };
 }
 
-const guides = [
-  sampleService("drivers-license-new", "Get a new driver's license", "lto"),
-  sampleService("psa-birth-certificate", "Get a PSA birth certificate", "psa"),
-  sampleService("barangay-clearance", "Get a barangay clearance", "barangay"),
+const guides: ServiceListing[] = [
+  sampleListing("drivers-license-new", "Get a new driver's license", "lto"),
+  sampleListing("psa-birth-certificate", "Get a PSA birth certificate", "psa"),
+  sampleListing("barangay-clearance", "Get a barangay clearance", "barangay"),
 ];
+
+/** A guide as lists show it. */
+function sampleListing(
+  slug: string,
+  title: string,
+  agency: string,
+): ServiceListing {
+  return {
+    slug,
+    title,
+    summary: `${title}.`,
+    keywords: [],
+    category: "ids-and-documents",
+    scope: "national",
+    agencies: [agency],
+    cities: ["sorsogon"],
+  };
+}
 const agencyNames = {
   lto: "Land Transportation Office (LTO)",
   psa: "Philippine Statistics Authority (PSA)",
@@ -392,7 +411,6 @@ export default function StyleguidePage() {
               <Spec title="Search on the teal header">
                 <div className="rounded-card bg-brand p-4">
                   <SearchForm
-                    city="sorsogon"
                     inputId="sg-search-hero"
                     variant="hero"
                     labelledBy="sg-search-label"
@@ -403,11 +421,7 @@ export default function StyleguidePage() {
                 </div>
               </Spec>
               <Spec title="Search on a page">
-                <SearchForm
-                  city="sorsogon"
-                  inputId="sg-search-page"
-                  variant="page"
-                />
+                <SearchForm inputId="sg-search-page" variant="page" />
               </Spec>
               <Spec title="Buttons">
                 <p className="text-sm text-muted">
@@ -445,7 +459,7 @@ export default function StyleguidePage() {
                 <GuideRows services={guides} agencyNames={agencyNames} />
               </Spec>
               <Spec title="Topic tiles">
-                <TopicTiles city="sorsogon" categories={sampleCategories} />
+                <TopicTiles categories={sampleCategories} />
               </Spec>
             </div>
           </Section>

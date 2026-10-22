@@ -8,12 +8,10 @@ import { getAgencyNames } from "@/features/services/agency-names";
 import { GuideRows } from "@/features/services/guide-rows";
 import {
   getCategory,
-  getCity,
   listCategories,
   listServices,
 } from "@/lib/content/repository";
 
-// The parent [city] layout supplies `city`; we add every category for it.
 export async function generateStaticParams() {
   const categories = await listCategories();
   return categories.map((category) => ({ slug: category.slug }));
@@ -21,52 +19,39 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-async function load(params: PageProps<"/[city]/categories/[slug]">["params"]) {
-  const { city: citySlug, slug } = await params;
-  const [city, category] = await Promise.all([
-    getCity(citySlug),
-    getCategory(slug),
-  ]);
-  return city && category ? { city, category } : undefined;
-}
-
 export async function generateMetadata({
   params,
-}: PageProps<"/[city]/categories/[slug]">): Promise<Metadata> {
-  const data = await load(params);
-  if (!data) return {};
+}: PageProps<"/categories/[slug]">): Promise<Metadata> {
+  const category = await getCategory((await params).slug);
+  if (!category) return {};
   return pageMetadata({
-    title: `${data.category.name} in ${data.city.name}`,
-    description: data.category.description,
-    path: `/${data.city.slug}/categories/${data.category.slug}`,
+    title: category.name,
+    description: category.description,
+    path: `/categories/${category.slug}`,
   });
 }
 
 export default async function CategoryPage({
   params,
-}: PageProps<"/[city]/categories/[slug]">) {
-  const data = await load(params);
-  if (!data) notFound();
-  const { city, category } = data;
+}: PageProps<"/categories/[slug]">) {
+  const category = await getCategory((await params).slug);
+  if (!category) notFound();
 
   const [services, agencyNames] = await Promise.all([
-    listServices(city.slug, { category: category.slug }),
+    listServices({ category: category.slug }),
     getAgencyNames(),
   ]);
-  const path = `/${city.slug}/categories/${category.slug}`;
+  const path = `/categories/${category.slug}`;
 
   return (
     <>
       <PageHeader
         title={category.name}
         subtitle={category.description}
-        back={{ href: `/${city.slug}`, label: city.name }}
+        back={{ href: "/", label: "Home" }}
         breadcrumbs={{
           path,
-          items: [
-            { label: city.name, href: `/${city.slug}` },
-            { label: category.name },
-          ],
+          items: [{ label: "Home", href: "/" }, { label: category.name }],
         }}
       />
 
@@ -85,7 +70,7 @@ export default async function CategoryPage({
                 Guides for {category.name.toLowerCase()} are coming. Which one
                 should we explain first?
               </p>
-              <SuggestService city={city.name} />
+              <SuggestService />
             </div>
           )}
         </div>
