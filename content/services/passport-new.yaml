@@ -1,5 +1,8 @@
-# DRAFT. Fees, the minors rule and the forfeiture rule are from the DFA Passport Application
-# Form (DFA-OCA-PDO-02, rev. 27 Dec 2024). Everything else still needs an official source.
+# DRAFT. Requirements and accepted IDs are from the DFA Office of Consular Affairs pages
+# "Requirements for Adult New Applications" and "List of Acceptable IDs for Philippine Passport
+# Application" (read 2026-10-22). Fees, the minors rule and the forfeiture rule are from the DFA
+# Passport Application Form (DFA-OCA-PDO-02, rev. 27 Dec 2024). Steps, processing time and
+# Courtesy Lane eligibility still need an official source.
 scope: national
 status: draft
 title: Apply for a new passport
@@ -12,30 +15,53 @@ category: ids-and-documents
 agency: dfa
 
 whoCanApply:
-  - Filipino citizens
+  - Filipino citizens applying for their first passport
   - "Minors (below 18) apply with an accompanying adult, who signs the form as parent or legal guardian. [VERIFY] documents minors need"
 
 requirements:
-  - label: "[VERIFY] Confirmed online appointment"
+  - label: Confirmed online appointment
     form: original
+    notes: You don't need one if you can use the Courtesy Lane.
   - label: Passport application form, filled out and signed
     form: original
     notes: Leave no space blank; write N/A where it doesn't apply. Download it from consular.dfa.gov.ph.
-  - label: "[VERIFY] PSA birth certificate"
+  - label: PSA birth certificate (Certificate of Live Birth) on security paper
     form: original-and-photocopy
     copies: 1
-  - label: "[VERIFY] Valid government ID"
+    notes: If the PSA copy is unclear or can't be read, also bring the copy from your Local Civil Registrar.
+  - label: PSA marriage certificate on security paper, or Report of Marriage
     form: original-and-photocopy
     copies: 1
+    notes: Only for married women using their husband's last name. Not needed if you keep your maiden name.
+  - label: One valid ID
+    form: original-and-photocopy
+    copies: 1
+    notes: Your National ID (PhilID or ePhilID), or one of the other IDs listed. It must be readable, not tampered with, and match the details on your other documents.
     alternatives:
-      - "[VERIFY] list of accepted IDs"
+      - National ID card (PhilID)
+      - ePhilID (paper National ID)
+      - Digital National ID, printed. You'll also be asked to open it on national-id.gov.ph or the eGovPH app.
+      - SSS card
+      - UMID card
+      - LTO driver's license (a student permit only if it's a card)
+      - BLTO driver's license card, issued 2022 onwards
+      - PRC ID
+      - OWWA e-Card
+      - COMELEC voter's ID, or voter's certificate from the COMELEC main office in Intramuros, Manila
+      - PNP permit to carry firearms outside residence
+      - Senior citizen ID
+      - Airman license, issued August 2016 onwards
+      - Philippine Postal ID
+      - MARINA Seafarer's Record Book (SRB) or Seafarer's Identity Document (SID), issued February 2020 onwards
+      - School ID with your Certificate of Registration
 
 steps:
-  - title: "[VERIFY] Book an appointment online"
-    where: Online, before you go
+  - title: Book an appointment online
+    where: "Online, before you go: passport.gov.ph"
   - title: "[VERIFY] Pay the passport fee"
     where: "[VERIFY]"
-  - title: "[VERIFY] Go to the consular office on your appointment date"
+  - title: Go to the consular office on your appointment date
+    details: You have to apply in person.
     where: "[VERIFY]"
   - title: "[VERIFY] Have your documents checked, photo and fingerprints taken"
     where: "[VERIFY]"
@@ -57,27 +83,38 @@ fees:
 processingTime: "[VERIFY]"
 
 online:
-  - label: "[VERIFY] DFA passport appointment system"
-    url: "[VERIFY]"
-    whatYouCanDo: "[VERIFY] book and pay for an appointment"
+  - label: DFA passport appointment
+    url: "https://www.passport.gov.ph/"
+    whatYouCanDo: Book your passport appointment.
 
 tips:
   - If you miss your appointment, or your application is denied for missing documents, your payment is forfeited and not refunded.
   - You can only hold one Philippine passport at a time.
-  - "[VERIFY] Only book through the official DFA website."
+  - The DFA may ask for more documents if it needs them.
+  - Only book at passport.gov.ph, the DFA's own appointment site.
+  - For problems with your appointment, call the DFA at (02) 8234-3488.
 
 faqs:
   - question: Can I walk in without an appointment?
-    answer: "[VERIFY]"
+    answer: "Only if you can use the Courtesy Lane. Everyone else needs a confirmed online appointment. [VERIFY] who can use the Courtesy Lane, from https://consular.dfa.gov.ph/courtesy-lane-eligibility/"
+  - question: What if my birth certificate was registered late or has errors?
+    answer: You'll need more documents. The DFA lists them case by case under "Supporting documents" on its adult new application page, including late registration, missing data, misspelled names or clerical errors, a name changed by court order, details that don't match across documents, an unreadable PSA copy, and no PSA birth certificate at all.
 
 related:
   - psa-birth-certificate
+  - national-id-philsys
 
 sources:
+  - title: "DFA Office of Consular Affairs: Requirements for Adult New Applications"
+    url: "https://consular.dfa.gov.ph/adult-new/"
+    accessed: "2026-10-22"
+  - title: "DFA Office of Consular Affairs: List of Acceptable IDs for Philippine Passport Application"
+    url: "https://consular.dfa.gov.ph/valid-ids-for-passport-application/"
+    accessed: "2026-10-22"
   - title: "DFA Passport Application Form (DFA-OCA-PDO-02, rev. 27 Dec 2024)"
     url: "https://consular.dfa.gov.ph/wp-content/uploads/2025/02/PASSPORT-DIV-APP-FORM.pdf"
     accessed: "2026-10-22"
-  - title: "[VERIFY] DFA passport requirements (Citizen's Charter)"
+  - title: "[VERIFY] DFA passport steps and processing time (Citizen's Charter)"
     url: "[VERIFY]"
     accessed: "[VERIFY]"
 
