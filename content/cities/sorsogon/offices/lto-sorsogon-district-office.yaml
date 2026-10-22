@@ -1,7 +1,7 @@
 # A local branch. Folder = city, file name = slug.
 agency: lto
 name: LTO Sorsogon District Office
-address: "Brgy. Cabid-an, Sorsogon City, Sorsogon"
+address: "Brgy. Cabid-an, Sorsogon City, Sorsogon 4700"
 mapUrl: "https://maps.app.goo.gl/9zx1PUkPsfLLB1Bb8"
 hours:
   - days: [mon, tue, wed, thu, fri]
@@ -9,4 +9,4 @@ hours:
     closes: "17:00"
 phones: [0970-309-9557]
 notes:
-  - "Application cut-off time: [VERIFY]"
+  - Applications may close before 5:00 PM. Call ahead to check the cut-off time.
