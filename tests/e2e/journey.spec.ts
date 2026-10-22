@@ -4,7 +4,11 @@ test("finds a guide from the home page and ticks off what to bring", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page).toHaveURL(/\/testville$/);
+  await expect(
+    page.getByRole("heading", { name: "Most looked up" }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Otherville" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Testville" })).toBeVisible();
 
   await page.getByLabel("What do you need to get done?").fill("permit");
   await page
@@ -29,7 +33,7 @@ test("finds a guide from the home page and ticks off what to bring", async ({
 });
 
 test("guide shows the facts people came for", async ({ page }) => {
-  await page.goto("/testville/services/get-a-test-permit");
+  await page.goto("/services/get-a-test-permit");
 
   const steps = page.locator("#route ol > li");
   await expect(steps).toHaveCount(3);
@@ -43,7 +47,7 @@ test("guide shows the facts people came for", async ({ page }) => {
 });
 
 test("prints a clean sheet without the screen-only parts", async ({ page }) => {
-  await page.goto("/testville/services/get-a-test-permit");
+  await page.goto("/services/get-a-test-permit");
   await page.emulateMedia({ media: "print" });
 
   await expect(page.locator("header")).toBeHidden();

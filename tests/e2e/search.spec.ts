@@ -6,7 +6,7 @@ test("doesn't download search until someone uses it", async ({ page }) => {
     if (r.url().includes("search-index.json")) indexRequests.push(r.url());
   });
 
-  await page.goto("/testville");
+  await page.goto("/");
   await page.waitForLoadState("networkidle");
   expect(indexRequests).toHaveLength(0);
 
@@ -17,7 +17,7 @@ test("doesn't download search until someone uses it", async ({ page }) => {
 test("understands Filipino phrasing, typos and agency keywords", async ({
   page,
 }) => {
-  await page.goto("/testville");
+  await page.goto("/");
   const box = page.getByLabel("What do you need to get done?");
   const results = page.getByRole("list", { name: "Search results" });
 
@@ -34,12 +34,12 @@ test("understands Filipino phrasing, typos and agency keywords", async ({
 });
 
 test("Enter opens a shareable search page", async ({ page }) => {
-  await page.goto("/testville");
+  await page.goto("/");
   const box = page.getByLabel("What do you need to get done?");
   await box.fill("permit");
   await box.press("Enter");
 
-  await expect(page).toHaveURL(/\/testville\/search\?q=permit$/);
+  await expect(page).toHaveURL(/\/search\?q=permit$/);
   await expect(
     page
       .getByRole("list", { name: "Search results" })
@@ -48,13 +48,13 @@ test("Enter opens a shareable search page", async ({ page }) => {
 });
 
 test("says so when nothing matches", async ({ page }) => {
-  await page.goto("/testville");
+  await page.goto("/");
   await page.getByLabel("What do you need to get done?").fill("passport");
   await expect(page.getByText("Nothing matches “passport”.")).toBeVisible();
 });
 
 test("never shows drafts in results", async ({ page }) => {
-  await page.goto("/testville");
+  await page.goto("/");
   await page
     .getByLabel("What do you need to get done?")
     .fill("unfinished draft");

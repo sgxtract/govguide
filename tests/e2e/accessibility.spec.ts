@@ -2,14 +2,16 @@ import { AxeBuilder } from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const PAGES = [
+  "/",
   "/testville",
-  "/testville/categories/permits",
-  "/testville/categories/other",
-  "/testville/services/get-a-test-permit",
-  "/testville/services",
-  "/testville/agencies",
-  "/testville/agencies/test-permits-agency",
-  "/testville/search?q=permit",
+  "/categories/permits",
+  "/categories/other",
+  "/services",
+  "/services/get-a-test-permit",
+  "/services/get-a-local-permit",
+  "/agencies",
+  "/agencies/test-permits-agency",
+  "/search?q=permit",
   "/contribute",
   "/about",
   "/disclaimer",
@@ -38,7 +40,7 @@ for (const colorScheme of ["light", "dark"] as const) {
 }
 
 test("keyboard users can skip straight to the content", async ({ page }) => {
-  await page.goto("/testville");
+  await page.goto("/");
   await page.keyboard.press("Tab");
   await expect(
     page.getByRole("link", { name: "Skip to content" }),
